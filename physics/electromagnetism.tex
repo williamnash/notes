@@ -1,0 +1,995 @@
+
+
+
+\chapter{Electromagnetism}
+
+The scope of Electricity and Magnetism is almost undoubtably the most broadly reaching field within Physics, describing everything from   why the sky is blue, to how we can send radio signals across the world, to why you can see yourself in a mirror. Somehow this huge array of phenomena stem entirely from just \emph{four} basic laws, called Maxwell's equations.
+
+
+
+
+\section{Maxwell's Equations}
+
+
+\subsection{Gauss's Law}\label{gauss}
+The electric field is an abstraction that tells us how a charge would move if it is in it's presence, with
+\begin{align}
+    \textbf{F} = q\textbf{E}
+\end{align}
+Gauss' law tells us that the divergence of the electric field at any point, is equal to the charge density at that point, divided by some constant
+\begin{align}
+    \nabla\cdot\textbf{E} = \frac{\rho}{\epsilon_0}
+\end{align}
+This equation is easier to interpret in integral form. With
+\begin{align}
+    \int dV~ \nabla\cdot\textbf{E} &= \int dV~\frac{\rho}{\epsilon_0}\\
+    \int d\textbf{A}\cdot\textbf{E} &= \frac{Q_{enc}}{\epsilon_0}
+\end{align}
+
+This equation says that if you add up the electric field going straight through every bit of area on some given surface, you will always find exactly the amount of charge that is in the volume enclosed by that surface. This quantity is also sometimes called the electric flux
+\begin{align}
+    \int d\textbf{A}\cdot\textbf{E} = \Phi_E
+\end{align}
+
+\subsection{No Monopoles}
+This law doesn't really have a name, but is just simply a fact that there happen to experimentally be no magnetic charges
+\begin{align}
+    \nabla\cdot\textbf{B} = 0
+\end{align}
+Or in integral form
+\begin{align}
+    \int d\textbf{A}\cdot\textbf{B} &= 0
+\end{align}
+
+
+\subsection{Ampere's Law}
+Typically thought of as current generates a magnetic field. In differential form
+\begin{align}
+    \nabla\times\textbf{B} = \mu_0\textbf{J} +\mu_0\epsilon_0\frac{d\textbf{E}}{dt}
+\end{align}
+Where $\textbf{J}$ is the current density, or current per unit area, and points in the direction that the positive current goes. The extra factor with $\textbf{E}$ is called the \emph{displacement current}, and accounts for times when we have current entering a surface, but the current has no place to go (such as current going onto a capacitor), but we still need to satisfy Gauss' law. In integral form we have
+\begin{align}
+    \int \textbf{B}\cdot d\textbf{l} = \mu_0 I + \mu_0\epsilon_0\frac{d\Phi_E}{dt}
+\end{align}
+
+
+
+\subsection{Faraday's Law}
+Faraday's law says that if we have a changing magnetic field, we will get an electric field that is created by it. In differential form
+\begin{align}
+    \nabla\times\textbf{E} = -\frac{d\textbf{B}}{dt}
+\end{align}
+In integral form, we can see how the voltage is generated, with
+\begin{align}
+    \int \textbf{E}\cdot d\textbf{l} = V =  -\frac{d\Phi_B}{dt}
+\end{align}
+Where $\Phi_B$ is the magnetic flux, and has the same form as the electric flux.
+
+
+\section{Electrostatics}
+Using the definition of the electric field in electrostatics
+\begin{align}
+\textbf{E}(\textbf{r}) = -\nabla \varphi(\textbf{r})
+\end{align}
+To arrive at Poisson's equation
+\begin{align}
+\nabla^2\varphi(\textbf{r}) = -\rho(\textbf{r})/\epsilon_0
+\end{align}
+We can use Green's functions (Section \ref{green}) to solve the the differential equation, looking first for 
+\begin{align}
+\nabla^2 G(\textbf{r},\textbf{r}') = \delta(\textbf{r}-\textbf{r}')
+\end{align}
+But we found something that solves that equation before with Equation \ref{dirac} (after adjusting constants) so we can write the \emph{free space} Green's function as
+\begin{align}
+G(\textbf{r},\textbf{r}') = \frac{-1}{4\pi|\textbf{r}-\textbf{r}'|}
+\end{align}
+In the formulation of Green's functions, we have
+\begin{align}\label{potential}
+\varphi(\textbf{r}) = \frac{-1}{\epsilon_0}\int dr'^3  G(\textbf{r},\textbf{r}') \rho(\textbf{r}') = \frac{1}{4\pi\epsilon_0}\int d^3\textbf{r}' \frac{\rho(\textbf{r}')}{|\textbf{r}-\textbf{r}'|}
+\end{align}
+This is the quintessential equation used in Electrostatics, and from here we do things like expand it with Legendre Polynomials and Spherical Harmonics, etc. to get rid of the bottom term which makes things difficult to integrate.
+
+\subsection{Green's Reciprocity Theorem}
+Normal electrostatic energy is defined by adding up all of the charges of one subset ($1$) multiplied by their potential at their given location created by another subset of charges ($2$). In integral form, the potential energy $V$ needed to put the set of charges in the given potential is
+\begin{align}
+V = \int dr^3 \varphi_1(\textbf{r})\rho_2(\textbf{r}) 
+\end{align}
+A nice consequence of the Green's function solution to the potential is that we can rewrite this equation with
+\begin{equation}
+\int dr^3 \varphi_1(\textbf{r})\rho_2(\textbf{r}) = \int dr^3 \int dr'^3 \frac{\rho_2(\textbf{r}')\rho_1(\textbf{r})} {|\textbf{r}-\textbf{r}'|} = \int dr^3 \varphi_2(\textbf{r})\rho_1(\textbf{r}) 
+\end{equation}
+Which is nice if the charge distribution from one set is easy to find, but not so easy the other way, we can swap which one we want to integrate over and the energy will be the same. This lets us find an unknown potential or charge distribution using tricks if we have somewhere that one of the potentials is zero, making the integrand zero. The \emph{total} electrostatic energy required to assemble the entire thing from nothing is given by
+\begin{align}
+U_T = \frac{1}{2} \int dr^3 \varphi (\textbf{r})\rho(\textbf{r}) = \frac{1}{2}\epsilon_0\int dr^3 |\textbf{E}(\textbf{r})|^2
+\end{align}
+Using now the entire distribution and ensuring we don't double count with the extra factor of 1/2. Integration by parts gives us the expression in terms of $\textbf{E}$.
+
+
+
+\subsection{Multipole Expansion}
+If we have that the point of observation $\textbf{r}$ is much farther than the location of the source $\textbf{r}'$, we can Taylor expand the denominator in equation \ref{potential} and get
+\begin{align}
+\frac{1}{|\textbf{r}-\textbf{r}'|} = \frac{1}{r} - \textbf{r}'\cdot\nabla\frac{1}{r} + \frac{(\textbf{r}'\cdot\nabla)^2}{2!}\frac{1}{r} - ...
+\end{align}
+Rewriting the potential, we get something kind of nasty
+\begin{align}
+\varphi(\textbf{r}) &= \frac{1}{4\pi\epsilon_0}\int d^3\textbf{r}' \frac{\rho(\textbf{r}')}{|\textbf{r}-\textbf{r}'|} = \frac{1}{4\pi\epsilon_0}
+\Big(\frac{Q}{r} + \frac{\textbf{p}\cdot\textbf{r}}{r^3} + Q_{ij}\frac{3r_ir_j-r^2\delta_{ij}}{r^5} + ...\Big)
+\end{align}
+Where the first term in the last expansion is the monopole moment, followed by the dipole moment, defined as 
+\begin{align}
+\textbf{p} \equiv \int dr^3 \rho(\textbf{r}) \textbf{r} = \sum q_i\textbf{r}_i
+\end{align}
+Which is just the vector sum of all of the charges multiplied by their coordinate, analogous to a calculation for center of mass. We can find the form of the electric field of a dipole using tensor notation with
+\begin{align}
+\textbf{E}_{dip} = -\nabla V_{dip} &= -\frac{1}{4\pi\epsilon_0}\partial_j \frac{p_ir_i}{r^3}\\
+&= - \frac{1}{4\pi\epsilon_0}\Big[\frac{p_i}{r^3}\partial_jr_i + p_ir_i\partial_j\frac{1}{r^3}\Big]\\
+&= -\frac{1}{4\pi\epsilon_0} \Big[\frac{p_i}{r^3}\delta_{ij} -\frac{3p_ir_ir_j}{r^5}\Big]\\
+&= \frac{1}{4\pi\epsilon_0} \frac{3(\textbf{p}\cdot\hat{\textbf{r}})\hat{\textbf{r}} - \textbf{p}}{r^3}
+\end{align}
+We can also find the expression for energy $E$ and torque $\boldsymbol{\tau}$ with
+\begin{align}
+E_{dip} = - \textbf{p}\cdot\textbf{E}\\
+\mathbf{\tau}_{dip} = \textbf{p}\times\textbf{E}
+\end{align}
+One can remember the minus sign because a dipole always points in the direction of it's positive charge, so one pointing parallel with an electric field will have lower energy. The torque rule can be recovered drawing out the dipole and imagining how it will spin in combiniation with the right hand rule.
+
+The quadrupole moment $Q_{ij}$ is a tensor defined as 
+\begin{align}
+Q_{ij} = \frac{1}{2}\int dr^3 \rho(\textbf{r})r_ir_j = \frac{1}{2} \sum q r_i r_j
+\end{align}
+Where $r_i = x,y,z$, this is not summation notation! One quadrant would look like
+\begin{align}
+Q_{xy} = \frac{1}{2}\int dr^3 \rho(\textbf{r})xy
+\end{align}
+
+
+%The field and electrostatic enery are given as
+
+%\begin{align}
+%%\textbf{E}(\textbf{r}) &= \frac{1}{4\pi\epsilon_0}\int d^3\textbf{r}' \frac{\rho(\textbf{r}')%%(\textbf{r} - \textbf{r}')}{|\textbf{r}-\textbf{r}'|^3}\\
+%U_E &= \frac{1}{2}\epsilon_0\int d^3r|\textbf{E}|^2
+%\end{align}
+
+
+\subsection{Uniqueness}
+In order for use to have unique solutions to each electrostatics question, which lets us get the solution be literally any means, it happens that\footnote{Zangwill pg. 199}, using something called Dirichlet boundary conditions, we need the potential specified at some boundary, such that any two solutions evaluated at that boundary will be equal or $\varphi_1(\textbf{r}_s) -\varphi_2(\textbf{r}_s) = 0$ where $\textbf{r}_s$ is the location of the boundary. There are other choices such Neumann Boundary conditions, but we probably won't need to know them.
+
+\subsection{Symmetries}
+Another key to solving these equations is looking for places where you can leverage symmetries to make evaluation of many of these things near trivial. For instances if we are looking at the potential of a conducting sphere relative to infinity, we can just use Gauss' law to solve for the electric field
+\begin{align}
+\int d\textbf{S}\cdot\textbf{E} =\frac{Q}{\epsilon_0} = 4\pi r^2 E
+\end{align}
+Then integrate from infinity to field the potential
+\begin{align}
+V = - \int_\infty^r d\textbf{l}\cdot\textbf{E}  = -\frac{Q}{4\pi \epsilon_0}\int_\infty^r \frac{dr'}{r'^2} = \frac{Q}{4\pi\epsilon_0 r}
+\end{align}
+
+
+
+\subsection{Image Charges}
+To solve these, need to have some kind of boundary, you can place a fake "image charge" within the boundary, and, through uniqueness, solve for the potential outside by just vector summing the  fictitious charge, and the real ones. It is typically done with grounded surfaces, but works equally well if the surface is just maintained at a constant potential, because we can just add more image charges in other locations to make it so (for instance the center of a sphere). For a sphere the image charge to make an equipotential surface is given as
+
+\begin{align}
+q' = -\frac{R}{d}q\\
+d' = \frac{R^2}{d}
+\end{align}
+
+Where $q$ is the magnitude of the charge outside the sphere, a distance $d$ from it's center, requiring that a charge of opposite sign $q'$ be put a distance along the same axis given by $d'$ to create the surface. You actually hardly have to remember these, since as long as you know that the charge should be negative and less in magnitude when it is inside the sphere, you can just make whatever ratio you like with the radius to make it so.
+
+For a dielectric surface, we can also use image charges. For an infinite sheet, we actually need \emph{two} image charges to keep the parallel component of the electric field equal to zero on the interface.
+
+
+
+
+\section{Laplace's Equation}
+Laplace's equation, obtained by plugging in the expression for electric potential into Gauss' law, is written as 
+\begin{align}
+\nabla^2\varphi = 0
+\end{align}
+And is used to solve the electric potential within a region with no charge. All the problems here involve solutions to the aptly named Laplacian operator $\nabla^2$ in various geometries using separation of variables.\footnote{Zangwill pg. 197} is a great resource here. To solve these questions follow this algorithm
+\begin{enumerate}
+\item Recognize geometry of the problem (Cartesian, Spherical with Azimuthal Symmetry, etc.)
+\item Shrink Laplace's equation by getting rid of any terms that the potential doesn't depend on out of the Laplacian, e.g. if it doesn't depend on $z, \frac{d^2 Z(z)}{dz^2} = 0$.
+
+\item Use boundary conditions to collapse form further and get some constants
+
+\item If necessary, use orthogonality of whatever functions you have to select out terms to find equations for coefficients for the potential
+
+\item Do the same thing for continuity of the electric field
+
+\item Plug in constants and you're done
+
+
+\end{enumerate}
+
+
+
+\subsection{Cartesian}
+Here we guess that the potential has the form of a product of $X(x)Y(y)Z(z)$ which lets us manipulate Laplace's equation into the form
+\begin{align}
+\frac{X''}{X} + \frac{Y''}{Y} + \frac{Z''}{Z} = 0
+\end{align}
+These all have to be constants, since they are all independent variables, which in total must sum to zero, so 
+\begin{align}
+\alpha^2 + \beta^2 + \gamma^2 = 0
+\end{align}
+Which gives us solutions
+\begin{align}
+X(x) &= \begin{cases}
+A_0 +B_0x &\alpha = 0\\
+A_\alpha e^{\alpha x} + B_\alpha e^{-\alpha x} &\alpha \neq 0
+\end{cases}\\
+Y(y) &= \begin{cases}
+C_0 +D_0y &\beta = 0\\
+C_\beta e^{\beta y} + B_\beta e^{-\beta y} &\beta \neq 0
+\end{cases}\\
+Z(z) &= \begin{cases}
+E_0 +F_0z &\gamma = 0\\
+E_\gamma e^{\gamma z} + F_\gamma e^{-\gamma z} &\gamma \neq 0
+\end{cases}
+\end{align}
+The solution is a general linear combination of all solutions that satisfy $\alpha^2+\beta^2+\gamma^2=0$, so the potential is
+\begin{align}
+\varphi(x,y,z) = \sum_\alpha \sum_\beta \sum_\gamma X_\alpha(x)Y_\beta(y)Z_\gamma(z) \delta(\alpha^2+\beta^2+\gamma^2)
+\end{align}
+
+\subsection{Spherical}
+For an \textbf{azimuthally symmetric} system, the form is
+\begin{align}\label{laplace}
+\varphi(r,\theta)=\sum_{l=0}^\infty [A_l r^l+B_lr^{-(l+1)}]P_l(\cos\theta)
+\end{align}
+Can remove either the positive or negative exponents depending on if your solution must include 0 or infinity. Can also figure it out from Taylor expansion that give you the Legendre Polynomials in section \ref{legendrepoly}. 
+
+For \textbf{non-azimuthally symmetric} systems, we have to expand the Legendre Polynomials in terms of Spherical Harmonics, so
+\begin{align}
+\varphi(r,\theta)=\sum_{l=0}^\infty\sum_{m=-l}^l [A_{lm} r^l+B_{lm}r^{-(l+1)}]Y^l_m(\theta,\phi)
+\end{align}
+
+
+
+
+\subsection{Cylindrical}\label{cylinderlaplace}
+Here we guess the form that the potential looks like a product of $R(\rho)G(\phi)Z(z)$, which comes out (Section \ref{cylinderlaplacian}) with solutions to Laplace's equation in Cylindrical that look like
+\begin{align}
+G_\alpha(\phi) &= \begin{cases}
+x_0 + y_0\phi &\alpha = 0\\
+x_\alpha e^{i\alpha \phi} + y_\alpha e^{-i\alpha \phi} &\alpha \neq 0
+\end{cases}
+\end{align}
+Where $\alpha$ comes from the equation
+\begin{align}
+\frac{d^2G}{d\phi^2} =  -\alpha^2 G
+\end{align}
+So it makes sense we get sines and cosines, or just linear terms if $\alpha = 0$. Since we need that $\varphi(\phi) = \varphi(\phi+2\pi)$, So as long as we are using the full angular range we need
+\begin{align}
+\alpha = 0,\pm 1,\pm 2, \pm 3, ... 
+\end{align}
+The $z$ portion is similar to the angular portion, but it happens that the constant can be either sign, so
+\begin{align}
+Z_k(z) &= \begin{cases}
+s_0 + t_0 z &k = 0\\
+s_k e^{kz} + t_k e^{-k z} &k \neq 0
+\end{cases}
+\end{align}
+The radial portion is quite nasty, we get the constants from the other two equations, with things like condary conditions, then can use them to help decide what radial function we need below.
+\begin{align}
+R^k_\alpha(r) &= \begin{cases}
+A_0 + B_0\ln\rho &k=0, \alpha = 0\\
+A_\alpha \rho^\alpha  + B_\alpha \rho^{-\alpha} &k = 0, \alpha \neq 0\\
+A_\alpha^kJ_\alpha(k\rho) + B_\alpha^kN_\alpha(k\rho) & k^2 > 0\\
+A_\alpha^kI_\alpha(-ik\rho) + B_\alpha^kK_\alpha(-ik\rho) & k^2 < 0
+\end{cases}
+\end{align}
+Where $J(x)$ and $N(x)$ are Bessel Functions (Section \ref{bessel}) and $I(x)$ and $K(x)$ are modified Bessel functions. The general solution is given by a linear super position of all the elementary solutions with
+\begin{align}
+\varphi(\rho,\phi,z) = \sum_\alpha\sum_k R_\alpha^k(\rho)G_\alpha(\phi)Z_k(z)
+\end{align}
+
+
+\section{Magnetostatics}
+\subsection{Magnetic Potential}
+We first need a vector identity that is true for any vector, given by
+\begin{align}
+    \textbf{C}(\textbf{r}) = \nabla\times\frac{1}{4\pi}\int d^3r'\frac{\nabla'\times\textbf{C}(\textbf{r}')}{|\textbf{r}-\textbf{r}'|} - \nabla\frac{1}{4\pi}\int d^3r'\frac{\nabla'\cdot\textbf{C}(\textbf{r}')}{|\textbf{r}-\textbf{r}'|}
+\end{align}
+Since $\nabla\cdot\textbf{B} = 0$, we have that
+\begin{align}
+    \textbf{B}(\textbf{r}) = \nabla\times\frac{1}{4\pi}\int d^3r'\frac{\nabla'\times\textbf{B}(\textbf{r}')}{|\textbf{r}-\textbf{r}'|}
+\end{align}
+In Magnetostatics
+\begin{align}
+    \nabla\times\textbf{B} = \mu_0\textbf{j}
+\end{align}
+We identify the term before the curl as the magnetic potential with
+\begin{align}
+    \textbf{A}(\textbf{r}) = \frac{\mu_0}{4\pi}\int d^3r'\frac{\textbf{j}(\textbf{r}')}{|\textbf{r}-\textbf{r}'|}
+\end{align}
+We can also derive the Biot-Savart law for the magnetic field using index notation with
+\begin{align}
+        \textbf{B}(\textbf{r}) &= \nabla\times\frac{\mu_0}{4\pi}\int d^3r'\frac{\textbf{j}(\textbf{r}')}{|\textbf{r}-\textbf{r}'|}\\
+        B_i &=\frac{\mu_0}{4\pi} \varepsilon_{ijk}\partial_j\int d^3r'\frac{j_k'}{|\textbf{r}-\textbf{r}'|}\\
+        &= \frac{\mu_0}{4\pi} \int d^3r' \epsilon_{ijk}j_k \partial_j \frac{1}{|\textbf{r}-\textbf{r}'|}\\
+        &=-\frac{\mu_0}{4\pi} \int d^3r' \epsilon_{ijk}j_k \frac{r_j}{|\textbf{r}-\textbf{r}'|^2}\\
+\end{align}
+Fix this. Thus we see that
+\begin{align}
+    \textbf{B}(\textbf{r}) &= \frac{\mu_0}{4\pi} \int d^3r'\frac{\textbf{j}(\textbf{r}')\times(\textbf{r}-\textbf{r}')}{|\textbf{r}-\textbf{r}'|^3}
+\end{align}
+
+
+\subsection{Ohm's Law}
+When I first studied E\&M, it was always weird to me that people would say "There is no electric field in a conductor" while simultaneously saying "The current in a conductor is proportional to the voltage difference between two regions (and therefore the electric field)". The real thing goes like this; we take the perspective of a single electron in a conductor, and look at a simplified version of all the forces that act on it
+\begin{align}
+m\dot{\textbf{v}} = -e\textbf{E} -  \frac{m\textbf{v}}{\tau}
+\end{align}
+The electric field term is straightforward, and the other one is a drag term meant to account for collisions, since the electron will be slowed down when it runs into things. Since the electron is feeling a force propotional to however fast it is going, it will eventually reach an equilibrium speed, which we can find by setting the acceleration to zero.
+\begin{align}
+\textbf{v}_d = -\frac{e\tau}{m}\textbf{E}
+\end{align}
+This is called the \emph{drift speed} and is actually quite small in most metals ($\sim 10^{-3}$ m/s). We define the current from the continuity equation for conservation of charge, since
+\begin{align}
+\frac{\partial \rho}{\partial t} +\nabla\cdot(\rho\textbf{v}) = 0
+\end{align}
+The \emph{current density} we call the right part, defined as
+\begin{align}
+\textbf{j} \equiv \rho\textbf{v}
+\end{align}
+If we have just one type of charge, the current density is identical to multiplying just one charge by its velocity then by however many there are in that region $n$, or if we have a whole bunch of kinds of charges $N$
+\begin{align}
+\textbf{j} = \sum_{i=1}^N q_in_i\textbf{v}_i
+\end{align}
+If we have only electrons, we have just one term, and since each electron will feel the same electric field, will have the same drift velocity, so we can say
+\begin{align}
+\textbf{j} = \frac{ne^2\tau}{m}\textbf{E} = \sigma\textbf{E}
+\end{align}
+Where $\sigma$ is called the conductivity. This is Ohm's law $V=IR$ since we see the current is linear in the electric field.
+The surface charge density is given by
+\begin{align}
+\textbf{K} &= \sigma \textbf{v}
+\end{align}
+But this time $\sigma$ is the surface charge density, which can be needlessly confusing if you are unfamiliar with how to use these equations.
+\section{Dipoles}
+
+\subsection{Electric Dipoles}
+\begin{align}
+    V(\textbf{r}) = \frac{1}{4\pi\epsilon_0} \frac{\textbf{p}\cdot\textbf{r}}{r^3}
+\end{align}
+
+\subsection{Magnetic Dipoles}
+
+
+
+\begin{align}
+\textbf{A}(\textbf{r},t) = \frac{\mu_0}{4\pi}\frac{\textbf{m}\times\textbf{r}}{r^3} 
+\end{align}
+Using index notation we can find the field with
+\begin{align}
+    \textbf{B}(\textbf{r},t) = \frac{\mu_0}{4\pi}\Big(\frac{3\hat{r}(\textbf{m}\cdot\hat{r}) - \textbf{m}}{r^3}\Big)
+\end{align}
+
+The magnetic moment is defined as 
+\begin{align}
+    \textbf{m} = \frac{1}{2} \int dr^3 [\textbf{r}\times\textbf{j}_m\Big] + \frac{1}{2} \int dS [\textbf{r}\times\textbf{K}_m]
+\end{align}
+
+
+\section{Fields in Matter}
+% TODO When we consider electric and magnetic fields inside of materials, not just vacuum ...
+\subsection{Dielectrics}
+A perfect conductor is capable of reorienting any and all of its electrons such that it always exactly cancels out any static electric field that is applied to it. In reality of course, most objects can't reorient themselves this well, but still can to a degree. These materials are called \emph{dielectrics} and physically appear from the stretching of electrons from their nuclei inside a material, which makes it so the field inside the material is no longer just the externally applied field, but also a field created by the stretched molecules created by the external field itself. So we break up the field into components
+\begin{align}
+\textbf{D} = \epsilon_0\textbf{E} + \textbf{P}
+\end{align}
+Where $\textbf{D}$ is called the \emph{auxillary} field, the field leftover inside the material after the molecules reorient themselves according to the applied field $\textbf{E}$ which gives the object it's \emph{polarization} $\textbf{P}$. In the lab we can control how much free charge  $\rho_f$ we can put on something, but not necessarily how much bound charge $\rho_B$ shows up, so most people use $\textbf{D}$ in real life circumstances.
+
+
+Something something free vs bound charge.
+
+
+ As a memorization rule, it seems best to obtain the expressions for bound charge from combining expressions for $\textbf{D}$ and $\textbf{E}$. We first say
+\begin{align}
+\nabla\cdot\textbf{D} = \rho_f(\textbf{r})
+\end{align}
+And taking the divergence
+\begin{align}
+\epsilon_0\nabla\cdot\textbf{E} - \nabla\cdot\textbf{D} &=  -\nabla\cdot \textbf{P}\\
+\rho(\textbf{r})  - \rho_f(\textbf{r}) &= -\nabla\cdot \textbf{P}
+\end{align}
+So we have to have that
+\begin{align}
+\nabla\cdot \textbf{P} = -\rho_B(\textbf{r})
+\end{align}
+
+
+Which just says if we add up the free and bound charge, we get the total charge density. We also want to have boundary conditions for the auxilary field, with
+\begin{align}
+\hat{n}\cdot[\textbf{D}_{out}-\textbf{D}_{in}] &= \sigma_f\\
+\hat{n}\cdot[\textbf{E}_{out}-\textbf{E}_{in}] &= \sigma/\epsilon_0
+\end{align}
+If we are looking at the interface of vacuum and a medium with polarization $\textbf{P}$, we have
+\begin{align}
+\hat{n}\cdot[\epsilon_0\textbf{E}_{out} + 0 -\epsilon_0\textbf{E}_{in} -\textbf{P}] &= \sigma_f\\
+\sigma -\textbf{P}\cdot\hat{n} &= \sigma_f
+\end{align}
+Thus
+\begin{align}
+\textbf{P}\cdot\hat{n} = \sigma_B
+\end{align}
+Typically we consider only linear (first order), isotropic (same from any direction), homogeneous (the same all over) materials, which means that the polarization is linearly proportional to the applied field
+\begin{align}
+\textbf{P} = \epsilon_0\chi\textbf{E}
+\end{align}
+There are  alot of constants here, with
+\begin{align}
+\epsilon = \epsilon_0(1+\chi) &&\kappa = \frac{\epsilon}{\epsilon_0}
+\end{align}
+These let you express a whole bunch of things in a huge number of ways, for instance
+\begin{align}
+\rho_b = -\frac{\chi}{1+\chi}\rho_f
+\end{align}
+Another useful thing to know is the relationship between an electric dipole moment $\textbf{p}$ and the field
+\begin{align}
+    \textbf{p} = \alpha \textbf{E}
+\end{align}
+Where $\alpha$ is the polarizability. With this knowledge, we can express the polarization in terms of the electric dipoles with
+\begin{align}
+    \textbf{P} = \frac{d\textbf{p}}{dV}
+\end{align}
+
+
+
+\subsection{Magnetization}
+Magnetization happens when we get a rearrangement of internal currents in a material when an external magnetic field is applied to it. Electron spin is responsible for most of magnetism in paramagnets and ferromagnets.
+
+
+Similar to electrostatics in materials, we want a magnetic field that comes just from the the free current $\textbf{j}_f$ (with $\partial\textbf{E}/\partial t = 0$) . We also call this field the auxiliary field $\textbf{H}$ with
+\begin{align}
+\nabla\times\textbf{H} = \textbf{j}_f
+\end{align}
+When these things were being define, they thought that $\textbf{H}$ was the real full field, and $\textbf{B}$ was the field that just came from the free currents, so the definition is similar to that for dielectrics, but with the two swapped and the constant only on $\textbf{B}$
+\begin{align}
+\frac{1}{\mu_0}\textbf{B} = \textbf{H} + \textbf{M}
+\end{align}
+Doing the same tricks to find out things about the Magnetization, $\textbf{M}$ we have
+\begin{align}
+\frac{1}{\mu_0}\nabla\times\textbf{B} &= \nabla\times\textbf{H} + \nabla\times\textbf{M}\\
+\textbf{j} &= \textbf{j}_f + \nabla\times\textbf{M}
+\end{align}
+So the magnetization current density is
+\begin{align}
+\textbf{j}_m = \nabla\times\textbf{M}
+\end{align}
+There is also another interesting property that the auxiliary field can have, a divergence, since
+\begin{align}
+\frac{1}{\mu_0}\nabla\cdot\textbf{B} = \nabla\cdot\textbf{H} + \nabla\cdot\textbf{M}\\
+\rightarrow \nabla\cdot\textbf{H} = -\nabla\cdot\textbf{M}
+\end{align}
+We can also use the boundary conditions to find out things about free and bound surface currents
+\begin{align}
+\hat{n}\times[\textbf{H}_{out} - \textbf{H}_{in}] = \textbf{K}_f\\
+\hat{n}\times[\textbf{B}_{out} - \textbf{B}_{in}] =\mu_0\textbf{K}
+\end{align}
+So looking for the equivalent bound current, with no magnetization on the outside
+\begin{align}
+\hat{n}\times[\textbf{B}_{out}  - \textbf{B}_{in} + \textbf{M}] &= \textbf{K}_f\\
+\textbf{K} +\hat{n}\times\textbf{M} &= \textbf{K}_f
+\end{align}
+Thus
+\begin{align}
+\textbf{M}\times\hat{n} = \textbf{K}_m
+\end{align}
+After swapping the order of the cross product.
+
+\subsection{Waves}
+Maxwell's equation's in matter can be rewritten, quite easily by simply changing all instances of $\epsilon_0 \rightarrow \epsilon$ and $\mu_0 \rightarrow \mu$, so
+\begin{align}
+\nabla\cdot\textbf{E} &= \frac{\rho}{\epsilon} & \nabla\cdot\textbf{B} &= 0\\
+\nabla\times\textbf{E} &= -\frac{\partial\textbf{B}}{\partial t} &\nabla\times\textbf{B} &= \mu\textbf{j} + \mu\epsilon\frac{\partial\textbf{E}}{\partial t} 
+\end{align}
+
+
+
+\subsection{Polarization}
+Scarab beetles reflect almost only circularly polarized light.
+
+
+
+\section{Boundary Conditions}
+\begin{align}
+\hat{n}\cdot[\textbf{D}_{out} - \textbf{D}_{in}] &= \sigma_{free} &\hat{n}\cdot[\textbf{B}_{out} - \textbf{B}_{in}] &= 0\\
+\hat{n}\times[\textbf{E}_{out} - \textbf{E}_{in}] &= 0 &\hat{n}\times[\textbf{H}_{out}-\textbf{H}_{in}] &= \textbf{K}_{free}
+\end{align}
+Where we assume $\textbf{D} = \epsilon\textbf{E}$ and $\textbf{H} = \textbf{B}/\mu$. These can easily be rederived thinking about an infinite sheet with charge density $\sigma$ for $\textbf{D}$ and just drawing vectors and using the right hand rule to put things in the right place for $\textbf{H}$
+
+\section{Waves}
+\subsection{Waves in Vacuum}
+Maxwell's equations in vacuum $\rho = \textbf{j} = 0$ are
+\begin{align}
+\nabla\cdot\textbf{E} &= 0 &\nabla\cdot\textbf{B} &= 0\\
+\nabla\times\textbf{E} &= -\frac{\partial \textbf{B}}{\partial t} & \nabla\times\textbf{B} &= \epsilon_0\mu_0\frac{\partial \textbf{E}}{\partial t}
+\end{align}
+Just to see what happens, let's take the curl of Faraday's law
+\begin{align}
+\nabla\times(\nabla\times\textbf{E}) &= -\nabla\times\frac{\partial \textbf{B}}{\partial t}\\
+\nabla(\nabla\cdot\textbf{E}) - \nabla^2\textbf{E} &= -\frac{\partial}{\partial t}\Big(\nabla\times\textbf{B}\Big)\\
+\nabla^2\textbf{E} &= \epsilon_0\mu_0\frac{\partial^2\textbf{E}}{\partial t^2}
+\end{align}
+This is the wave equation in three dimensions. We can match the term in front of the time derivative with the normal form of the wave equation to recover the speed at which the electric field propagates as
+\begin{align}
+c = \frac{1}{\sqrt{\epsilon_0\mu_0}} = 3\times 10^8~\rm{m/s}
+\end{align}
+Which is in fact the speed of light in vacuum. We can also rewrite the magnetic field doing the same thing with
+\begin{align}
+\nabla^2\textbf{B} &= \frac{1}{c^2}\frac{\partial^2\textbf{B}}{\partial t^2}
+\end{align}
+So the changing in space and time of the electric field is able to generate a magnetic field, which then twists and turns back into an electric field, over and over and over again as it propagates through vacuum. The well known solutions to this equation let write a general solution to 
+\begin{align}
+\nabla^2\textbf{w} &= \frac{1}{c^2}\frac{\partial^2\textbf{w}}{\partial t^2}
+\end{align}
+As a function of new arguments
+\begin{align}
+\textbf{w}(z, t) = \textbf{g}(z-ct) + \textbf{f}(z+ct)
+\end{align}
+As long as the velocity $c^2$ is independent of frequency. We can then adjust constants and write the general electric field wave as
+\begin{align}
+\textbf{E}(\textbf{r},t) &= \textbf{E}_0 f(\textbf{k}\cdot\textbf{r} -\omega t)\\
+\end{align}
+This is an electric field that propagates in the \emph{positive} $\hat{k}$ direction, which can be seen by looking at its phase. We take  $\textbf{B}$ to be an identical function of $\textbf{r}$ and $t$\footnote{Why?}, with
+\begin{align}
+\textbf{B}(\textbf{r},t) &= \textbf{B}_0 f(\textbf{k}\cdot\textbf{r} -\omega t)
+\end{align}
+With $c|\textbf{k}| = \omega$. Using tensor notation and Faraday's law, we see
+\begin{align}
+\varepsilon_{ijk}\partial_j\Big[E_k f(k_lr_l-\omega t)\Big] &= -\partial_tB_if(k_lr_l-\omega t)\\
+\varepsilon_{ijk}E_kf'(k_lr_l-\omega t)\delta_{jl}k_l &= \omega B_if'(k_lr_l-\omega t)\\
+\textbf{k}\times\textbf{E}_0f'(k_lr_l-\omega t) &= \omega \textbf{B}_0f'(k_lr_l-\omega t)\\
+\textbf{k}\times\textbf{E}_0 &= \omega \textbf{B}_0
+\end{align}
+This tells us that
+\begin{align}
+|\textbf{E}| = c|\textbf{B}|
+\end{align}
+So we can write general \textbf{plane wave} solutions as
+\begin{align}
+\tilde{\textbf{E}}(\textbf{r},t) &= \textbf{E}_0\exp\Big[i(\textbf{k}\cdot\textbf{r}-\omega t)\Big]\\
+\tilde{\textbf{B}}(\textbf{r},t) &= \frac{1}{\omega}\textbf{k}\times\textbf{E}_0\exp\Big[i(\textbf{k}\cdot\textbf{r}-\omega t)\Big]
+\end{align}
+We are able to write in general the fields in terms of a single exponential function, with the phase hidden in the constant. These are much nicer to use than trigonometric functions, although the \emph{real} part of these fields are the things that create the \emph{real} field, which can be found just taking the real part of these equations with
+\begin{align}
+    \textbf{E}(\textbf{r},t) = \rm{Re}\Big(\tilde{\textbf{E}}\Big)\\
+    \textbf{B}(\textbf{r},t) = \rm{Re}\Big(\tilde{\textbf{B}}\Big)
+\end{align}
+
+
+
+\subsection{Waves in Matter}
+For these questions, we can find the $\omega$ dependent permitivity by
+\begin{enumerate}
+\item Write out the forces on each of the individual electrons
+\item Find the current density using the equation
+\begin{align}
+\textbf{j} = \sum_\alpha q_\alpha  n_\alpha \dot{\textbf{x}} = \sigma\textbf{E}
+\end{align}
+\item Find an expression for the effective permitivity in maxwells equations in matter
+\item Solve for the effective permitivity
+ 
+\end{enumerate}
+
+
+
+
+
+\subsection{Waves in Conductors}
+
+The whole idea here is that in Maxwell's equations, because of Ohm's law $\textbf{j} = \sigma\textbf{E}$, which make the electrons resistance to movement, we get funny residual effects that wouldn't happen if they could move instantly. Using Maxwell's equations in matter, we first assume that we have waited long enough for the charge density $\rho$ to go away, but a time that we still have a current. I'm still not super clear on this. Anyways, we have
+\begin{align}
+\nabla\cdot\textbf{E} &= 0& \nabla\cdot\textbf{B} &= 0\\
+\nabla\times\textbf{E} &= -\frac{\partial\textbf{B}}{\partial t} &\nabla\times\textbf{B} &= \mu\textbf{j} + \mu\epsilon\frac{\partial\textbf{E}}{\partial t} 
+\end{align}
+Let's take the curl of Ampere's law and replace $\textbf{j} = \sigma\textbf{E}$
+\begin{align}
+\nabla\times(\nabla\times\textbf{E}) &= -\nabla\times\frac{\partial\textbf{B}}{\partial t}\\
+\nabla(\nabla\cdot\textbf{E}) - \nabla^2\textbf{E} &= -\frac{\partial}{\partial t}\nabla\times\textbf{B}\\
+-\nabla^2\textbf{E} &= -\frac{\partial}{\partial t}\Big[\mu\sigma\textbf{E}+ \mu\epsilon\frac{\partial\textbf{E}}{\partial t}\Big]\\
+\nabla^2\textbf{E} &= \mu\sigma\frac{\partial\textbf{E}}{\partial t} + \mu\epsilon\frac{\partial^2\textbf{E}}{\partial t^2}\label{maxwellmatter}
+\end{align}
+This equation can again be solved with an plane wave, with
+\begin{align}
+\textbf{E}(\textbf{r},t) &= \textbf{E}_0\exp\Big[i(\tilde{\textbf{k}}\cdot\textbf{r}-\omega t)\Big]\\
+\textbf{B}(\textbf{r},t) &= \textbf{B}_0\exp\Big[i(\tilde{\textbf{k}}\cdot\textbf{r}-\omega t)\Big]
+\end{align}
+Plugging it into the new wave equation, we find that
+\begin{align}
+\tilde{\textbf{k}}^2 = i\mu\sigma\omega + \mu\epsilon\omega^2
+\end{align}
+Obviously $\tilde{\textbf{k}}$ must have an imaginary part to it, so we can now write it as a complex number
+\begin{align}
+\tilde{\textbf{k}} = (k+i\kappa)\hat{k} = \textbf{k} + i\boldsymbol{\kappa}
+\end{align}
+Thus
+\begin{align}
+ 2ik\kappa + (k^2 -\kappa^2) = i\mu\sigma\omega + \mu\epsilon\omega^2
+\end{align}
+We can now match the real and imaginary parts, leading to a quadratic equation, which can be solved. The important part is that the fields now go like
+\begin{align}
+\textbf{E}(\textbf{r},t) &= \textbf{E}_0e^{-\boldsymbol{\kappa}\cdot\textbf{r}}\kappa\exp\Big[i\textbf{k}\cdot\textbf{r}-\omega t)\Big]\\
+\textbf{B}(\textbf{r},t) &= \textbf{B}_0e^{-\boldsymbol{\kappa}\cdot\textbf{r}}\exp\Big[i(\textbf{k}\cdot\textbf{r}-\omega t)\Big]
+\end{align}
+So we see the fields die off exponential as we go into the conductor. We define the skin depth as
+\begin{align}
+d = \frac{1}{\kappa}
+\end{align}
+
+
+
+
+\subsection{Waves in Plasma}
+
+
+"The frequency dispersion of the index of refraction ... occurs because matter cannot respond instantaneously to an external perturbation".\footnote{Zangwill pg. 625} Now we again look at the motion of a charge particle in a magnetic and electric field. We first look at the forces on a charge, pretending it has a binding force $-m\omega_0^2\textbf{x}$
+\begin{align}
+m\ddot{\textbf{x}} = q\textbf{E} -m\gamma\dot{\textbf{x}} - m\omega_0^2\textbf{x}
+\end{align}
+We assume that it matches the field
+\begin{align}
+\textbf{x}(t) = \textbf{x}_0e^{i\omega t} &&\textbf{E}(t) = \textbf{E}_0e^{i\omega t}
+\end{align}
+This gives us
+\begin{align}
+\textbf{x} = \frac{q/m}{i\omega\gamma - \omega^2-\omega_0^2}\textbf{E}
+\end{align}
+We can plug this into the formula for current density, if we have just one species and get
+\begin{align}
+\textbf{j} = \frac{i\omega q^2n/m}{i\omega\gamma + \omega^2-\omega_0^2}\textbf{E}
+\end{align}
+We can find the effective permittivity from maxwells equations in matter with Equation \ref{maxwellmatter}. 
+\begin{align}
+\frac{\tilde\epsilon(\omega)}{\epsilon_0} = 1 + \frac{i\sigma}{\epsilon_0 \omega}
+\end{align}
+We use Ohm's law to find the conductivity and find
+\begin{align}
+n = \sqrt{\frac{\tilde\epsilon(\omega)}{\epsilon_0}} = \sqrt{1- \frac{\omega_p^2}{i\omega\gamma + \omega^2-\omega_0^2}}
+\end{align}
+Where the plasma frequency is given by
+\begin{align}
+\boxed{\omega_p^2 = \frac{q^2n}{\epsilon_0 m}}
+\end{align}
+
+
+
+
+\subsection{Waveguides}
+Take Maxwell's equation's in free space, and assume of the electric field as
+\begin{align}
+    \textbf{E} = \textbf{E}(x,y)e^{i(kz-\omega t)}
+\end{align}
+Play around with their components to come up with a differential equation for $x$ and $y$ in terms of $z$.
+\begin{align}
+    \Big[\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + (\omega/c)^2 - k^2\Big]E_z &= 0\\
+    \Big[\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + (\omega/c)^2 - k^2\Big]B_z &= 0
+\end{align}
+There are two typical cases considered \textbf{Transverse electric} which happens when the electric field is \emph{never} in the $z$ direction, or $E_z = 0$. \textbf{Transverse magnetic} is when the magnetic field is never in the $z$ direction so $B_z = 0$. There is also a case where both are transverse aptly named \textbf{TEM} waves where $B_z = E_z = 0$. After solving for $E_z$ or $B_z$, we will get coefficients in place of the derivative operators. The sum of these must add to zero to keep the equation true. Typically it looks something like
+\begin{align}
+    \Big(\frac{n\pi}{d_x}\Big)^2 + \Big(\frac{m\pi}{d_y}\Big)^2 + (\omega/c)^2 - k^2 = 0
+\end{align}
+
+Our job here is to find the \emph{smallest possible} $\omega$, which is done just rearranging
+\begin{align}
+    \omega = c\sqrt{k^2 -\Big(\frac{n\pi}{d_x}\Big)^2 - \Big(\frac{m\pi}{d_y}\Big)^2}
+\end{align}
+Now in most cases $n,m= 0,1,2,3, ...$ etc. So we just pick the one that makes it so, giving us our "cutoff frequency" $\omega_c$ which is the smallest frequency that can possibly travel down the waveguide. To solve for the other components of the electric field as it is traveling, just plug $E_z$ into Maxwell's equations to get differential equations for $E_x$ and $E_y$. For instance
+\begin{align}
+    \nabla\cdot\textbf{E} = 0 = \partial_x E_x + \partial_y E_y + \partial_z E_z
+\end{align}
+Where we can usually assume one of these is zero to start with, since we usually just look at TE or TM waves.
+
+
+
+
+
+\section{Potentials and Energy Transport}
+
+
+\subsection{Gauges}
+Because $\nabla\cdot\textbf{B} = 0$  always (there are no magnetic monopoles), and the divergence of the curl of any vector is always zero, we can say
+\begin{align}
+    \nabla\cdot\textbf{B} = 0 = \nabla\cdot\Big(\nabla\times\textbf{A}\Big) 
+\end{align}
+So we define the magnetic potential $\textbf{A}$ as
+\begin{align}
+    \textbf{B} = \nabla\times\textbf{A}
+\end{align}
+We want to also maintain the same definition we used for the scalar potential before that arose because the curl of a gradient is zero with
+\begin{align}
+    \nabla\times\textbf{E} = 0 = \nabla\times \Big(-\nabla\varphi\Big)
+\end{align}
+In electrodynamics of course, Faraday's law reads
+\begin{align}
+    \nabla\times \textbf{E} = -\frac{\partial\textbf{B}}{\partial t} = -\frac{\partial}{\partial t}\Big(\nabla\times\textbf{A}\Big)
+\end{align}
+Which inspires us to write
+\begin{align}
+    \textbf{E} = -\nabla\varphi -\frac{\partial \textbf{A}}{\partial t}
+\end{align}
+
+The only restriction on these potentials is that when you do the operations described, you must get back the same fields. Playing around and you can see that this lets us change 
+\begin{align}
+    \textbf{A}' &= \textbf{A} +\nabla\psi\\
+    \varphi' &=\varphi -\frac{\partial \psi}{\partial t}
+\end{align}
+Where $\psi(\textbf{r},t)$ is any scalar function. The \textbf{Coulomb Gauge} is one where $\nabla\cdot\textbf{A} = 0$, so we get equations familiar to us in electrostatics, with 
+\begin{align}
+    \nabla\cdot\textbf{E} = -\nabla^2\varphi = \rho/\epsilon_0
+\end{align}
+The \textbf{Lorenz Gauge} is one where
+\begin{align}
+    \boxed{\nabla\cdot\textbf{A} = -\frac{1}{c^2}\frac{\partial\varphi}{\partial t}}
+\end{align}
+This equation is particularly useful in electrodynamics. Partially because then the potentials satisfy an inhomogeneous wave equation with
+\begin{align} \label{potwaves}
+     \frac{1}{c^2}\frac{\partial^2\varphi}{\partial t^2}- \nabla^2\varphi &= \frac{\rho}{\epsilon_0}\\ \label{magpotwaves}
+     \frac{1}{c^2}\frac{\partial^2\textbf{A}}{\partial t^2}- \nabla^2\textbf{A} &= \mu_0\textbf{j}
+\end{align}
+In relativistic electrodynamics, these wave equations are consolidated into a super small formula after we define
+\begin{align}
+A^\mu &\equiv (\varphi/c, A_x,A_y,A_z)\\
+j^{\mu} &\equiv (\rho c, j_x, j_y, j_z)
+\end{align}
+So
+\begin{align}
+    \partial_\mu \partial^\mu A^\nu = \mu_0j^\nu
+\end{align}
+One can use Green's functions to solve equations \ref{potwaves} and \ref{magpotwaves}. Giving us the solutions as
+\begin{align}
+    \varphi(\textbf{r},t) &= \frac{1}{4\pi\epsilon_0}\int dr'^3 ~\frac{\rho(\textbf{r}', t - |\textbf{r}-\textbf{r}'|/c)}{|\textbf{r}-\textbf{r}'|}\\ \label{magpotretard}
+    \textbf{A}(\textbf{r},t) &= \frac{\mu_0}{4\pi}\int dr'^3 ~\frac{\textbf{j}(\textbf{r}',t-|\textbf{r} - \textbf{r}'|/c)}{|\textbf{r}-\textbf{r}'|}
+\end{align}
+The intuition behind these equations is that at the point $\textbf{r}$, it will take time for the information from the charge and current density to propagate to wherever the observer is. So what we have to do is add up all the charge and current density that existed at an earlier time, where that time is determined by how long it takes light to reach the location of the observer, from the location of the source. 
+
+
+\subsection{Poynting's Theorem}
+The rate of change of mechanical energy of a system due to work done by charges is given by
+\begin{align}
+    \frac{dW_{mech}}{dt} = \int dr^3 \rho(\textbf{E} + \textbf{v}\times\textbf{B})\cdot\textbf{v} = \int dr^3 \textbf{j}\cdot\textbf{E}
+\end{align}
+Since the magnetic force does no work. Solving for the current density in Ampere's law we have that
+\begin{align}
+    \textbf{j} = \frac{\nabla\times\textbf{B}}{\mu_0} - \epsilon_0\frac{\partial\textbf{E}}{\partial t}
+\end{align}
+So
+\begin{align}
+    \int dr^3 \textbf{j}\cdot\textbf{E} = \int dr^3 \Big(\frac{\nabla\times\textbf{B}}{\mu_0} - \epsilon_0\frac{\partial\textbf{E}}{\partial t}\Big)\cdot\textbf{E}
+\end{align}
+The curl must act before the divergence, so let us look at the term
+\begin{align}
+    \textbf{E}\cdot\Big(\nabla\times\textbf{B}\Big) &= \epsilon_{ijk}E_i\partial_jB_k = \epsilon_{ijk} \Big[\partial_j (E_iB_k) - B_k\partial_jE_i\Big] \\
+    &= -\nabla\cdot\Big(\textbf{E}\times\textbf{B}\Big) + \textbf{B}\cdot\Big(\nabla\times\textbf{E}\Big)\\
+    &= - \nabla \cdot\Big(\textbf{E}\times\textbf{B}\Big) -\textbf{B}\cdot\frac{\partial\textbf{B}}{\partial t}
+\end{align}
+Plugging in we get
+\begin{align}
+    \int dr^3 \textbf{j}\cdot\textbf{E} = -\int dr^3 \Big[\frac{1}{\mu_0}\nabla\cdot\Big(\textbf{E}\times\textbf{B}\Big) + \frac{\partial}{\partial t}\Big(\frac{1}{2\mu_0} \textbf{B}\cdot\textbf{B} + \frac{\epsilon_0}{2}\textbf{E}\cdot\textbf{E}\Big)\Big]
+\end{align}
+Matching the integrands we see that
+\begin{align}
+     \frac{\partial}{\partial t}\Big(\frac{1}{2\mu_0} \textbf{B}\cdot\textbf{B} + \frac{\epsilon_0}{2}\textbf{E}\cdot\textbf{E}\Big) + \frac{1}{\mu_0}\nabla\cdot\Big(\textbf{E}\times\textbf{B}\Big)  = -\textbf{j}\cdot\textbf{E}
+\end{align}
+The term on the left is called the electromagnetic energy density $u_E$. Written in a more illuminating way, we have
+\begin{align}
+    -\frac{\partial u_E}{\partial t} = \nabla\cdot\textbf{S} + \textbf{j}\cdot\textbf{E}
+\end{align}
+This is effectively an energy conservation equation. It says the decrease in energy per unit volume ($-\partial u_E / \partial t$) is equal to the energy that leaves the volume ($\nabla\cdot\textbf{S}$) plus the work done on the charges ($\textbf{j}\cdot\textbf{E}$).
+
+
+
+
+\section{Radiation}
+Electromagnetic radiation is caused by the acceleration of charged particles. The primary equation that simplifies almost all of radiation and makes the math bearable takes a long time to derive\footnote{Zangwill pg. 735} gives us the power radiated per solid angle as %\todo{Not really true, i guess it is for general radiation}
+\begin{align}\label{powerdistribution}
+    \frac{dP}{d\Omega} = \frac{1}{c\mu_0}\Big| \textbf{r}\times\frac{\partial \textbf{A}_{ret}}{\partial t}\Big|^2
+\end{align}
+We know that the Poynting vector tells us the flux of energy through each unit surface area per unit time, so if we added up all the flux through an entire surface, we would get the total power radiated. We can thinking about doing things as follows (this is just an area integral in Spherical coordinates). We first add up all the flux going through a ring created by the distance from the $z$ axis ($r\sin\theta$) at some given $\theta$ value
+\begin{align}
+    dP_{ring} (\textbf{r}) = \int_0^{2\pi} d\phi r\sin\theta ~\textbf{S}\cdot\hat{r}
+\end{align}
+Then we just add up all these contributions for each $\theta$ value
+\begin{align}
+    P (\textbf{r}) = \int_0^\pi r d\theta~ dP_{ring} (\textbf{r})
+\end{align}
+So we see the total flux through a given surface is just 
+\begin{align}
+    P = \int d\Omega  ~r^2 \textbf{S}\cdot{\hat{r}}
+\end{align}
+This gives us our expression for the differential power radiated per solid angle as just the integrand of this expression 
+\begin{align}
+    \frac{dP}{d\Omega} = r^2\textbf{S}\cdot\hat{r} = \frac{r^2}{\mu_0} \hat{r}\cdot\Big(\textbf{E}\times\textbf{B}\Big)
+\end{align}
+
+
+Typically when looking at radiation, we care about what the field looks like very far away. Skipping ahead and looking at the form of the radiation fields in equation \ref{radiationfields}, most of the terms have $1/r^2$ or more dependence, which means that very far away from the source, these contributions will be next to nothing. There are a few that this is not the case for, called the radiation fields, which, when multiplied by the $r^2$ that comes from the surface integral, give a factor with \emph{no dependence} on $r$, which means there will always be the same amount of power that travels through a sphere of any size. This is what we call radiation. For a wave traveling in free space the electric and magnetic field are always perpendicular to each other, and to the direction of travel, so we know that 
+\begin{align}
+    \hat{r} = \hat{E}\times\hat{B}
+\end{align}
+So plugging into our expression for power radiated, we see
+\begin{align}
+    \frac{dP}{d\Omega} = \frac{r^2}{\mu_0} \hat{r}\cdot\Big(\textbf{E}\times\textbf{B}\Big) = \frac{r^2}{\mu_0}\hat{r}\cdot\Big(\hat{E}\times\hat{B}\Big)|\textbf{E}||\textbf{B}|
+\end{align}
+We also know from Maxwell's equations in free space that
+\begin{align}
+    |\textbf{E}| = c|\textbf{B}|
+\end{align}
+So we see that
+\begin{align}
+    \frac{dP}{d\Omega} = \frac{r^2}{\mu_0c} |\textbf{E}|^2
+\end{align}
+There seems to be endless variations on how you expression the radiated power, I suppose the best idea for attacking radiation problems is find the formulation that sits the best in your head. A useful equation that comes up often is the Larmor formula which says
+ \begin{align}
+ P &=\frac{1}{4\pi\epsilon_0}\frac{2q^2|\textbf{a}_{ret}|^2}{3c^3}
+ \end{align}
+ 
+ 
+\subsection{Electric Dipole Radiation}\label{electricdipole}
+The current density of a dipole at the origin is given by
+\begin{align}
+    \textbf{j}(\textbf{r},t) = \dot{\textbf{p}}(t) \delta(\textbf{r})
+\end{align}
+Which is equivalent to thinking about the charge in the dipole oscillating back and forth between its two poles, but the poles not moving at all. This is likely the easiest and most sensible place to start the derivation of the rest of dipole radiation. We can plug this into equation \ref{magpotretard} and have
+\begin{align}
+    \textbf{A}(\textbf{r},t) &= \frac{\mu_0}{4\pi}\int dr'^3 ~\frac{\dot{\textbf{p}}(t-|\textbf{r} - \textbf{r}'|/c)}{|\textbf{r}-\textbf{r}'|}\delta(\textbf{r}') = \frac{\mu_0}{4\pi}\frac{\dot{\textbf{p}}(t-r/c)}{r}
+\end{align}
+Using the Lorenz gauge condition we can find the potential with
+\begin{align}
+\varphi &= -c^2 \int dt \nabla\cdot\textbf{A} \\
+&= -\frac{1}{4\pi\epsilon_0}\int dt \Big[\frac{1}{r}\partial_i \dot{p}_i + \dot{p}_i\partial_i\frac{1}{r}\Big]\\
+&= -\frac{1}{4\pi\epsilon_0}\int dt \Big[\frac{1}{r}\ddot{p}_i\partial_i(t-r/c) - \dot{p}_i\frac{1}{r^2}\partial_i r \Big]\\
+&= \frac{1}{4\pi\epsilon_0}\int du \frac{\ddot{p}_i(u)r_i}{r^2c} + \frac{\dot{p}_i(u)r_i}{r^3}\\
+\varphi(\textbf{r},t) &= \frac{1}{4\pi\epsilon_0}\Big[\frac{\dot{\textbf{p}}(t-r/c)\cdot\textbf{r}}{r^2c} + \frac{\textbf{p}(t-r/c)\cdot\textbf{r}}{r^3}\Big]
+\end{align}
+To find the field's we have to plug them into the definitions we used to create the potentials first of all with
+\begin{align}
+    \textbf{B} = \nabla\times\textbf{A} &&\textbf{E} = -\nabla\varphi -\frac{\partial\textbf{A}}{\partial t}
+\end{align}
+This gives us the fields as
+\begin{align}\label{radiationfields}
+    \textbf{B}(\textbf{r},t) &= -\frac{\mu_0}{4\pi}\hat{r}\times\Big[\frac{\dot{\textbf{p}}_{ret}}{r^2} + \frac{\ddot{\textbf{p}}_{ret}}{cr}\Big]\\
+    \textbf{E}(\textbf{r},t) =\frac{1}{4\pi\epsilon_0}\Big[\frac{3\hat{r}(\hat{r}\cdot\textbf{p}_{ret})-\textbf{p}_{ret}}{r^3}& + \frac{3\hat{r}(\hat{r}\cdot\dot{\textbf{p}}_{ret})-\dot{\textbf{p}}_{ret}}{cr^2} + \frac{\hat{r}(\hat{r}\cdot\ddot{\textbf{p}}_{ret})-\ddot{\textbf{p}}_{ret}}{c^2r}\Big]
+\end{align}
+They're pretty gross looking, but can be calculated with tensor notation. the magnetic field is relatively straightforward, the electric field however takes quite a while. The key is to just look at the denominators, so if you are very far away, $r\gg 0$, then most of the other terms will be near zero. The $1/r$ terms are the fields that are characteristic to radiation, as energy they give off per solid angle is constant. The radiation fields are given by
+\begin{align}
+    \textbf{B}(\textbf{r},t) &= -\frac{\mu_0}{4\pi}\hat{r}\times\Big(\frac{\ddot{\textbf{p}}_{ret}}{cr}\Big)\\
+    \textbf{E}(\textbf{r},t) &= \frac{1}{4\pi\epsilon_0}\Big( \frac{\hat{r}(\hat{r}\cdot\ddot{\textbf{p}}_{ret})-\ddot{\textbf{p}}_{ret}}{c^2r}\Big)
+\end{align}
+
+
+ 
+
+
+%\subsection{Magnetic Dipole Radiation}
+
+ %TODO
+
+\section{Scattering}
+Starting with equation \ref{powerdistribution}, we can time average it, looking at only the real part of the field, which if we have a sinusoidal field oscillation, gives us
+\begin{align}
+    \Big\langle \frac{dP}{d\Omega}\Big\rangle = \frac{1}{2}\frac{dP}{d\Omega}
+\end{align}
+We can then plug this into the equation for differential scattering cross section
+\begin{align}
+ \frac{d\sigma}{d\Omega} = \frac{\langle dP/d\Omega\rangle}{\frac{1}{2}\epsilon_0c E_0^2}
+ \end{align}
+Integrating this over the entire solid angle gives us the full cross section, which is essentially how large of an object the incident wave sees when it is first scattered. The algorithm goes as
+\begin{enumerate}
+    \item Find the current density, using Newton's laws, etc
+    \item Plug this into the equation for magnetic potential
+    \item Plug the time derivative of this into the equation for power radiated per solid angle
+    \item Plug this into the equation for differential cross section
+    \item Integrate to find total cross section
+\end{enumerate}
+
+
+\subsection{Thomson Scattering}
+Thomson scattering is when a plane wave scatters off a single free electron. It is the low energy ($\omega \ll mc^2/\hbar$) limit of Compton Scattering. We first find the current density with Newton's laws for a unbounded particle
+\begin{align}
+    m\ddot{\textbf{x}} = qE_0e^{i\omega t}\hat{e_0}
+\end{align}
+We plug this into the equation for current density (one electron)
+\begin{align}
+    \textbf{j}(t,\textbf{r}) = q\dot{\textbf{x}}\delta(\textbf{r}) = \frac{-iq^2E_0}{m\omega}e^{i\omega t}\hat{e}_0
+\end{align}
+Plug into equation for magnetic potential, take a derivative, then plug in for average power per solid angle
+\begin{align}
+\Big\langle \frac{dP}{d\Omega}\Big\rangle = \frac{1}{2}\frac{\mu_0}{c}\Big(\frac{q^2E_0^2}{4\pi m}\Big)^2 |\hat{r}\times\hat{e}_0|^2
+\end{align}
+Plug in for cross section
+\begin{align}
+    \frac{d\sigma}{d\Omega} = \frac{\langle dP/d\Omega\rangle}{\frac{1}{2}\epsilon_0c E_0^2} = \Big(\frac{q^2}{4\pi m \epsilon_0 c^2} \Big)^2 | \hat{r}\times\hat{e}_0|^2
+\end{align}
+It turns out if we set the rest energy of an electron equation to it's potential energy, we get
+\begin{align}
+    mc^2 = \frac{q^2}{4\pi\epsilon_0 r_e} & \rightarrow r_e = \frac{q^2}{4\pi\epsilon_0mc^2}
+\end{align}
+So $r_e$ is in some sense the 'radius of the electron' and is technically called the \emph{classical electron radius}. Plugging this in, our equation becomes
+\begin{align}
+    \frac{d\sigma}{d\Omega}  = r_e^2|\hat{r}\times\hat{e}_0|^2
+\end{align}
+Where $\hat{r}$ points in the direction of wherever you are observing from, and $\hat{e}_0$ points in the direction of the electric field polarization of the initial plane wave. An important result is the differential cross section from unpolarized light. If we have the incident wave comes from the $z$ direction and is polarized making an angle $\gamma$ with the $x$ axis, we can explicitly do the cross product getting.
+\begin{align}
+    |\hat{r}\times\hat{e}_0|^2 = \cos^2\theta + \sin^2\theta\sin^2(\gamma-\phi)
+\end{align}
+We can average this over the angle $\gamma$, since it polarized equally in each direction, i.e. not polarized, and get
+\begin{align}
+    \frac{d\sigma}{d\Omega} = r_e^2|\hat{r}\times\hat{e}_0|^2 &= r_e^2\Big(\cos^2\theta + \frac{1}{2}\sin^2\theta\Big)\\
+    &=\frac{1}{2}r_e^2\Big(1 + \cos^2\theta\Big)
+\end{align}
+We can integrate this over the entire solid angle and find
+\begin{align}
+    \sigma = \frac{8\pi}{3}r_e^2
+\end{align}
+Normally we would think the surface area that a plane wave would see when looking at the electron would just be the area of a circle created by it's projection $\sigma = \pi r_e^2$, but it's not for some reason (more in Carter's notes).
+
+\subsection{Rayleigh Scattering}
+Rayleigh scattering is why the sky is blue. This type of scattering happens when the object being scattered off of is much smaller than the wavelength of the light hitting it. In the sky, Nitrogen (the majority of the stuff that makes it up) has a radius of $\sim 0.155 $ nm whereas blue light has a wavelength of $\sim 450$ nm. In this regime, over the entire particle, the phase of the light hitting it is all roughly the same, since it is so small.
+
+%TODO - Question 13 Practice Comp Day 2 v 1. "Electron is bound to a spring with spring constant k"
+
+Rayleigh scattering is also the cause of why some eyes are blue colored. It turns out in blue eyes, there is a low concentration of melanin, which evidently acts like a dipole radiator with power radiated like $\omega^4$.\footnote{\url{https://en.wikipedia.org/wiki/Eye_color}} 
+\subsection{Mie Scattering}
+Mie scattering happens when the wavelength incident on the object is comparable with the size of the object itself. This type of scattering is possibly the cause of grey eyes, which have larger deposits of collagen in the stroma, which are larger in size than the melanin. This is analogous to scattering off of clouds vs scattering off the sky itself.
+
+Essentially what happens here is within the entirety of the particle, each 'dipole' is at a different phase, which causes constructive and destructive interference.
+
+\subsection{Relativistic Electromagnetism}
+Key equations to learn are
+\begin{align}
+    \textbf{E}_{||}' &= \textbf{E}_{||} & \textbf{E}_\perp ' &= \gamma( \textbf{E}_\perp + \textbf{v}\times\textbf{B}_\perp)\\
+    \textbf{B}_{||}' &=\textbf{B}_{||} & \textbf{B}_\perp' &= \gamma\Big(\textbf{B}_\perp -\frac{\textbf{v}\times\textbf{E}_\perp}{c^2}\Big)
+\end{align}
+This says that if we have another frame moving next to us with velocity $\textbf{v}$, the fields \emph{parallel} to the direction of travel are exactly the same as the ones they see, but the ones perpendicular the the direction of travel are changed. We can also write the potential and current as a four vector.
+\begin{align}
+A^\mu &\equiv (\Phi/c, A_x,A_y,A_z)\\
+j^{\mu} &\equiv (\rho c, j_x, j_y, j_z)
+\end{align}
+$\rho$ is the charge density, $j$ is the current density. Remember the latter equation with the charge conservation formula, which can be written as $\partial_\mu j^\mu = 0$. Gauge invariance can be rewritten as 
+$$A'_\mu = A_\mu + \partial_\mu \theta$$
+If you take the derivative of $A'_\mu$, you get
+
+\begin{align}
+\partial_\nu A'_\mu &= \partial_\nu A_\mu + \partial_\nu \partial_\mu \theta\\
+\implies \partial_\nu \partial_\mu \theta &= \partial_\mu \partial_\nu \theta\\
+\partial_\nu A'_\mu - \partial_\nu A_\mu &= \partial_\mu A'_\nu - \partial_\mu A_\nu \\
+F_{\mu\nu} \equiv\partial_\mu A'_\nu - \partial_\nu A'_\mu &= \partial_\mu A_\nu - \partial_\nu A_\mu \\
+\end{align}
+This invariant tensor is called the \textit{field strength}. Lets calculate $F_{01}$.
+
+\begin{align}
+F_{01} &= \partial_0 A_1 - \partial_1 A_0\\
+ &= \frac{1}{c}\partial_t A_x + \partial_x \Phi/c\\
+ &= -E_x/c
+\end{align}
+
+The rest of the differentiation yields this invariant traceless, antisymmetric matrix to be
+
+$$F_{\mu\nu} = \left({\begin{array}{cccc}
+0&-E_1/c & -E_2/c & -E_3/c\\
+E_1/c& 0 & B_3 & -B_2 \\
+E_2/c& -B_3 & 0 & B_1 \\
+E_3/c& B_2 & -B_1 & 0
+\end{array}}\right)$$
+
+You can find $F^{\mu\nu}$ by simply multiplying the first column and first row by $-1$
+$$\partial_\mu F^{\mu\nu} = j^\nu$$
+
+
+
+
+ 
+ \subsection{Lienard-Wiechert Potentials}
+ The Lienard Wiechert potentials come directly from Maxwell's equations, but happen to be relativistically correct. They describe the potentials of a moving point charge. Due to Lorentz contraction (Equation \ref{lorentzcontract}) of the dimension in which the particle is traveling, The distance between 
+ 
+ \begin{align}
+    \varphi(\textbf{r},t) &= \frac{1}{4\pi\epsilon_0}\Big(\frac{q}{(1-\hat{n}\cdot\frac{\textbf{v}}{c})|\textbf{r}-\textbf{r}'|} \Big)_{t_{r}}\\
+    \textbf{A}(\textbf{r},t) &= \frac{\textbf{v}(t_r)}{c^2}\varphi(\textbf{r},t)
+ \end{align}
+ Where $\hat{n} = \frac{\textbf{r}-\textbf{r}'}{|\textbf{r}-\textbf{r}'|}$
+

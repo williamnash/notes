@@ -1,0 +1,1245 @@
+
+
+
+\chapter{Quantum Mechanics}
+
+
+\section{Fundamentals}
+
+Quantum Mechanical systems are represented by state vectors which, together with the rules for how these vectors will evolve, tell us everything that can be predicted about a quantum system. A ''bra" is a column vector represented as  $\langle  \psi| $ and is always accompanied by a row vector called a ''ket" represented as $| \psi \rangle$. Looking at the combination of these two, we create a "bracket" $\langle\psi|\psi\rangle$ doing just normal vector multiplication. As an example, let's say our Hilbert space is just two dimensional
+\begin{align}
+    \langle\psi| = (a^*,b^*) && |\psi\rangle = \left(
+{\begin{array}{c}
+a\\
+b\\
+\end{array}}
+\right)
+\end{align}
+
+\subsection{Basis}
+Any state vector can be represented in another basis, as long as it also spans the same Hilbert space, with 
+\begin{align}
+|\psi\rangle  = \sum_{n} |n\rangle\langle n|\psi\rangle
+\end{align}
+The value $\langle n|\psi\rangle = c_n$ is just a (potentially complex) number. Let us pretend that $n = a,b$ thus we have
+\begin{align}\label{abbasis}
+|\psi\rangle &= |a\rangle\langle a |\psi\rangle + |b\rangle\langle b |\psi\rangle \\
+&= c_a|a\rangle + c_b|b\rangle
+\end{align}
+Dual correspondence tells us that the bra takes the roughly same form with
+\begin{align}
+\langle \psi | &= c_a^*\langle a| + c_b^*\langle b|
+\end{align}
+
+
+The chance that the state $|\psi\rangle$ is in any of the states at a given time can be found with
+\begin{align}
+P_n &= |\langle n|\psi\rangle |^2\\
+&= |c_n|^2
+\end{align}
+This can be seen since we must have the requirement that $|\psi\rangle$ is found in at least one of the states (and is normalized) with
+\begin{align}
+1 &= \langle \psi |\psi \rangle\\
+&= \sum_{n} \langle \psi |n\rangle\langle n|\psi\rangle\\
+&= \sum_n (\langle n|\psi\rangle)^*\langle n |\psi \rangle\\
+&= \sum_n |\langle n | \psi \rangle |^2\\
+&= \sum_n P_n
+\end{align}
+
+
+
+\subsection{Measurement}
+A measurement on a Quantum Mechanical system is not at all straight forward. Firstly, all observables are real, which requires the operator associated with them to be Hermitian with
+\begin{align}
+A = (A^T)^* = A^\dagger
+\end{align}
+
+
+
+ Let us pretend that $A$ spans a Hilbert space given by Equation \ref{abbasis}. Pretending that
+\begin{align}
+A|a\rangle = a |a\rangle && A|b\rangle = b|b\rangle
+\end{align}
+Then
+\begin{align}
+A|\psi\rangle = c_a a|a\rangle + c_b b|b\rangle 
+\end{align}
+Now one may think that you would get some combination of the values $a$ and $b$, but in fact \emph{you get only one}! Although the chance you get one will be weighted with probability $|c_n|^2$. Only on average will you get
+\begin{align}
+\langle A\rangle = \langle \psi | A|\psi\rangle = |c_a|^2 a + |c_b|^2 b
+\end{align}
+When the measurement takes place, it is said that the wave function "instantaneously collapses" into one of the eigenstates of the operator $A$ (with the probabilities given above).
+\begin{align}
+A|\psi\rangle \rightarrow \rm{Measurement} &\rightarrow a|a\rangle  && \textrm{with~Probability} =  |c_a|^2 \\
+&\rightarrow b|b\rangle  && \textrm{with~Probability} =  |c_b|^2 
+\end{align}
+Operators can also be expressed as Matrices using the following rules
+\begin{align}
+A &= \sum_n^N\sum_{n'}^N |n\rangle\langle n| A |n'\rangle \langle n'|\\
+&=\sum_n^N\sum_{n'}^N\langle n| A |n'\rangle |n\rangle\langle n'|\\
+&= \left(
+{\begin{array}{ccc}
+\langle n_1|A |n'_1\rangle&\hdots&\langle n_1|A|n'_N\rangle\\
+\vdots&\ddots&\vdots\\
+\langle n_N| A|n'_1\rangle &\hdots&\langle n_N | A | n'_N\rangle\\
+\end{array}}
+\right)
+\end{align}
+The placement of the off diagonals can be figured out because all operators should act on the index they are closest to from the projection operator with $n|n_1\rangle\langle n_1|A$.
+
+
+Quantum mechanics is strange and it turns out there are some things you can't know at the same time. An "observation" of some variable (i.e. position, momentum, etc) is represented by a respective operator denoting that type of obervation. Two things are said to be compatible observables if
+\begin{align}
+AB|\psi\rangle  &= BA |\psi\rangle
+\end{align}
+Which tells us the order in which we make the observations have no effect on what we end up seeing. Written in a more succint way, the operators are said to \emph{commute}, with
+\begin{align}
+AB - BA = [A,B] = 0
+\end{align}
+These compatible observables can be used to break degeneracy. The basic algorithm for doing this is finding all the eigenvalues and eigenvectors for $A$ and $B$, then identifying valid combinations of the vectors that still return unique eigenvalues when operated on by the respective matrix\footnote{Sakurai 1.23}. In three dimensions it is possible to have a simultaneous ket of all $x,y,z$ coordinates in Cartesian, which lets us write things like
+\begin{align}
+\hat{y}|\textbf{x}\rangle = y|\textbf{x}\rangle
+\end{align}
+If it turns out that the ordering of the operators acting on the state \emph{does} matter, we say that
+\begin{align}
+[A,B]\neq 0
+\end{align}
+A typical example is position and momentum which do not commute, with
+\begin{align}
+[x,p] = i\hbar
+\end{align}
+
+\subsection{Probability Current}
+We can use the continuity equation in quantum mechanics for the probability current with
+\begin{align}
+\frac{d\rho}{dt} = -\nabla\cdot\textbf{j}
+\end{align}
+This probability current $\textbf{j}$ tells us the 'probability' flowing through a given surface area per unit time per unit area.
+\begin{align}
+\textbf{j} = \frac{\hbar}{2mi}\Big(\psi^*\nabla\psi - \psi\nabla\psi^*\Big)
+\end{align}
+
+
+\subsection{Wave Function}
+The wave function in relation to a ket is simply
+\begin{align}
+\psi(\textbf{x}) = \langle \textbf{x}|\psi\rangle
+\end{align}
+With just this we can do a lot, including some tricks that use the fact that all observables are Hermitian. For instance
+\begin{align}
+\langle \textbf{x}'  | \textbf{x} | \psi\rangle = \textbf{x}'\langle \textbf{x}'|\psi\rangle
+\end{align}
+
+
+
+We can also often write expectation values as integrals by inserting multiple sets of states
+\begin{align}
+\langle \psi | y |\psi\rangle &= \int d\textbf{x} \int d\textbf{x}'  \langle \psi | \textbf{x}\rangle \langle \textbf{x} |y|\textbf{x}'\rangle\langle \textbf{x}'|\psi\rangle\\
+&= \int d\textbf{x} \int d\textbf{x}'~  \langle \psi | \textbf{x}\rangle y\delta(\textbf{x}-\textbf{x}')\langle \textbf{x}'|\psi\rangle\\
+&= \int d\textbf{x}~\psi^*(\textbf{x}) y\psi(\textbf{x})
+\end{align}
+The transformation function from $x$ to $p$ can be obtained with
+\begin{align}
+\langle x |\hat{p}|p\rangle = -i\hbar\frac{\partial}{\partial x}\langle x|p\rangle
+\end{align}
+The operator $\hat{p}$ acting on its eigenket simply gives back its eigenvalue $p$, so this becomes a differential equation with solution
+\begin{align}
+\langle x | p \rangle = A\exp\Big[\frac{i p x}{\hbar}\Big]
+\end{align}
+Analogously in three dimensions, with a normalizing factor obtained on page 55 of Sakurai.
+\begin{align}
+\langle \textbf{x} |\textbf{p}\rangle = \frac{1}{(2\pi\hbar)^{3/2}}\exp\Big[\frac{i\textbf{p}\cdot\textbf{x}}{\hbar}\Big]
+\end{align}
+
+
+
+\subsection{Changing Basis}
+Changing basis is easy when you are given two complete sets of eigenstates, say $|S_y;\pm\rangle$ and$|S_x;\pm\rangle$. If you want to solve for 
+
+$$|S_y;+\rangle = a|S_x;+\rangle + b|S_x;-\rangle$$
+
+Just get the coefficients because you can sum over each state, i.e
+
+\begin{align}
+|S_y;+\rangle &=\sum|S_x;\pm\rangle\langle S_x;\pm|S_y;+\rangle\\
+&= \langle S_x;+|S_y;+\rangle |S_x;+\rangle + \langle S_x;-|S_y;+\rangle |S_x;-\rangle\\
+&= a|S_x;+\rangle + b|S_x;-\rangle
+\end{align}
+\section{Quantum Dynamics}
+Let's say we want some operator $U$ that  changes the wavefunction, but still preserve it's inner product such that
+\begin{align}
+1 = \langle \psi |\psi\rangle = (\langle\psi|U^\dagger )(U|\psi\rangle)
+\end{align}
+Or more clearly, we want the property
+\begin{align}
+U^\dagger U = UU^\dagger = 1
+\end{align}
+These are called \emph{unitary operators}. Let's pretend we have some parameter contained in the wavefunction we want to change a small amount $\varepsilon$. We now want to find some operator that allows us to change this parameter, yet still preserve the inner product so we don't have to keep normalizing it. Because the change is small, we expect it to be linear in $\varepsilon$, so 
+\begin{align}
+U(\varepsilon) = I + G\varepsilon
+\end{align}
+Where the $G$ is some operator to be determined, and $I$ is the identity operator and comes from the fact that if we have $\varepsilon = 0$, the wave function shouldn't change at all. Using the definition of the unitary operator, we see that
+\begin{align}
+I = U^\dagger U  = (I +G^\dagger\varepsilon)(I + G\varepsilon) = I + G^\dagger\varepsilon + G\varepsilon + G^\dagger G\varepsilon^2
+\end{align}
+Because $\varepsilon$ is small, we forget about the squared term, and subtracting terms, we see
+\begin{align}
+G^\dagger = -G
+\end{align}
+This is the definition of an \emph{antihermitian} operator which are kind of gross, but we know that if we define an operator as
+\begin{align}
+G = -iH && G^\dagger = iH^\dagger
+\end{align}
+Thus we see that
+\begin{align}
+H^\dagger = H
+\end{align}
+And we now have a \emph{Hermitian operator} which are things that describe observables in Quantum mechanics and are all over the place. These are overall much nicer to work with. So our unitary operator can be written as 
+\begin{align}
+U(\varepsilon) = 1 -iH\varepsilon
+\end{align}
+The nomenclature that goes around this is that $H$ is the \emph{generator} of the change in $\varepsilon$. 
+
+
+
+
+
+
+
+\subsection{Translation Operators}
+The position translation operator is defined as 
+\begin{align}
+\mathcal{J}(dx)|x\rangle = |x+dx\rangle
+\end{align}
+To find the mathematical representation of the operator, we let it operate on $|\psi\rangle$
+\begin{align}
+\mathcal{J}(\Delta x)|\psi\rangle &= \mathcal{J}(\Delta x)\int |x\rangle \langle x|\psi
+\rangle\\
+&=\int dx |x+\Delta x\rangle \langle x|\psi
+\rangle\\
+&=\int dx|x\rangle \langle x-\Delta x|\psi
+\rangle\\
+&= \int dx|x\rangle \psi (x-\Delta x)
+\end{align}
+The last step is essentially changing integration bounds. Now that we have a function and no longer a vector, we can Taylor expand
+\begin{align}
+\psi(x-\Delta x) \approx \psi(x) -\Delta x\frac{\partial\psi(x)}{\partial x}
+\end{align}
+Thus we have
+\begin{align}
+\mathcal{J}(\Delta x)|\psi\rangle &= \int dx |x\rangle \Big[\psi(x) -\Delta x\frac{\partial\psi(x)}{\partial x}\Big]\\
+\end{align}
+Using the relation 
+\begin{align}
+\boxed{p_x= -i\hbar\frac{\partial}{\partial x}}
+\end{align}
+We can rewrite
+\begin{align}
+\mathcal{J}(\Delta x)|\psi\rangle &= \int dx \Big[1 -\frac{i \Delta x p}{\hbar}  \Big]\psi(x)|x\rangle \\
+&= \Big(1-\frac{i\Delta xp}{\hbar}\Big)\int dx |x\rangle\langle x|\psi\rangle\\
+&=\Big(1- \frac{i\Delta x p}{\hbar} \Big) |\psi\rangle 
+\end{align}
+So we say that momentum is the generator of translation. Intuitively, we know that if we keep acting small translations over and over again on a state, we should be able to move it some finite amount, which is roughly the basis for calculus itself. Let's pretend we want to move a total amount $d$ but divide it up into $N$ steps to make each step really small.
+\begin{align}
+    \mathcal{J}(d)|\psi\rangle = \Big(\mathcal{J}(d/N)\mathcal{J}(d/N)...\Big)|\psi\rangle = \Big[\mathcal{J}(d/N)\Big]^N|\psi\rangle
+\end{align}
+Let's look at the form of that operator
+\begin{align}
+    \Big[\mathcal{J}(d/N)\Big]^N = \Big(1- \frac{i d p}{N\hbar} \Big)^N
+\end{align}
+
+In the limit that $N$ goes to infinity, if you remember from precalculus, this is the definition of an exponential. Thus the finite operator, obtained by acting the infinitesimal operator many times, then becomes
+\begin{align}
+\mathcal{J}(x) = \exp\Big[ -\frac{i x p}{\hbar}\Big]
+\end{align}
+
+
+\subsection{Time Evolution Operator}\label{timeevolve}
+In the same way we found the translation operator, we can find the time evolution operator as
+
+\begin{align}
+\mathcal{U}(dt)|\psi\rangle = 1 - \frac{iHdt}{\hbar}|\psi\rangle 
+\end{align}
+If the Hamiltonian is \textbf{not time dependent}, the finite operator becomes
+\begin{align}
+\mathcal{U}(t) = \exp\Big[-\frac{iHt}{\hbar}\Big]
+\end{align}
+We can now look at two subsequent time translation operations
+\begin{align}
+    \mathcal{U}(t + dt) &= \mathcal{U}(dt)~\mathcal{U}(t) \\
+    &= \Big(1 - \frac{iHdt}{\hbar}\Big)\mathcal{U}(t)\\
+    &= \mathcal{U}(t) - \frac{iHdt}{\hbar}\mathcal{U}(t)
+\end{align}
+Shifting this equation around, and since $dt$ is already infinitesimally small, we get the definition of the time derivative
+\begin{align}
+    \frac{\mathcal{U}(t + dt) - \mathcal{U}(t)}{dt} = -\frac{iH}{\hbar}\mathcal{U}(t)
+\end{align}
+Or
+\begin{align}\label{operatorevo}
+    i\hbar\frac{\partial}{\partial t}\mathcal{U}(t) = H\mathcal{U}(t)
+\end{align}
+
+
+
+\subsection{Schrodinger and Heisenberg}
+There are two primary views as to how the machinery behind Quantum mechanical systems evolve, which happen to also be mathematically equivalent. The first, due to Schrodinger, treats the kets as moving in time but all operators as constant. 
+\begin{align}
+    |\psi(t)\rangle = \mathcal{U}(t)|\psi\rangle
+\end{align}
+This gives us the \textbf{Schrodinger equation} as
+\begin{align}
+i\hbar\frac{\partial\psi }{\partial t} = H\psi
+\end{align}
+The second approach treats the operators as changing in time, but as if the basis they act on is always a constant (i.e. fixed kets). 
+
+
+\begin{align}
+    A(t)^{(H)} = \mathcal{U}^\dagger(t)~ A^{(S)}~\mathcal{U}(t)
+\end{align}
+Taking the time derivative of this, using equation \ref{operatorevo}, we get
+\begin{align}
+    \frac{d}{dt} A^{(H)}(t) &= \Big[\frac{d}{dt}\mathcal{U}^\dagger(t)\Big]A^{(S)}~\mathcal{U}(t) + \mathcal{U}^\dagger(t)A^{(S)}\Big[\frac{d}{dt}\mathcal{U}\Big]\\
+    &= - \frac{1}{i\hbar}H\mathcal{U}^\dagger(t)~ A^{(S)}~\mathcal{U}(t) + \frac{1}{i\hbar}\mathcal{U}^\dagger(t)~ A^{(S)}~H\mathcal{U}(t)
+\end{align}
+
+Using the fact that the Hamiltonian commutes with the time translation operator, by it's definition, we get 
+\begin{align}
+\frac{d}{dt} A^{(H)}(t) = \frac{1}{i\hbar}[A^{(H)},H]
+\end{align}
+This is the \textbf{Heisenberg equation} analogous to the Schrodinger equation, although in my experience, used much less frequently.
+
+\subsection{Feynman Propagator}
+If we start with some arbitrary ket $|\psi, t_0\rangle$, we can first time evolve it using the time evolution operator (Section \ref{timeevolve}), then insert two complete sets of states $|a\rangle\langle a|$  and $|\textbf{x}\rangle\langle\textbf{x}|$ that the Hamiltonian will act on (from the Hermiticity of the Hamiltonian), giving us
+\begin{align}
+|\psi, t\rangle &= \sum_a \int dx^3~|a\rangle\langle a|\textbf{x}\rangle \langle\textbf{x}|\psi,t_0\rangle e^{-iE_a(t-t_0)}\\
+&=\sum_a |a\rangle \int dx^3~a(\textbf{x})e^{-iE_a(t-t_0)}\psi(\textbf{x},t_0) 
+\end{align}
+We can then dot this with a new set of bra's $\langle \textbf{x}'|$, which gives us
+\begin{align}
+\psi(\textbf{x}', t) &= \sum_a a(\textbf{x}') \int dx^3~a(\textbf{x})e^{-iE_a(t-t_0)}\psi(\textbf{x},t_0)\\
+&= \int dx^3~\sum_a a^*(\textbf{x}') a(\textbf{x})e^{-iE_a(t-t_0)}\psi(\textbf{x},t_0)
+\end{align}
+We can then identify something called the propagator $K(\textbf{x}', t;\textbf{x},t_0)$ as
+\begin{align}
+K(\textbf{x}', t;\textbf{x},t_0) &= \sum_a a^*(\textbf{x}') a(\textbf{x})e^{-iE_a(t-t_0)}
+\end{align}
+Which lets us write the wave function "propagated" into the future at a new position as
+\begin{align}
+\psi(\textbf{x}', t) = \int dx^3~K(\textbf{x}', t;\textbf{x},t_0)\psi(\textbf{x},t_0)
+\end{align}
+
+
+--- Might be wrong from here ---
+
+\begin{align}
+    K(\textbf{x}', t;\textbf{x},t_0) = \langle \textbf{x}', t| \exp\Big(-\frac{i}{\hbar}\hat{H}(t-t_0)\Big)|\textbf{x},t_0\rangle
+\end{align}
+Path integral is an expression for this transition amplitude. We divide $t-t_0$ into $N$ steps, and make a whole bunch of integrals
+
+\begin{align}
+    \epsilon = (t-t_0)/N 
+\end{align}
+So after breaking it up, we get
+\begin{align}
+    \int dq_1, dq_2, ... dq_{N-1} \langle q''|(1-i\epsilon\hat{H})|q_{N-1}\rangle\langle q_{N-1}|(1-i\epsilon\hat{H})|q_{N-2}\rangle  ...
+\end{align}
+ 
+
+
+
+
+%TODO \subsection{Density Matrix}
+%Can define quantum entropy with the density matrix.
+
+
+
+
+
+\subsection{Useful Operator Tricks}
+
+The \emph{essential} commuation relation is
+\begin{align}
+\boxed{[x_i,p_j] = i\hbar\delta_{ij}}
+\end{align}
+
+
+
+
+\begin{align}
+[A,BC] = [A,B]C + B[A,C]
+\end{align}
+
+
+A nice consequence of this relationship is known as \textbf{Ehrenfest's Theorem} which goes as 
+\begin{align}
+[p_i,F(\textbf{x})] = -i\hbar\frac{\partial F}{\partial x_i}\\
+[x_i,G(\textbf{p})] = i\hbar\frac{\partial G}{\partial p_i}
+\end{align}
+Another nice one is the \textbf{Baker-Campbell-Hausdorff} lemma can be written as
+\begin{align}
+e^X Ye^{-X} = Y + [X,Y], + \frac{1}{2!}[X,[X,Y]] + ...
+\end{align}
+Typically one an exam, it is easier to just Taylor expand the exponent with 
+\begin{align}
+e^X = \sum_{n=0}^\infty \frac{X^n}{n!}
+\end{align}
+Then find some pattern in the exponent which terminates as you look at higher and higher powers of $n$. This relationship shows up often in rotation questions. Another nice one is
+\begin{align}
+ e^{AB} = e^Ae^Be^{-[A,B]/2}
+\end{align}
+ The generalized uncertainty relation is given as
+\begin{align}
+\sigma_A^2\sigma_B^2 \ge \frac{1}{4} |\langle [A,B]\rangle |^2
+\end{align}
+Which gives us the classic Heisenberg uncertainty relation with $A=x,B=p$ as
+\begin{align}
+\sigma_x\sigma_p \ge \frac{\hbar}{2}
+\end{align}
+
+
+
+
+
+\section{Rotation}
+Also see section \ref{classicalrot}. We should have some generator of rotation, in the same way we have one for time and position translation. This generator happens to be the angular momentum operator with
+\begin{align}
+\mathcal{D}(\hat{n},d\phi) = 1 - i\Big(\frac{\textbf{J}\cdot\hat{n}}{\hbar}\Big)d\phi
+\end{align}
+Applying this many, many times gives us the operator for a finite rotation
+\begin{align}\label{rotation}
+\mathcal{D}(\hat{n}, \phi) = \exp\Big[\frac{-i\textbf{J}\cdot\hat{n}\phi}{\hbar}\Big]
+\end{align}
+We act this operator on a ket to find out it's rotated form with
+\begin{align}
+|\alpha_R\rangle = \mathcal{D}(\hat{n}, \phi)|\alpha\rangle
+\end{align}
+Intuitively, we know that a rotation won't change the size of an object, it will just reorient it. Since the determinant of a matrix corresponds to its size, we come up with another requirement for the rotation translators, with
+\begin{align}\label{specialunitary}
+    \det\Big(\mathcal{D}\Big) = 1
+\end{align}
+This defines the \emph{special unitary group}. 
+
+
+
+\subsection{Spin 1/2}
+Starting just with $S_z$ and it's eigenvectors, we know
+\begin{align}
+\langle + |S_z|+\rangle &= \frac{\hbar}{2}\\
+\langle - |S_z|-\rangle &= -\frac{\hbar}{2}
+\end{align}
+Now we only have two things to remember, the definition of the ladder operators
+
+\begin{align}
+S_\pm \equiv S_x \pm iS_y
+\end{align}
+
+And the effective "eigenvalues" that come out when the ladder operators act on kets
+
+\begin{align}\label{ladder}
+J_+|jm\rangle &= \hbar\sqrt{(j-m)(j+m+1)}|jm+1\rangle\\
+J_-|jm\rangle &= \hbar\sqrt{(j+m)(j-m+1)}|jm-1\rangle
+\end{align}
+
+To remember these, know that it is $(j-m + ?)(j + m + ?)$ and the kets must annihilate when the operators act on a state where $J_+|jj\rangle = 0$, which gives us the placement of the 1. Using both of these equations, we can get the matrix representation of $S_x, S_y$. Since
+\begin{align}
+S_+|+\rangle &= 0 &&S_+|-\rangle = \hbar|+\rangle\\
+\end{align}
+In matrix form, we get
+\begin{align}
+S_+ &= \hbar \left(
+{\begin{array}{cc}
+0&0\\
+1&0
+\end{array}}
+\right)
+\end{align}
+Similarly for $S_-$
+\begin{align}
+S_- = \hbar\left(
+{\begin{array}{cc}
+0&1\\
+0&0
+\end{array}}
+\right)
+\end{align}
+By manipulating the equations for $S_\pm$, we can find expressions for $S_x$ and $S_y$, with
+\begin{align}
+S_x = \frac{1}{2}(S_+ +S_-) &= \frac{\hbar}{2}\left(
+{\begin{array}{cc}
+0&1\\
+1&0
+\end{array}}
+\right)\\
+S_y = -\frac{i}{2}(S_+ - S_-) &= \frac{\hbar}{2}\left(
+{\begin{array}{cc}
+0&-i\\
+i&0
+\end{array}}
+\right)\\
+S_z &= \frac{\hbar}{2}\left(
+{\begin{array}{cc}
+1&0\\
+0&-1
+\end{array}}
+\right)
+\end{align}
+
+
+Where $S_z$ we already knew at the start from orthogonality of the states. These operators, as well as all angular momentum operators in general, obey a set of commutator relations that show up frequently in exam questions. The most important of which is likely
+\begin{align}
+[J_x, J_y] &= i\hbar J_z
+\end{align}
+This group of operators is \textbf{non-Abelian}, which synonomous with the fact that their commutator is non-zero. They also define a \emph{Lie group} which are super important in physics for some reason. It also turns out that the total squared angular momentum operator commutes with each direction individually
+
+\begin{align}
+[J^2, J_i] &= 0 &&(i=1,2,3)\\
+\end{align}
+Some other nice ones to speed things up, but could be derived just knowing the definitions of $J_\pm$ are
+\begin{align}
+[J_+,J_-] &= 2\hbar J_z\\
+[J_z,J_\pm] &= \pm\hbar J_\pm
+\end{align}
+
+
+The matrices in each expression for $S_x,S_y,S_z$ happen to be the Pauli matrices
+\vskip 0.2in
+\centerline{\begin{tabular}{c c c}
+$\sigma_1 = \Big(~ \begin{matrix}
+ 0 & 1 \\
+ 1 & 0
+ \end{matrix} ~\Big)$ &  $\sigma_2 = \Big(~ \begin{matrix}
+ 0 & -i \\
+ i & 0
+ \end{matrix} ~\Big)$  & $\sigma_3 = \Big(~ \begin{matrix}
+ 1 & 0 \\
+ 0 & -1
+ \end{matrix} ~\Big)$ \\
+\end{tabular}}
+\vskip 0.2in
+These matrices obey another important set of properties
+\begin{align}
+\sigma_1^2 = \sigma_2^2 = \sigma_3^2 = -i\sigma_1\sigma_2\sigma_3 = I
+\end{align}
+Where $I$ is the identity matrix. They also have no trace and determinant equal to negative one
+\begin{align}
+\rm{Tr}~\sigma_i &= 0\\
+\det\sigma_i &= -1
+\end{align}
+
+A nice way to show that these matrices must be traceless starting from the fact that rotation operator must have unit determinant (Equation \ref{specialunitary}) is
+\begin{align}
+    \det\Big(\mathcal{D}(d\phi)\Big) = 1  = \det\Big(I -i\sigma_i d\phi\Big) = \det
+\left(
+{\begin{array}{ccc}
+1 -i \sigma_i^{11}d\phi&-i\sigma_i^{12}d\phi\\
+-i\sigma_i^{21}d\phi&1-i\sigma_i^{22}d\phi
+\end{array}}
+\right)
+\end{align}
+Since $d\phi$ is small by definition we have that, 
+\begin{align}
+    \det(I-i\sigma_id\phi) \approx (1-i\sigma_i^{11}d\phi)(1-\sigma_i^{22}d\phi) \approx -i(\sigma_{11}+\sigma_{22})d\phi
+\end{align}
+We see that the factor in the parentheses is identical to the trace of the matrix, and the requirement that the determinant be 1 gives us
+\begin{align}
+    1 = 1  -i\rm{Tr}(\sigma_i)d\phi
+\end{align}
+Therefore the trace of the Pauli matrices must be zero to keep the operator of unit determinant for finite $d\phi$.
+
+
+In two dimensions, after working out the matrix math, we can represent any rotation from equation \ref{rotation} as 
+
+
+
+
+\begin{align}
+\mathcal{D}(\hat{n},\phi) = \exp\Big[\frac{-i\textbf{S}\cdot\hat{n}\phi}{\hbar}\Big] = \textbf{I}\cos\frac{\phi}{2} -i\boldsymbol{\sigma}\cdot\hat{n}\sin\frac{\phi}{2}
+\end{align}
+
+Take note of the \textbf{extra factor of 1/2}. It can also be shown that the positive eigenstate of any spinor in relation to the $z$ eigenstates is given as
+\begin{align}
+|S_{\theta,\phi}; +\rangle =\cos\frac{\phi}{2}|+\rangle +\sin\frac{\phi}{2}e^{i\theta}|-\rangle
+\end{align}
+
+
+
+\subsection{Entanglement}
+Pretend that somehow, you obtained a state that is composed of two spin 1/2 particles, $1$ and $2$. Both these particles live in different Hilbert spaces, meaning that each one can be expressed as a linear combination of its own eigenstates, let's choose the basis along the $z$ axis as is customary, so
+\begin{align}
+    |\psi_1 \rangle &= \sum_i c_{1i} | \psi_{1i}\rangle  = c_{1+} |\uparrow_1\rangle + c_{1-}|\downarrow_1\rangle\\
+    |\psi_2 \rangle &= \sum_j c_{2j} | \psi_{2j}\rangle  = c_{2+} |\uparrow_2\rangle + c_{2-}|\downarrow_2\rangle
+\end{align}
+This is standard quantum mechanics. The interesting part happens when we look at the wavefunction of both of these particles together, we can get the form of the state with  the tensor product of these two states.
+\begin{align}
+    |\psi\rangle = |\psi_1\rangle \otimes |\psi_2\rangle
+\end{align}
+To save space, with spin 1/2, we often write $|\uparrow_1\rangle \otimes |\uparrow_2\rangle  = |\uparrow\uparrow \rangle$. So evaluating the full wave function by just distributing everything, we get
+\begin{align}
+    |\psi\rangle = c_{++}|\uparrow\uparrow\rangle + c_{+-}|\uparrow\downarrow\rangle + c_{-+}|\downarrow\uparrow\rangle + c_{--}|\downarrow\downarrow\rangle
+\end{align}
+This is the generic state, where the coefficients are not necessarily the same as the product of the two on the top states. If we \emph{did} have that 
+\begin{align}
+    |\psi_s\rangle &= \Big(c_{1+} |\uparrow_1\rangle + c_{1-}|\downarrow_1\rangle\Big) \otimes \Big(c_{2+} |\uparrow_2\rangle + c_{2-}|\downarrow_2\rangle\Big)\\ \label{separablewave} 
+    &= c_{1+}c_{2+}  |\uparrow\uparrow\rangle + c_{1+} c_{2-}|\uparrow\downarrow\rangle + c_{1-}c_{2+}|\downarrow\uparrow\rangle +  c_{1-}c_{2-}|\downarrow\downarrow\rangle
+\end{align}
+Then the system would behave as we would expect. To illustrate this, an observation on one of the particles is represented by 
+\begin{align}
+    I\otimes S_z
+\end{align}
+$I$ is the identity operator, and $S_z$ is the operator that looks at the spin in the $z$ direction. What this expression is equivalent to is acting only on the second state, and doing nothing to the first one. Let's pretend someone looks at the second particle with the $S_z$ operator, and finds it is in the $|\uparrow\rangle$ state. This means that the wave function has \emph{collapsed} into an eigenstate of only  $|\uparrow\rangle$ for the second particle, which means we have to get rid of all of the other states and renormalize. Doing it our on equation \ref{separablewave}, we see that the wave function is now in the state
+\begin{align}
+    |\psi_s\rangle &= c_{1+}|\uparrow\uparrow\rangle + c_{1-}|\downarrow\uparrow\rangle \\
+    &= \Big(c_{1+}|\uparrow\rangle + c_{1-}|\downarrow\rangle\Big)\otimes |\uparrow\rangle
+\end{align}
+So literally nothing has changed about what we know about the first particle, which is what you would expect. These states are called \emph{separable}, since we can always act in one space without effecting the other. The generic states on the other hand are \emph{not} always separable. One of the classic examples of these types of states is the Bell state
+\begin{align}
+    |\psi_B\rangle = \frac{1}{\sqrt{2}} \Big(|\uparrow\uparrow \rangle + |\downarrow\downarrow\rangle\Big)
+\end{align}
+This term can not be written simply as the tensor product of the two spaces, since we are missing cross terms. Let's pretend that we were somehow able to make this state (in reality, most entanglement is done with the polarization of photons). 
+
+Remember that we physically have two particles that together create this wavefunction, which allows us to physically separate them in space, leaving the wavefunction itself intact as long as an "observation" is not made on it along the way which would collapse the wave function.\footnote{This is the exact reason why quantum communication is so attractive, because if a third party tampers with the wavefunction, it ruins the coherence of the things we are about to talk about.} Let's have that one person, Alice, measures particle 1, and Bob measures particle 2. Pretend that Alice measures the spin along the $z$ direction and finds it is up, meaning that the wave function collapsed to
+\begin{align}
+    |\psi_B\rangle \rightarrow |\uparrow\uparrow\rangle
+\end{align}
+Where the $1/\sqrt{2}$ is taken out to keep the wavefunction normalized to 1. What this means is the state of particle 2 is now in an eigenstate of spin up, which means that at any point, whenever Bob measures the system in the same $z$ basis, he will necessarily find his particle in spin up. 
+
+This seems to imply faster than light communication, since the other particle, at an arbitrarily far distance away necessarily changes the moment Alice completes her measurement. To quote Einstein, we have "spooky action at a distance". This provoked him, Poldolsky and Rosen to write a paper about it, now know as the \textbf{EPR Paradox}. A nice way to gain statistical information about a state is with the density matrix
+\begin{align}\label{density}
+    \rho \equiv \sum_i p_i|\psi_i\rangle\langle \psi_i|
+\end{align}
+Where $p_i$ is the probability of a given state. The density operator tells us the maximum statistical information that Alice can know about Bob's system, without any interaction with Bob. As soon as Bob interacts with Alice the density matrix is changed.
+
+
+The density operator has some interesting properties, lets first look at it's trace
+\begin{align}
+    \textrm{tr}(\rho) = \sum_i p_i \textrm{tr}(|\psi_i \rangle\langle \psi_i |) = \sum_i p_i = 1
+\end{align}
+
+
+The density matrix is also related to Liouville Theorem and entropy somehow.
+
+Quantum Computing is also interesting.\footnote{Nice lecture from MIT - \url{https://www.youtube.com/watch?v=awpnsGl08bc}}
+
+
+
+\subsection{Addition of Angular Momentum}
+In general when adding two different angular momentums the math goes as a tensor product with
+
+$$|j_1\rangle \otimes |j_2\rangle = |j_1+ j_2\rangle \oplus |j_1 + j_2 - 1\rangle \oplus ... ||j_1- j_2|\rangle$$
+
+SInce $j_1$ and $j_2$ have dimensionality $2j_1+1$, $2j_2+1$ respectively (from $m_1, m_2$). So the product should have dimensionality $(2j_1+1)(2j_2+1)$. The algorithm for mathematically adding two angular momentums, first find the maximum state where all $m_i$ were maximum. From there you know what state correlates between the $|j_1,j_2,m_1,m_2\rangle$ and $|j_1,j_2,j,m\rangle$ bases. With that just act the ladder operator on both sides
+
+$$J_- = J_{1-} \otimes 1 +1\otimes J_{2-}$$
+
+This gives you all the different $m$ values and their coefficients from equation \ref{ladder}. To get the other $j$ values, you want to use orthogonality between the states, requiring that the level below the top one is orthogonal to one which now has $j-1$ instead of $j$, and is a linear combination of the $m_1,m_2$ states that could sum to it.
+
+\begin{align}
+\langle j_1,j_2, j, m|j_1,j_2,j-1,m\rangle = 0
+\end{align}
+
+Here you just solve for the coefficients of the ket, having them already for the bra, and also requiring normalization. Then you repeat the whole thing again until you get to $j=0$...
+
+
+
+
+\section{Symmetries}
+
+
+\subsection{Parity Operator}
+The parity operator $\pi$ flips the coordinate of a ket, so
+\begin{align}
+\pi|\textbf{x}\rangle  = |-\textbf{x}\rangle
+\end{align}
+Up to a phase. Can remember that momentum also swaps sign, since it is \emph{distance} over time
+\begin{align}
+\pi|\textbf{p}\rangle = |-\textbf{p}\rangle
+\end{align}
+Up to a phase. It turns out that the angular momentum operator actually commutes with the parity operator from the definition of angular momentum as 
+\begin{align}
+\textbf{L} = \textbf{x}\times\textbf{p}
+\end{align}
+Both $\textbf{x}$ and $\textbf{p}$ would swap in sign, which would then cancel leaving us with
+\begin{align}
+[\textbf{L},\pi] = 0
+\end{align}
+Also if the Hamiltonian commutes with the parity operator, it turns out that we get parity eigenkets.
+
+
+
+\subsection{Time Reversal Operator}
+The time reversal operator $\Theta$ changes $t\rightarrow -t$. This obviously should change the direction of the momentum with
+\begin{align}
+\Theta |\textbf{p}\rangle = |-\textbf{p}\rangle
+\end{align}
+Up to a phase. But does not change the sign of the coordinate
+\begin{align}
+\Theta |\textbf{x}\rangle = |\textbf{x}\rangle
+\end{align}
+Up to a phase. Similar to the previous section, this product now \emph{will} change the sign of the angular momentum, making it \emph{anticommute}
+\begin{align}
+\{\Theta, \textbf{J}\} = 0
+\end{align}
+
+
+
+
+
+
+
+
+\textbf{Kramer's Degeneracy} happens for particles of half integer spin, which causes two unique states with the same energy, from time reversal invariance. Make's interesting things happen when you have odd-numbered or even numbered systems. This degeneracy is split from magnetic fields from $\textbf{v}\cdot\textbf{A}$ in the hamiltonian, which is not time reversal invariant. 
+
+Another useful relation is
+
+\begin{align}
+\{\Theta,S_i\} = 0
+\end{align}
+
+
+\section{Solution's to the Schrodinger Equation}
+
+\subsection{Free Particle}
+\begin{align}
+    \psi(\textbf{r},t) = \frac{1}{(2\pi)^{3/2}}e^{i(\textbf{k}\cdot\textbf{r} - \omega t)}
+\end{align}
+
+
+\subsection{Hydrogen Atom}
+Bohr developed a lot of things involving the Hydrogen atom semiclassically and serendipitously arrived at some results that happened to be more or less correct using the full machinery  of Quantum Mechanics. We first say that the Energy is given by
+\begin{align}
+E = \frac{1}{2}m_ev^2 - \frac{Ze^2}{4\pi\epsilon_0 r}
+\end{align}
+Where $Z$ is there to account for if we have extra charges in the nucleus. We then say that the centripetal force is cancelled by the pull of the nucleus
+\begin{align}
+\frac{mv^2}{r} = \frac{Ze^2}{4\pi\epsilon_0 r^2}
+\end{align}
+We can solve for $mv^2$ and put it back into the expression for energy and get
+\begin{align}
+E = -\frac{Ze^2}{2(4\pi\epsilon_0) r}
+\end{align}
+The big deal thing that Bohr did was call the angular momentum a quantized value, with
+\begin{align}
+L = mvr = \hbar n
+\end{align}
+He did this because classically, an electron spinning around a nucleus is technically accelerating. An accelerating charge gives off radiation, and thus loses energy, which would mean eventually the electron would spiral into the nucleus. Now obviously this doesn't happen, so this was the prescription that Bohr came up with. Solving for the radius and plugging in the force equation we find it is \emph{quantized} as well with
+\begin{align}
+r_n = \frac{4\pi\epsilon_0 \hbar^2n^2}{Ze^2m} = \frac{n^2a_0}{Z}
+\end{align}
+Where $a_0$ is called the Bohr radius. Plugging this quantized radius into our expression for energy we get
+\begin{align}
+E_n = -\frac{Ze^2}{2(4\pi\epsilon_0)}\frac{Ze^2m}{4\pi\epsilon_0\hbar^2n^2} = -\frac{Z^2e^4m}{2(4\pi\epsilon_0)^2\hbar^2n^2}
+\end{align}
+The maximum angular momentum value for a given $n$ is
+\begin{align}
+    0 \le l &\le n-1\\
+\end{align}
+When transitioning states, we need
+\begin{align}
+    l &= \pm 1\\
+    m &= 0, \pm 1
+\end{align}
+Which can be thought of as a photon leaving the hydrogen atom, which has spin $1$. The ground state quantum mechanically is given by
+\begin{align}
+\psi_{100}(r) = Ce^{-r/a_0}
+\end{align}
+Other useful relations are
+\begin{align}
+L^2\psi = \hbar^2l(l+1)\psi\\
+L_z\psi = \hbar m\psi
+\end{align}
+
+
+The angular portion of the Hydrogen atom is simply given by the spherical harmonic with the same $l,m$
+
+\subsection{Coherent State}
+The Coherent state obeys the condition
+\begin{align}
+a|\lambda\rangle = \lambda |\lambda\rangle
+\end{align}
+Even though the state $|\lambda\rangle$ is an eigenket of $a$, $a$ itself is not a Hermitian operator. The intuition behind this state is it is meant to resemble the classical harmonic oscillator, which has such a high $n$ value that it can never be annihilated (since repeated operations of $a$ leave it unchanged). It is also a Gaussian wave packet satisfying the minimum uncertainty with
+\begin{align}
+\sigma_x\sigma_p = \frac{\hbar}{2}
+\end{align}
+which remains true for all time. 
+
+
+\subsection{Infinite Square Well}
+Given a potential
+\begin{align}
+V(x) &= 0 && 0 \le x\le L\\
+V(x) &= \infty && x< 0, x>L
+\end{align}
+The general solution to the Schrodinger equation is a superposition of sines and cosines with
+\begin{align}
+\psi(x) = A\sin(kx) + B\cos(kx)
+\end{align}
+We can then plug in boundary conditions to get rid of one of these if we choose a nice coordinate system, and find 
+\begin{align}
+k = \frac{n\pi}{L}
+\end{align}
+Which gives us the energy as
+\begin{align}
+E = \frac{\hbar^2k^2}{2m} = \frac{\hbar^2\pi^2n^2}{2mL^2}
+\end{align}
+
+\subsection{Harmonic Oscillator}
+These guys are critical to success with harmonic oscillator questions
+\begin{align}
+a &= \sqrt{\frac{m\omega}{2\hbar}}\Big(x + \frac{i}{m\omega}p\Big)\\
+a^\dagger &= \sqrt{\frac{m\omega}{2\hbar}}\Big(x - \frac{i}{m\omega}p\Big) \\
+x &= \sqrt{\frac{\hbar}{2m\omega}}(a^\dagger+a)\\
+p &= i\sqrt{\frac{m\hbar\omega}{2}}(a^\dagger - a)
+\end{align}
+As are these relations
+
+\begin{align}
+[a,a^\dagger] &= 1 \\
+a|n\rangle &= \sqrt{n}|n-1\rangle\\
+a^\dagger|n\rangle &= \sqrt{n+1}|n+1\rangle
+\end{align}
+
+
+Can simply find the wave function for a ladder system because it is required that
+
+\begin{align}
+a|0\rangle= 0
+\end{align}
+Plugging in $a$ in the $x$ basis, we get
+\begin{align}
+\langle x|a|0\rangle = 0 = \int dx \langle x|a|x'\rangle\langle x'|0\rangle = \Big(x + \frac{\hbar}{m\omega}\frac{\partial}{\partial x}\Big)\psi_0(x)
+\end{align}
+Rearranging everything, we get
+\begin{align}\label{harmosc}
+-\frac{m\omega}{\hbar}xdx = \frac{d\psi}{\psi}
+\end{align}
+Integrating gives us the wave function as
+\begin{align}
+\psi_0(x) = Ce^{-\frac{m\omega}{2\hbar}x^2}
+\end{align}
+From here, we can just act the $a^\dagger$ operator on the state to find all the next ones, with
+\begin{align}
+\psi_n(x) = A_n(a^\dagger)^n\psi_0(x)
+\end{align}
+
+
+
+
+
+\section{Particle in a Magnetic Field}
+Considering just a particle in a magnetic field, the Hamiltonian of the system is given by\footnote{\url{http://www.tcm.phy.cam.ac.uk/~bds10/aqp/lec5.pdf}}
+\begin{align}
+H = \frac{1}{2m}\boldsymbol{\Pi}^2 = \frac{1}{2m}\Big(\textbf{p}-q\textbf{A}\Big)^2
+\end{align}
+
+Where $\textbf{p}$ is of course the canonical momentum which is the sum of the kinetic momentum $\boldsymbol{\Pi}$, which comes just from the physical movement of the mass, and the momentum from the field $q\textbf{A}$. We can expand the Hamiltonian to take the form
+\begin{align}
+H = \frac{1}{2m}\Big[ \textbf{p}^2 -q\Big(\textbf{p}\cdot \textbf{A} +\textbf{A}\cdot\textbf{p}\Big) + q^2\textbf{A}^2\Big]
+\end{align}
+Since $\textbf{p} = -i\hbar\nabla$ and $\nabla\cdot\textbf{A} = 0$, we have that $\textbf{p}\cdot\textbf{A}=\textbf{A}\cdot\textbf{p}$ from the product rule. For a stationary magnetic field we can write the magnetic potential as
+\begin{align}
+\textbf{A} =-\frac{1}{2} \textbf{x}\times\textbf{B}
+\end{align}
+This is the Symmetric gauge which will be covered later. This gauge lets us find an expression for the term in braces in Einstein notation with
+\begin{align}
+2\textbf{A}\cdot\textbf{p} = i\hbar\Big(\textbf{x}\times\textbf{B}\Big)\cdot\nabla &= i\hbar \varepsilon_{ijk} x_iB_j\partial_k\\
+&= i\hbar \varepsilon_{ijk} x_i\partial_k B_j\\
+&= -i\hbar\varepsilon_{ikj}x_i\partial_kB_j\\
+&= -i\hbar\Big(\textbf{x}\times\nabla\Big)\cdot\textbf{B}\\
+&= \textbf{L}\cdot\textbf{B}
+\end{align}
+Since the field does not change in space making its derivative zero and $\textbf{L} = \textbf{x}\times-i\hbar\nabla$. We can also simplify the last term in the Hamilonian with
+\begin{align}
+\textbf{A}^2 &= \frac{1}{4}\Big((\textbf{x}\times\textbf{B})\cdot(\textbf{x}\times\textbf{B})\Big) = \frac{1}{4}\Big(\textbf{x}^2\textbf{B}^2 - (\textbf{x}\cdot\textbf{B})^2\Big)\\
+\end{align}
+If we take the magnetic field to be $\textbf{B} = (0,0,B)$, we have our Hamiltonian as
+\begin{align}
+H = \frac{\textbf{p}^2}{2m} -\frac{q}{2m}\textbf{L}\cdot\textbf{B} +\frac{q^2B^2}{8m}(x^2+y^2)
+\end{align}
+The first term with a magnetic field component is called the \textbf{paramagnetic component}, and the last term is called the \textbf{diamagnetic component}. We then define the gyromagnetic ratio as
+
+\begin{align}
+\boldsymbol{\mu}_l = \frac{q}{2m}\textbf{L}
+\end{align}
+There is an addition analogous quantum gyromagnetic ratio given by twice this value with
+\begin{align}
+\boldsymbol{\mu}_s = \frac{q}{m}\textbf{S}
+\end{align}
+
+
+
+\subsection{Landau Levels}
+A good resource is this.\footnote{\url{http://hitoshi.berkeley.edu/221a/landau.pdf}} It turns out that when a charged particle is placed in a magnetic field, it's energy becomes quantized in a way identical to the harmonic oscillator. Taking the magnetic field to be a constant in the $z$ direction
+\begin{align}
+\textbf{B} = (0,0,B)
+\end{align}
+
+
+ We are then free to choose a gauge that works best for the problem we have. Two typical choices are
+
+\begin{itemize}
+\item \textbf{Symmetric Gauge}
+\begin{align}
+\textbf{A} = \frac{B}{2}(-y,x,0)
+\end{align}
+
+This makes our Hamiltonian rotationally invariant
+
+
+\item \textbf{Landau Gauge}
+\begin{align}
+\textbf{A} = B(-y,0,0)
+\end{align}
+This makes the Hamiltonian translationally invariant
+\end{itemize}
+
+The Hamiltonian that is usually looked at is just the kinetic energy term, since we have no potential, which tells us that
+\begin{align}
+H = \frac{1}{2m}\boldsymbol{\Pi}^2 = \frac{1}{2m}\Big(\textbf{p}-q\textbf{A}\Big)^2
+\end{align}
+With
+\begin{align}
+\textbf{p} = \boldsymbol{\Pi} + q\textbf{A}
+\end{align}
+Where $\textbf{p}$ is of course the canonical momentum, and is the sum of the kinetic momentum $\boldsymbol{\Pi}$, which comes just from the physical movement of the mass, and the momentum from the field $q\textbf{A}$. Breaking up the Hamiltonian with the magnetic field only in the $z$ direction using the Landau Gauge, we have
+\begin{align}
+H = \frac{1}{2m}\Big[ (p_x+qBy)^2 + p_y^2 + p_z^2\Big]
+\end{align}
+We see that 
+\begin{align}
+[p_x, H] = 0\\
+[p_z, H] = 0
+\end{align}
+So we can have simultaneous eigenstates of the Hamiltonian and $p_x,p_z$ so we can rewrite these as their eigenvalues $\hbar k_x, \hbar k_z$. However, $p_y$ does not commute with the Hamiltonian, but we now it in the form of a Harmonic oscillator in $y$, since it has a momentum squared term and a position squared term with
+\begin{align}
+H &= \frac{\hbar^2k_z^2}{2m} + \frac{1}{2m}\Big[\Big(\hbar k_x + qBy\Big)^2 + p_y^2\Big]\\
+&=\frac{\hbar^2k_z^2}{2m} + \frac{1}{2m}\Big[\Pi_x^2 + \Pi_y^2\Big]
+\end{align}
+From here, we make a few observations and some new notations, to get it into the regular looking form of a harmonic oscillator. First we define what are essentially the raising and lowering operators for kinetic momentum
+\begin{align}
+    \Pi_\pm = \Pi_x \mp i\Pi_y
+\end{align}
+The sign convention here is opposite the typical ladder operator, but its what they use for some reason. In a way similar to what we do with the harmonic oscillator, lets look at the term
+\begin{align}
+    \Pi_+\Pi_- &= (\Pi_x - i\Pi_y)(\Pi_x + i\Pi_y)\\ 
+    &= \Pi_x^2 - i\Pi_y\Pi_x +i\Pi_x\Pi_y +\Pi_y^2\\ 
+    &= \Pi_x^2 + \Pi_y^2 + i[\Pi_x,\Pi_y]
+\end{align}
+We see we have a term that exactly matches the one in our Hamiltonian. Now we can evaluate the commutator term, finding in fact there is a constant commutation relation no matter what gauge we choose with
+\begin{align}
+    [\Pi_x,\Pi_y] = i\hbar qB
+\end{align}
+Plugging in we see that
+\begin{align}
+    \Pi_x^2 + \Pi_y^2 = \Pi_+\Pi_- + \hbar qB
+\end{align}
+So our Hamiltonian looks like
+\begin{align}
+    H = \frac{\hbar^2k_z^2}{2m} + \frac{1}{2m}\Big(\Pi_+\Pi_- + \hbar qB\Big)
+\end{align}
+This is the same form of a normal harmonic oscillator in $x$ and $y$, just from the placement of the operators, but now in order to get it all the way there we have to match coefficients
+\begin{align}
+    \frac{1}{2m}\Big(\Pi_+\Pi_- + \hbar qB\Big) = \hbar\omega\Big(a^\dagger a + \frac{1}{2}\Big)
+\end{align}
+Looking at the constant first
+\begin{align}
+    \frac{\hbar qB}{2m} = \frac{\hbar\omega}{2} \rightarrow \omega = \frac{qB}{m}
+\end{align}
+This is the cyclotron frequency. We can then reverse engineer the true ladder operators knowing the constants should be the same in front of both
+\begin{align}
+    \frac{1}{\sqrt{2m}}\Pi_+ = \sqrt{\frac{\hbar qB}{m}}a^\dagger 
+\end{align}
+This gives us
+\begin{align}
+    a^\dagger &= \frac{1}{\sqrt{2\hbar q B}} (\Pi_x - i\Pi_y)\\
+    a &= \frac{1}{\sqrt{2\hbar q B}} (\Pi_x + i\Pi_y)
+\end{align}
+So our final Hamiltonian, after being painfully manipulated is
+\begin{align}
+H = \frac{\hbar^2k_z^2}{2m} + \hbar\omega\Big(a^\dagger a + \frac{1}{2}\Big)
+\end{align}
+We can find the eigenstates in the same way we find those for the harmonic oscillator (Equation \ref{harmosc}), and using separation of variables for $z$. The corresponding state is also an eigenstate of the $L_z$ operator with
+\begin{align}
+L_z\psi_n = \hbar n\psi_n
+\end{align}
+
+But this quantity is in fact gauge dependent because we used canonical momentum and not kinetic momentum, which depends on gauge.
+
+%\subsection{Aharonov-Bohm Effect}
+%TODO
+
+\subsection{Fractional Quantum Hall Effect}
+In the ground state Landau Level, you can show there is stability given the number of states (degeneracy) for the ground state is given by
+
+\begin{align}
+N = \frac{1}{k}\frac{e\Phi}{hc}
+\end{align}
+
+where $k$ is some odd number
+
+
+
+
+\section{WKB Approximation}
+The WKB approximation is useful for when you have a potential that varies with position $V(x)$ or barriers that become larger than the available energy of the system. 
+\begin{enumerate}
+\item Rewrite the Schrodinger equation
+\begin{align}
+\frac{\partial^2}{\partial x^2}\psi &= -\frac{p(x)^2}{\hbar^2}\psi
+\end{align}
+where
+\begin{align}
+p(x) = \sqrt{2m[E-V(x)]}
+\end{align}
+\item Guess the form
+\begin{align}
+\psi(x) = A(x)e^{-i\phi(x)}
+\end{align}
+\item Plug it in and get some differential equations you can solve (in Griffith's) and find that
+\begin{align}
+A = \frac{C}{\sqrt{p(x)}} && \phi(x) = \frac{1}{\hbar}\int_0^x p(x') dx'
+\end{align}
+
+
+\item Plug in and see that the general solution is given by
+\begin{align}
+\psi(x) &= \frac{1}{\sqrt{p(x)}}\Big(C_+e^{i\phi(x)} + C_-e^{-i\phi(x)}\Big)\\
+&= \frac{1}{\sqrt{p(x)}}\Big(C_1\sin\phi(x) + C_2\cos\phi(x)\Big)
+\end{align}
+
+\item From here we use boundary conditions, by requiring things like $\psi(0) = 0$ and $\psi(a) = 0$ if we have that $V(0) = V(a) = \infty$ etc. This gives us conditions on the integral equation for $\phi(x)$ like
+\begin{align}
+\phi(a) = \frac{1}{\hbar}\int_0^a p(x) dx = n\pi
+\end{align}
+There are some nasty integrals involved that I don't full understand, but reading Griffith's pg 289 could help.
+
+\end{enumerate}
+
+\section{Variational Method}
+\begin{enumerate}
+\item Guess a trial wave function $|\phi(\alpha)\rangle$ of some flexible parameter $\alpha$
+\item Normalize that wave function
+\item Calculate the expectation value of the energy using that wave function $\langle \phi(\alpha) |H|\phi(\alpha)\rangle = E(\alpha)$
+\item Take the derivative of the energy with respect to $\alpha$ and set it equal to zero to solve for $\alpha$ in terms of other constants.
+\item Plug it back in to $E(\alpha)$ to come up with an upper bound on the ground state energy.
+\end{enumerate}
+
+
+
+
+\section{Perturbation Theory}
+
+All time-independent perturbation questions should be solved as
+\begin{enumerate}
+\item Are the zeroth order energies degenerate? If they aren't skip to 3
+\item Break the degeneracy and come up with new zeroth order states
+\item Use the time-independent perturbation using the zeroth order states to find perturbed states and energy shifts
+\end{enumerate}
+
+
+\subsection{Time Independent - Non Degenerate}
+Always first check if the zeroth order energies are degenerate first before following this approach! The idea here is you can write your Hamiltonian as
+\begin{align}
+H = H_0 + \lambda V
+\end{align}
+Where $\lambda$ is some small value, and you know all the eigenstates of $H_0$ already. With some clever math involving the projection operator and expansion in powers of $\lambda$ one gets the first order energy shift\footnote{Sakurai pg. 312}  as
+
+\begin{align}
+\Delta_n^{(1)} &= \langle n^{(0)}|V|n^{(0)}\rangle
+\end{align}
+The corresponding first order ket is
+\begin{align}\label{firstordertimeindependent}
+ |n^{(1)}\rangle &= \sum_{k\neq n}\frac{\langle k^{(0)} |V|n^{(0)}\rangle}{E_n^{(0)}-E_k^{(0)}}|k^{(0)}\rangle
+\end{align}
+Can remember the conjugation here since its almost the projection operator $|k^{(0)}\rangle\langle k^{(0)}|$. The second order energy shift is given by
+\begin{align}
+\Delta_n^{(2)} &= \sum_{k\neq n} \frac{|\langle k^{(0)}| V| n^{(0)}\rangle|^2}{E_n^{(0)} - E_k^{(0)}}
+\end{align}
+All the remaining kets and shifts become much more complicated and its best to assume you won't need to know them. One can remember the order of the minus sign in a backwards way by remembering that second order shifts to the ground state of \emph{an}y system will always decrease its energy. 
+
+
+\subsection{Time Independent - Degenerate}
+If it happens that there are two (or more) kets in our Hilbert space have the same energy, lets say $E_a^{(0)} = E_b^{(0)}$ then Equation \ref{firstordertimeindependent} will go to infinity since one of the terms will divide by zero. We avoid this by also making the \emph{numerator} also go to zero. The key here is to take clever linear combinations of the degenerate subspace (here $|a^{(0)}\rangle, |b^{(0)}\rangle$) that do just that. 
+\begin{align}
+|\alpha^{(0)}\rangle = c_1 |a^{(0)}\rangle + c_2|b^{(0)}\rangle\\
+|\beta^{(0)}\rangle = c_3|a^{(0)}\rangle + c_4|b^{(0)}\rangle
+\end{align}
+
+Where we want $\langle \alpha |V |\beta \rangle = \langle \beta |V|\alpha\rangle  = 0$. The way we do this is write the perturbation matrix out with the states we start with, then diagonalize it (Section \ref{diagolize}) thus making the off-diagonal terms writtern earlier zero. The eigenvalues tell us the first order shift $\Delta_n^{(1)}$, and the eigenvectors tell us the correct linear combinations for the degenerate subspace. From here we can just use non-degenerate perturbation theory to calculate stuff like $|n^{(1)}\rangle$ and $\Delta_n^{(2)}$ using $|\alpha^{(0)}\rangle$ and $|\beta^{(0)}\rangle$. 
+Griffith's pg 229 outlines a nice way to find the states beforehand, look for an operator $A$ that obeys 
+\begin{align}
+[A,V] = 0
+\end{align}
+We can use eigenstates of that operator and were good as long as both the degenerate kets have different eigenvalues of $A$. A common example would be some angular momentum operator like $S_z$
+
+\subsection{Time Dependent}
+Now we take an almost entirely different approach and forget about the $\lambda$ expansion, first order energy shift, etc,  and have that our Hamiltonian looks like
+\begin{align}
+H = H_0 + V(t)
+\end{align}
+We always assume time seperability of our kets so any state can be represented as
+\begin{align}
+|\alpha; t\rangle = \sum_n c_n(t)\exp\Big[-\frac{iE_n t}{\hbar}\Big]|n\rangle
+\end{align}
+Where we now have \emph{time-dependent} coefficients. Now just looking at the Schrodinger equation, (Where of course $\langle n |\alpha;t\rangle = c_n(t)\exp\Big[-\frac{iE_n t}{\hbar}\Big]$),we get
+\begin{align}
+i\hbar \frac{\partial}{\partial t} \Big[c_n(t)e^{-\frac{iE_n t}{\hbar}}\Big] &= \langle n| H|\alpha; t\rangle\\
+i\hbar\Big[\dot{c}_n(t) - \frac{i}{\hbar}E_nc_n(t)\Big]e^{-\frac{iE_n t}{\hbar}} &= \sum_m \langle n| H|m\rangle c_m(t)e^{-\frac{iE_m t}{\hbar}}\\
+\end{align}
+Simplifying, and using the variable $\omega_{mn} = \frac{E_m-E_n}{\hbar}$ we get $n$ coupled differential equations of the form 
+\begin{align}
+i\hbar\dot{c}_n(t) = \sum_m \langle n |V(t)|m\rangle c_m(t) e^{-i\omega_{mn}t}
+\end{align}
+These are rarely exactly solvable unless there are only a few kets, so the primary approach is still through perturbation. Integrating this equation gives us an expression for one of the coefficients in terms of the coefficient itself
+\begin{align}
+c_n(t) = c_n(0)-\frac{i}{\hbar}\sum_m \int_0^t dt' \langle n |V(t')|m\rangle c_m(t') e^{-i\omega_{mn}t'}
+\end{align}
+Freeman Dyson came up with a clever way to recursively solve for $c_n(t)$ by plugging the expression into itself. More clearly, on the right side of the equation, we have the variable $c_m(t')$, but looking at the left side, we actually have an explicit expression for it, the equation itself. So plugging in for $c_m(t')$ over and over we can get closer and closer to the exact expression for $c_n(t)$ with more and more integrals. So effectively we have
+\begin{align}
+c_n(t) = c_n^{(0)}(t) + c_n^{(1)}(t) + c_n^{(2)}(t) + ...
+\end{align}
+To find each coefficient, we follow the formula
+\begin{align}
+c_n^{(i+1)} = -\frac{i}{\hbar}\sum_m \int_0^t dt' \langle n |V(t')|m\rangle c_m^{(i)}(t') e^{-i\omega_{mn}t'}
+\end{align}
+The first two written out explicitly are
+\begin{align}
+c_n^{(0)}(t) &= c_n(0)\\
+c_n^{(1)}(t) &= -\frac{i}{\hbar}\sum_m \int_0^t dt' \langle n |V(t')|m\rangle c_m(0) e^{-i\omega_{mn}t'}
+\end{align}
+
+
+\subsection{Fermi's Golden Rule}
+We consider all of the states $n$ that are within some small range of an energy we care about $E_i$. By considering only the first term in time dependent perturbation theory, we can do some math to find that transition rate $w$, which is the rate of change of the probability you will be in a state is given by
+\begin{align}
+    w_{i->[n]} = \frac{2\pi}{\hbar} |V_{in}|^2\rho_n
+\end{align}
+
+
+\subsection{Adiabatic Theorem}
+The Adiabatic theorem tells us that if you start with some Hamiltonian $H$, and you have a particle in the $n$th eigenstate of it, and you \emph{slowly} change the Hamiltonian to $H'$, it will again be in the $n$th eigenstate of $H'$, as long as there is no degeneracy and the change to the Hamiltonian is small.
+
+
+\section{Scattering}\footnote{Much of this section is thanks to Stephan Blugel and his nice writeup \url{http://juser.fz-juelich.de/record/20885/files/A2_Bluegel.pdf}}
+The solution to the Schrodinger equation for a particle in free space is simply a plane wave, with
+\begin{align}
+\psi_\textbf{k}(\textbf{r}) = \frac{1}{(2\pi)^{3/2}}e^{i\textbf{k}\cdot\textbf{r}}&& E_\textbf{k} = \frac{\hbar^2k^2}{2m}
+\end{align}
+
+In general, we know that if we have an eigenstate of energy, we must have
+\begin{align}
+    E|\psi\rangle = H|\psi\rangle = \Big(\frac{p^2}{2m} + V\Big)|\psi\rangle
+\end{align}
+Now looking at the position space wave form
+\begin{align}
+    E\langle \textbf{x} |\psi\rangle &=  \langle \textbf{x}|\Big(\frac{p^2}{2m} + V\Big)|\psi\rangle\\
+    E\psi(\textbf{x}) &= \frac{-\hbar^2}{2m}\nabla^2\psi(\textbf{x}) + \langle\textbf{x}|V|\psi\rangle
+\end{align}
+The most general form of the scattering equation including a \emph{non-local} potential is
+\begin{align}
+    E\psi(\textbf{x}) &= \frac{-\hbar^2}{2m}\nabla^2\psi(\textbf{x}) + \int dx'^3\langle\textbf{x}|V|\textbf{x}'\rangle\langle\textbf{x}'|\psi\rangle
+\end{align}
+Where the potential has off diagonal matrix elements, so we have to sum over everything. If the potential is local then we have that
+\begin{align}
+\Big(\frac{\hbar^2}{2m}\nabla^2 + E\Big)\psi'(\textbf{r}) = V(\textbf{r})\psi'(\textbf{r})
+\end{align}
+From here, we can notice that the left operator acting on $\psi'(\textbf{r})$ is a linear differential operator, so it's Kosher to look for solutions to it using Green's Functions (Section \ref{green}). The equation we want to solve is
+\begin{align}
+\Big(\frac{\hbar^2}{2m}\nabla^2 + E\Big) G(\textbf{r}, \textbf{r}') = \delta(\textbf{r}-\textbf{r}')
+\end{align}
+We can thus write the Schrodinger equation in integral form, with an integration constant accounting for the fact that as $V(\textbf{r})$ goes to zero, we must recover our initial unscattered plane wave solution
+\begin{align}\label{lippmann}
+\psi'(\textbf{r}) = \psi(\textbf{r}) + \int dr'^3~G(\textbf{r}, \textbf{r}') V(\textbf{r}')\psi'(\textbf{r}')
+\end{align}
+This equation is called the \textbf{Lippmann-Schwinger Equation}. To solve for the Green's function, we can use the method of eigenfunction expansion\footnote{\url{http://www.nhn.ou.edu/~milton/p5013/chap12.pdf} pg. 15}, using the fact that
+\begin{align}
+\int dk^3 \psi_\textbf{k}^*(\textbf{r})\psi_\textbf{k}(\textbf{r}') = \delta(\textbf{r}-\textbf{r}')
+\end{align}
+Since we have that
+\begin{align}
+\Big(\frac{\hbar^2}{2m}\nabla^2 + E\Big)\psi_\textbf{k}(\textbf{r}) = \frac{\hbar^2}{2m}(k'^2 - k^2)\psi_\textbf{k}(\textbf{r})
+\end{align}
+Where $E = \frac{\hbar^2k'^2}{2m}$. We thus have that the eigenvalue of the linear differential operator\footnote{Zangwill pg. 255}, needed for this expansion is given by
+
+\begin{align}
+\lambda_\textbf{k} = \frac{\hbar^2}{2m}(k'^2-k^2)
+\end{align}
+Thus our Green's function can be written as
+\begin{align}
+G(\textbf{r},\textbf{r}') &= \frac{2m}{(2\pi)^3\hbar^2}\int dk^3 ~\frac{e^{i\textbf{k}\cdot(\textbf{r}-\textbf{r}')}}{k'^2-k^2}
+\end{align}
+Now evaluating the easy part, written in spherical coordinates, we have
+\begin{align}
+G(\textbf{r},\textbf{r}') &= \frac{2m}{(2\pi)^2\hbar^2}\int_{-1}^1 d(\cos\theta) \int_0^\infty dk k^2 ~\frac{e^{ik|\textbf{r}-\textbf{r}'|\cos\theta}}{k'^2-k^2}
+\end{align}
+The rest can be evaluated using complex integration, giving us the result as
+\begin{align}
+G(\textbf{r},\textbf{r}') = -\frac{2m}{\hbar^2}\frac{1}{4\pi} \frac{e^{ik|\textbf{r}-\textbf{r}'|}}{|\textbf{r}-\textbf{r}'|}
+\end{align}
+It is worth noting this is also the Green's function for the Helmholtz equation. Now plugging this back into equation \ref{lippmann}, we get
+\begin{align}\label{scat}
+\boxed{\psi'(\textbf{r}) = \psi(\textbf{r})  -\frac{m}{2\pi\hbar^2}\int dr'^3~ \frac{e^{ik|\textbf{r}-\textbf{r}'|}}{|\textbf{r}-\textbf{r}'|} V(\textbf{r}')\psi'(\textbf{r}')}
+\end{align}
+This is the scattering equation and is completely equivalent to the Schrodinger equation in integral form for a local potential\footnote{Griffiths pg. 366}, everything else approximates usually that observation point is far away. As a reminder $\textbf{r}$ is the position of the wave you are considering, and $\textbf{r}'$ will be everywhere that you have a non-zero potential, otherwise the integrand will be zero.
+
+\subsection{Far-Field}
+If we are observing at a point very far away from where the potential is, we have that $|\textbf{r}| \gg |\textbf{r}'|$, which lets us approximate, through Taylor expansion
+\begin{align}
+|\textbf{r}-\textbf{r}'| \approx r-\hat{\textbf{r}}\cdot\textbf{r}' &&\frac{1}{|\textbf{r}-\textbf{r}'|} \approx \frac{1}{r} + \mathcal{O}\Big(\frac{1}{r^2}\Big)
+\end{align}
+So after defining $\textbf{k}' = k\hat{\textbf{r}}$, which is the component of the wave vector still travelling towards the observer, equation \ref{scat} becomes
+\begin{align}
+\psi'(\textbf{r}) = \psi(\textbf{r})  -\frac{m}{2\pi\hbar^2}\frac{e^{ikr}}{r}\int dr'^3~ e^{-i\textbf{k}'\cdot\textbf{r}' } V(\textbf{r}')\psi'(\textbf{r}')
+\end{align}
+It is conventional to write
+\begin{align}
+f(\textbf{k}',\textbf{k}) \equiv -\frac{m}{2\pi\hbar^2}\int dr'^3~ e^{-i\textbf{k}'\cdot\textbf{r}' } V(\textbf{r}')\psi'(\textbf{r}')
+\end{align}
+Where the $\textbf{k}$ denotes that the equation is implicitly dependent on our initial wave function $\psi(\textbf{r})_\textbf{k}$. This lets the equation be read as 
+\begin{align}
+\psi'(\textbf{r}) = \psi(\textbf{r}) + \frac{e^{ikr}}{r}f(\hat{\textbf{r}})
+\end{align}
+It also happens that the differential scattering cross-section is given by
+\begin{align}
+\frac{d\sigma}{d\Omega} = |f(\textbf{k}',\textbf{k})|^2
+\end{align}
+
+\subsection{Born Approximation}
+
+Since equation \ref{scat} contains itself, we can use a method similar to what we did in perturbation theory to expand it in powers of the potential, with %\todo{verify this}
+\begin{align}
+\psi'(\textbf{r}) = \psi'^{(0)}(\textbf{r}) + \psi'^{(1)}(\textbf{r}) + \psi'^{(2)}(\textbf{r}) + ...
+\end{align}
+The recursive equation is given by
+\begin{align}
+\psi'^{(n+1)}(\textbf{r}) = e^{i\textbf{k}\cdot\textbf{r}} -\frac{m}{2\pi\hbar^2}\frac{e^{ikr}}{r}\int dr'^3~ e^{-i\textbf{k}'\cdot\textbf{r}' } V(\textbf{r}')\psi'^{(n)}(\textbf{r}')
+\end{align}
+Physically, each term in the expansion represents the order of the scattering, i.e the first term is when the wave function has scattered once, the second order is when it has scattered twice, etc. It is often easier to just use numerical methods to do anything higher than first order, but the first order term is important, whose scattering amplitude is given by
+\begin{align}\label{born}
+f^{(1)}(\textbf{k}', \textbf{k}) = -\frac{m}{2\pi\hbar^2} \int dr'^3 e^{i(\textbf{k}-\textbf{k}')\cdot\textbf{r}'}V(\textbf{r}')
+\end{align}
+There are a few cases where this equation can be reduced even further
+
+\begin{enumerate}
+
+\item \textbf{Spherically Symmetric Potential}\\
+Centering the coordinate system at the center of the potential and choosing the direction of the vector $\textbf{q} = \textbf{k}-\textbf{k}'$ to be along the $\hat{z}$ axis, so that
+\begin{align}
+\textbf{q}\cdot\textbf{r}' = qr\cos\theta
+\end{align}
+The first order Born approximation reads as 
+\begin{align}\label{born}
+f^{(1)}(\textbf{k}', \textbf{k}) &= -\frac{m}{2\pi\hbar^2} \int_0^{2\pi}d\phi  \int_{-1}^1 d(\cos\theta) \int_0^\infty dr' r'^2e^{iqr\cos\theta}V(r')\\
+&= -\frac{m}{\hbar^2}\frac{1}{iq}\int_0^\infty dr' \frac{r'^2}{r'}V(r')\Big(e^{iqr'} - e^{-iqr'}\Big)\\
+&= -\frac{2m}{q\hbar^2}\int_0^\infty dr' r' V(r')\sin(qr')
+\end{align}
+
+
+
+
+\item \textbf{Low Energy}\\
+When we have that the wave length of $\textbf{k}$ is very long compared to the region the potential is in, the exponential factor in equation \ref{born} will change very slightly as we integrate over the entire potential, so it is fair to pull it out of the integral entirely, since it is effectively a constant, and set it to one. This gives us
+\begin{align}
+f^{(1)}(\textbf{k}',\textbf{k}) = -\frac{m}{2\pi\hbar^2} \int dr'^3 V(\textbf{r}')
+\end{align}
+
+\end{enumerate}

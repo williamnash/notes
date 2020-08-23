@@ -1,0 +1,44 @@
+\documentclass[11pt]{book}
+\input{includes}
+
+
+\title{Notes on Mathematics}
+\author{William Nash}
+\date{August 22, 2020}
+
+
+\begin{document}
+
+\maketitle \clearpage
+
+%%
+%% Intro Quote
+%%
+\vspace*{\fill}
+\thispagestyle{empty} % optional -- suppress showing of page number
+\begin{quotation}
+	\em % optional -- to switch to emphasis (italics) mode
+	Mathematics may be defined as the subject in which we never know what we are talking about, nor whether what we are saying is true.
+	\medskip
+	
+	\raggedleft
+	- Bertrand Russell
+\end{quotation}
+\vspace*{\fill}
+
+
+%%
+%% Sections
+%%
+
+\tableofcontents
+
+\input{mathematics/numbertheory}
+\input{mathematics/statistics}
+\input{mathematics/vectorcalculus}
+
+\bibliography{references}{}
+\bibliographystyle{plain}
+
+
+\end{document}

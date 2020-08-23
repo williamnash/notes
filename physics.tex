@@ -1,0 +1,41 @@
+\documentclass[11pt]{book}
+\input{includes}
+\usepackage{tikz} 
+\usetikzlibrary{shapes,arrows,positioning,automata,backgrounds,calc,er,patterns,bending}
+\usepackage{tikz-feynman}
+\usepackage{enumitem}
+
+\title{Notes on Physics}
+\author{William Nash}
+\date{January 11, 2017}
+
+\begin{document}
+
+\maketitle \clearpage
+
+\vspace*{\fill}
+\thispagestyle{empty} % optional -- suppress showing of page number
+\begin{quotation}
+\em % optional -- to switch to emphasis (italics) mode
+What is it that we humans depend on? We depend on our words... Our task is to communicate experience and ideas to others. We must strive continually to extend the scope of our description, but in such a way that our messages do not thereby lose their objective or unambiguous character... We are suspended in language in such a way that we cannot say what is up and what is down. The word "reality" is also a word, a word which we must learn to use correctly.
+
+\medskip
+\raggedleft
+- Niels Bohr
+\end{quotation}
+\vspace*{\fill}
+
+\tableofcontents
+
+\input{physics/classicalMechanics}
+\input{physics/statisticalMechanics}
+\input{physics/quantumMechanics}
+\input{physics/electromagnetism}
+\input{physics/particlePhysicsInTheory}
+\input{physics/particlePhysicsInPractice}
+
+\bibliography{references}{}
+\bibliographystyle{plain}
+
+
+\end{document}

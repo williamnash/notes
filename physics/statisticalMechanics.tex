@@ -1,0 +1,709 @@
+
+
+\chapter{Statistical Mechanics and Thermodynamics}
+
+
+
+\section{Laws of Thermodynamics}
+\begin{enumerate}
+\item The change in \emph{internal} energy of a system is equal to the heat added minus the work it does
+\begin{align}
+dE = \delta Q - \delta W
+\end{align}
+The reason why we write the squiggles is because this is true no matter how you change the system, as we must still have conservation of energy, but if we have cases where we move between equilibriums we can then write that $\delta Q = T dS$ and $\delta W = PdV$. In general $TdS \ge \delta Q$, for instance a freely expanding gas, which does not exchange heat, but since it has more places for each molecule to be, increases in entropy.
+
+
+\item Entropy of the universe always increases
+
+$$\Delta S \ge 0$$ Is a statement that the equilibrium state is preferred for a system, so if a system is changed, it is at first not in equilibrium, then moves towards equilibrium, where the entropy is maximized, so the change in entropy will be increased. Equilibrium can be thought of as a state where any process and its time reversal have equal probability. \textbf{Detailed Balance} says that if you have two processes (1,2) $\rightarrow$ (3,4) they are just as likely as (3,4) $\rightarrow$ (1,2)
+
+
+\item Entropy of a perfect crystal (one state) goes to zero as temperature goes to zero
+ $$S\rightarrow 0 ~~\rm{as}~~ T\rightarrow 0$$
+
+\end{enumerate}
+
+\section{Thermodynamics}
+Thermodynamics has to do with huge numbers of particles that we can't easily keep track of individually. For classical mechanics, our "state variables" were things like positions and momentum in the Hamiltonian formulation. In Thermodynamics,  instead of trying to keep track of $10^{23}$ pairs of position and momenta, we just keep track of a few macroscopic things that can tell us things about the system from a macroscopic point of view. 
+
+Here our "state variables" are $p,T,V,S$ out of which we are able to describe everything.\footnote{I'm not entirely sure why these were chosen., as entropy itself is non-trivial to measure, maybe its the leftover variable?} The issue is that these variables  are all netted together in often mathematically unfriendly ways and in general are \emph{not independent} of one another. We get around this by just taking a bunch of partial derivatives all over the places, holding this or that constant.
+
+We start with the first law of Thermodynamics
+\begin{align}
+dE = \delta Q - \delta W
+\end{align}
+So long as each time we infinitesimally change the system, we wait for it to equilibrate before touching it again (a \emph{quasistatic process}),  we can use the equalities
+\begin{align}
+dE = TdS - p dV
+\end{align}
+In general
+\begin{align}
+T\delta S \ge \delta Q
+\end{align}
+This is because entropy can change without heat being added to the system, for instance a free expansion of a gas. Rearranging the first law to find entropy, we get
+\begin{align}
+dS &= \frac{1}{T}dE +\frac{p}{T}dV
+\end{align}
+We are also free to think of the energy as being a function of $T$ and $V$, so
+\begin{align}\label{thermenergy}
+dE = \Big(\frac{dE}{dT}\Big)_VdT + \Big(\frac{dE}{dV}\Big)_TdV
+\end{align}
+Which tells us
+\begin{align}
+dS &= \frac{1}{T}\Big(\frac{dE}{dT}\Big)_VdT + \frac{1}{T}\Big[p + \Big(\frac{dE}{dV}\Big)_T\Big]dV
+\end{align}
+But also
+\begin{align}
+dS &= \Big(\frac{dS}{dT}\Big)_V dT + \Big(\frac{dS}{dV}\Big)_T dV
+\end{align}
+Which shows us one of the many funny relationships we get with the partial derivatives
+\begin{align}
+ \Big(\frac{dS}{dT}\Big)_V &= \frac{1}{T}\Big(\frac{dE}{dT}\Big)_V\\
+\Big(\frac{dS}{dV}\Big)_T &= \frac{1}{T}\Big[p + \Big(\frac{dE}{dV}\Big)_T\Big]\label{partialentropy}
+\end{align}
+Going back to equation \ref{thermenergy}, by definition, we have the specific heat as
+Part of this is easy since by definition
+\begin{align}
+c_v \equiv \Big(\frac{dQ}{dT}\Big)_V = \Big(\frac{dE}{dT}\Big)_V
+\end{align}
+For the next one, we can rearrange equation \ref{partialentropy} after using the Maxwell square (Section \ref{square}) to find
+\begin{align}
+\Big(\frac{\partial S}{\partial V}\Big)_T &= \Big(\frac{\partial p}{\partial T}\Big)_V
+\end{align}
+Plugging this in we get
+\begin{align}
+T\Big(\frac{\partial p}{\partial T}\Big)_V - p = \Big(\frac{dE}{dV}\Big)_T
+\end{align}
+Which is often useful when given an equation of state i.e. function that contains $P$ as a function of the other variables. I still don't have a solid grasp as to the best algorithm for finding these relationships, it seems like trying to get somewhere by random walk.
+
+
+
+\subsection{Thermodynamic Potentials}
+The idea here is that somehow from the second law, you can write all of these different kinds of potentials which are at a minimum when we 
+hold certain things about the system as constant. \\
+
+\begin{center}
+\begin{tabular}{ c c }
+Constant & Potential Minimized \\ \hline
+$S,V$ & $U$ - Internal Energy\\
+$T,V$ & $F$ - Helmholtz Free Energy\\  
+$T,P$ & $G$ - Gibbs Free Energy \\
+$S,P$ & $H$ - Enthalpy\\
+$T,V,\mu$ & $\Phi$ - Grand Potential  
+\end{tabular}
+\end{center}
+So what we do with each of these guys is, since we know two of the things are constant, we take the derivative of the potential with respect to either of the other two state variables and set it to zero. We can then solve that equation for whatever we are looking for. The Helmholtz free energy can be written as
+
+\begin{align}
+F = U - TS = -kT\ln Z
+\end{align}
+
+
+
+\subsection{Thermodynamic Square}\label{square}
+
+As a reminder
+\begin{align}
+U=&~\textrm{Internal Energy}\\
+H =&~\textrm{Ent\textbf{h}alpy}\\
+G =&~\textrm{\textbf{G}ibbs Free Energy}\\
+F =&~\textrm{Helmholtz \textbf{F}ree Energy}
+\end{align}
+A nice mnemonic for remembering:\\ \\
+\centerline{Good Physicists Have Studied Under Very Fine Teachers.}
+\\
+\\
+\centerline{\includegraphics[width=0.3\textwidth]{physics/images/Thermodynamic_square}}
+\begin{enumerate}
+\item Start with a potential (e.g. $F$)
+\item Pick the two variables at the opposite corners, noting their signs (e.g. $-P$, $-S$)
+\item Now multiply those terms by their term furthest from them, forgetting about the sign. This gives us $$dF = -S dT -pdV$$
+\item If you have non-fixed number of particles, just add $+\mu dN$ to whichever potential you are looking at
+\end{enumerate}
+
+This gives us the natural way to express whatever potential we obtained, in terms of the differentials, so
+\begin{align}
+F = F(T,V)
+\end{align}
+
+We can also obtain the maxwell relations with the square once we find the definition of the potential we chose, we can say
+\begin{align}
+dF = \Big(\frac{\partial F}{\partial T}\Big)_V dT + \Big(\frac{\partial F}{\partial V}\Big)_T dV
+\end{align}
+We know by definition that
+\begin{align}
+\frac{\partial^2 F}{\partial T\partial V} = \frac{\partial}{\partial V}\Big(\frac{\partial F}{\partial T}\Big)_V &= \frac{\partial}{\partial T}\Big(\frac{\partial F}{\partial V}\Big)_T 
+\end{align}
+So looking at the prefactors on our initial expression for the potential, we can find that
+\begin{align}
+-\Big(\frac{\partial S}{\partial V}\Big)_T &= -\Big(\frac{\partial p}{\partial T}\Big)_V
+\end{align}
+We can do the same trick to find the rest, there is one for each potential. You can also look and see you can obtain these factors by taking a ''U" shape in the box. In the above case we take the top row, then the bottom right corner, is equal to the bottom row, then the top right corner.
+
+
+\section{Quasi-Static (Reversible) Process}
+
+$$\Delta S = 0$$
+As the system changes, it does so by changing between equilibrium states the entire time. Because it is in equilibrium the entire time, we don't change entropy. 
+
+
+\section{Ideal Gas}
+An ideal gas is just a gas that doesn't interact with the other molecules in the gas, and behaves as if each of the molecules were just alone. We calculate the partition function for just one of the particles with
+\begin{align}
+    Z_1 = \frac{1}{h^3}\int dx^3 \int dp^3 e^{-\beta p^2/2m}
+\end{align}
+Which is just adding up all the possible states it could be in. It's energy is just kinetic. We can actually evaluate this integral explicitly using a Gaussian integral trick giving us
+\begin{align}
+    Z_1 = \frac{V}{h^3}\Big(2\pi m kT\Big)^{3/2}
+\end{align}
+Since the particles don't interact, the total partition function, which is the normalizing factor considering \emph{all} states, is just all of the individual ones multiplied together, normalized by $1/N!$ due to a strange paradox called the Gibb's paradox.
+\begin{align}
+    Z = \frac{1}{N!} Z_1^N = \frac{V^N}{h^3N!}\Big(2\pi m kT\Big)^{3N/2}
+\end{align}
+The free energy of a system is defined as 
+\begin{align}
+    F = -kT\ln Z
+\end{align}
+And we know that one of Maxwell's relations tells us 
+\begin{align}
+    P = -\Big(\frac{dF}{dV}\Big)_{T,N}
+\end{align}
+This formula in general tells us the \emph{equation of state} and is true for any type of system. Using our expression for the partition function and plugging into this, we can find the equation of state for an ideal gas, which we all know and love
+\begin{align}
+    PV = NkT
+\end{align}
+\subsection{Isotherms}
+From the equation of state, we see that if temperature is constant for a process, we must have that the product of pressure and volume is also constant
+\begin{align}
+    PV = \textrm{const}
+\end{align}
+
+\subsection{Adiabats}
+Adiabatic expansion happens when there is no heat transferred to or from the system, so
+\begin{align}
+    \delta Q = 0
+\end{align}
+So looking at the first law, we see
+\begin{align}
+    dU = -PdV
+\end{align}
+We know for an ideal gas, the internal energy $U$ is only dependent on temperature, and after also plugging in for the ideal gas law
+\begin{align}
+    \frac{3}{2}Nk dT = -\frac{NkT}{V}dV
+\end{align}
+Rearranging and integrating we see that
+\begin{align}
+    \int \frac{dT}{T} &= -\frac{2}{3} \int \frac{dV}{V}\\
+    \ln T &= -\frac{2}{3}\ln V + C
+\end{align}
+Exponentiating, we have
+\begin{align}
+    TV^{2/3} = e^C
+\end{align}
+Now plugging in the equation of state once more, we arrive at
+\begin{align}
+    PV^{5/3} = Nke^C
+\end{align}
+Or, since the number of particles is held fixed, we have that 
+\begin{align}
+    PV^{5/3} = \textrm{const}
+\end{align}
+
+\subsection{Free Expansion}
+In a free expansion, the gas does no work, so
+\begin{align}
+    dW = 0
+\end{align}
+and if the process is adiabatic
+\begin{align}
+    dQ = 0
+\end{align}
+Which tells us the change in internal energy is zero
+\begin{align}
+    dU = dQ - dW
+\end{align}
+So with the ideal gas law, we get
+\begin{align}
+    P_iV_i = P_fV_f
+\end{align}
+
+\section{Entropy}
+
+Entropy can be thought of as a unit of information. The mathematical definition of entropy is given by
+
+\begin{align}\label{entropy}
+S = k_B\ln\Omega
+\end{align}
+Where $\Omega$ is the number of possible ways a given system could be arranged, each with equal probabilities. The entropy is a state variable, and can be evaluated explicitly for a given system, i.e. a system will have a definite entropy. What we mean by "number of ways the system could be arranged" is the amount of configurations we could put all of the small pieces together that make up the system (typically all the molecules) that give us the exact same macroscopic quantities. %\todo{elaborate}
+
+
+
+ The second law tells us that number of ways that the universe could be organized is \emph{always} increasing in time until it reaches equilibrium. There is speculation that this should in some way tell us more about time itself, as the two are entwined together in way a which is still one of Physics great mysteries\footnote{\url{https://en.wikipedia.org/wiki/Arrow_of_time}}. Another more general definition is given by
+
+\begin{align}\label{gen-entropy}
+S = -\sum_{i=1}^N P_i\ln P_i
+\end{align}
+
+Where we sum over the probabilities that the system is in the state $1,2,... N$. For instance if there are two energies ($0,\epsilon$) possible, you will sum over those states for the entropy. This definition must also include states which are degenerate in energy. The reason for the minus sign is that the logarithm of a fraction is negative, so to get entropy positive, we swap signs. This expression reduces to equation \ref{entropy} in the case where all the probabilities are equal. 
+
+The entire game of statistical mechanics boils down to try to maximize this quantity (equation \ref{gen-entropy}) under constraints using Lagrange multipliers. Two simple constraints are
+
+\begin{align}\label{sumprob}
+\sum_{i=1}^N P_i -1 &= 0\\ \label{sumenergy}
+\sum_{i=1}^N E_iP_i - E &= 0\\
+\end{align}
+These are the constraints for the canonical ensemble. So using the multipliers
+\begin{align}
+S' = -\sum_{i=1}^N P_i\ln P_i - \alpha\Big[\sum_{i=1}^N P_i -1\Big] - \beta\Big[\sum_{i=1}^N E_iP_i - E\Big]
+\end{align}
+We now look for the extremum of the entropy, which will be positive since $P_i$ is always positive, and $-\ln P_i$ is also always positive. 
+\begin{align}
+\frac{\partial S'}{\partial P_i} &= -\ln P_i  + 1 -\alpha - \beta E_i\\
+ &= 0 
+\end{align}
+We see we have now almost accidentally obtained an expression for each $P_i$, which we can get by shifting variables and exponentiating. We first define $1-\alpha = \ln Z$
+
+\begin{align}\label{stat-probability}
+P_i = \frac{1}{Z}e^{-\beta E_i}
+\end{align}
+This is the \textbf{Boltzmann distribution}, found only using the constraint of maximum entropy, total energy, and probability conservation. This allows us to define the \textbf{partition function} $Z$ plugging into equation \ref{sumprob} with
+\begin{align}
+\sum_{i=1}^N e^{-\beta E_i} = Z
+\end{align}
+Which acts like a normalization factor for the probabilities. Now plugging into equation \ref{sumenergy}, we get
+
+\begin{align}
+\sum_{i=1}^N \frac{1}{Z}e^{-\beta E_i}E_i = E
+\end{align}
+We now see that the following identity holds, which lets us express the average energy as a function of \emph{only} the partition function
+\begin{align}\label{partenergy}
+E = -\frac{1}{Z}\frac{\partial Z}{\partial \beta} = -\frac{\partial \ln Z}{\partial \beta}
+\end{align}
+In the continuum limit, we get 
+
+\begin{align}
+S = -\int dV \rho \ln\rho
+\end{align}
+
+Where $\rho$ is the \emph{probability density} and we integrate over the volume in phase space $p,q$ as we define the states as when an atom has some fixed $p, q$. This has an identical form to the density matrices  used in Quantum Mechanics (Equation \ref{density}), which is pretty weird.
+
+
+
+
+\section{Temperature}
+Temperature is the measure of the average kinetic energy of a system. It is defined as 
+
+\begin{align}
+\frac{1}{T}= \frac{\partial S}{\partial E}
+\end{align}
+
+It tells you how much the entropy changes by when you change the average energy of the system. It can be shown using equation \ref{stat-probability} that the entropy looks like
+\begin{align}
+S = k(\beta E + \ln Z)
+\end{align}
+Thus
+\begin{align}
+dS &= Ed\beta + \beta dE +\frac{\partial \ln Z}{\partial \beta}d\beta\\
+&= Ed\beta + \beta dE -Ed\beta\\
+&= \beta dE
+\end{align}
+Which tells us that
+\begin{align}
+\frac{1}{T} = \beta
+\end{align}
+So temperature is in fact just a Lagrange Multiplier.
+
+
+\section{Partition Function}
+The real secret behind getting good at statistical mechanics is just getting fancy with how you take derivative of the partition function. For instances let's look at the specific heat capacity
+\begin{align}
+    C_v = \frac{\partial \langle E\rangle}{\partial T} &= \frac{\partial}{\partial T}\Big[\frac{1}{Z}\sum_{i=1}^N E_i e^{-E_i/kT}\Big]\\
+    &= -\frac{1}{Z^2}\sum_{i=1}^N E_i e^{-E_i/kT}\frac{\partial Z}{\partial T} + \frac{1}{kT^2Z}\sum_{i=1}^N E_i^2 e^{-E_i/kT}
+\end{align}
+It can be shown that eventually we get an expression that relates the specific heat capacity to the \emph{average fluctuations in energy} which is super weird.
+\begin{align}
+    \langle \Delta E^2\rangle= C_vkT^2 
+\end{align}
+
+\section{Ensembles}
+Usually when we need statistical mechanics, it is because we care about how fast a block of ice melts or the spreading out of a gas. These objects of interest are called \emph{systems}. %TODO Because statistical mechanics is all about averages, \footnote{Kittel pg. 9}
+
+\subsection{Microcanonical Ensemble}
+Here, because the system can have only one energy level, we look for states within that energy $E$, again using Lagrange multipliers with
+\begin{align}
+    S' = -\sum_{i=1}^N P_i\ln P_i - \alpha\Big[\sum_{i=1}^N P_i -1\Big]
+\end{align}
+Taking the derivative, we see that
+\begin{align}
+    \frac{\partial S'}{\partial P_i} &= -\ln P_i  + 1 -\alpha\\
+ &= 0 
+\end{align}
+So the probability that the system is in any of it's states with total energy $E$ is given by a constant, with
+\begin{align}
+    P_i = e^{1-\alpha} = \frac{1}{Z}
+\end{align}
+
+%\subsection{Canonical Ensemble}
+
+\subsection{Grand Canonical Ensemble}% \todo{this is garbage}
+We now pretend we have a system $A$ with $N_r$ at energy $E_s$ which is free to exchange particles and everything with another system $A'$ at $E_s'$. Under the constraints that
+\begin{align}
+E_i + E_i' = E^{(0)}\\
+N_r + N_r' = N^{(0)}
+\end{align}
+We have different indices for the energy and particle number because there can be states with differing number of particles $N_r$ which all have the same energy $E_i$. Our task is to find the probability $P_{i,r}$ that the system $A$ is in some given state $E_i$ with number of particles in it $N_r$. It is legitimate to think that this probability should be proportional to the amount of ways you can organizes all the molecules and their energy to get exactly the energy in the \emph{other} system $A'$ to be $E^{(0)} - E_i$
+\begin{align}
+P_{i,r}(E_i,N_r) \propto \Omega'(E^{(0)} - E_i , N^{(0)}- N_r)
+\end{align}
+We are also going to pretend the system $A$ is much smaller than the other, so $E_i\ll E^{(0)}$ and $N_r \ll N^{(0)}$, which lets us Taylor expand the number of ways we can arrange the system, after taking the natural log to keep it's extensive nature.
+\begin{align}
+\ln\Omega'(E^{(0)} - E_i , N^{(0)}- N_r) = \ln\Omega'(E^{(0)},N^{(0)}) - \Big[\frac{\partial\ln\Omega'}{\partial E'}\Big] E_i - \Big[\frac{\partial\ln\Omega'}{\partial N'}\Big]N_r
+\end{align}
+From here, we identify constants as \footnote{There is likely a better way to do all of this, but I haven't found it}
+\begin{align}
+\Big[\frac{\partial\ln\Omega'}{\partial E'}\Big] = \frac{1}{kT}&&\Big[\frac{\partial\ln\Omega'}{\partial N'}\Big] = -\frac{\mu}{kT}
+\end{align}
+Exponentiating the expression, we see that 
+\begin{align}
+P_{i,r}\propto\exp\Big[-\beta(E_i-\mu N_r)\Big]
+\end{align}
+We can then normalize everything to find that
+\begin{align}
+P_{i,r} = \frac{e^{-\beta(E_i-\mu N_r)}}{\sum_{i,r}e^{-\beta(E_i-\mu N_r)}}
+\end{align}
+
+
+
+
+\section{Distributions}
+To obtain the distributions, we discretize each of the energies, which is what happens from Quantum Mechanics. For a given energy level of the entire system $E_i$, it should be the sum of the number of particles in each discretize energy level $\epsilon$ multiplied by $\epsilon$ itself.
+
+\begin{align}
+    E_i = n_1\epsilon_1 + n_2\epsilon_2 + n_3\epsilon_3 + ...
+\end{align}
+
+
+We also assume that there is some function $\mu$ called the \emph{chemical potential} which tells us how much energy it takes to add another particle to the system. The total energy from the chemical potential $\mu$ is given by
+\begin{align}
+    \mu N = \mu(n_1 + n_2 + n_3 + ... ) 
+\end{align}
+This gives us our full partition function as 
+\begin{align}
+Q= \sum e^{-\beta(n_1\epsilon_1  +  n_2\epsilon_2 +  n_3\epsilon_3 + ...) + \beta\mu(n_1 + n_2 + n_3 + ...)}
+\end{align}
+Where the different $n$'s are how many particles are in each of the discretized energy levels. We of course also have the constraint that
+\begin{align}
+n_1 + n_2 + n_3 + ... = N
+\end{align}
+This partition function is actually huge in general, because each of the $n_1, n_2,$ etc are currently \emph{unbounded} and could be any number. So the sum has to be over all possible combinations of them.
+Thankfully however, we are free to break up the partition function however we like as long as we eventually enumerate over all the possible states. To show this, let's pretend that we have only two energy levels $\epsilon_1, \epsilon_2$ making the full partition function
+\begin{align}
+    Q_T = \sum_{n_1}\sum_{n_2}e^{-\beta[n_1\epsilon_1 + n_2\epsilon_2 - \mu(n_1 + n_2)]} = \sum_{n_1} e^{-\beta(\epsilon_1-\mu)n_1} \sum_{n_2} e^{-\beta(\epsilon_2 - \mu)n_2} = Q_1Q_2
+\end{align}
+So in fact the total partition function is just the \emph{product} of each of the individual ones. Lets break up the partition function for how many particles $n_k$ are in the $k$th energy level $\epsilon_k$, so
+\begin{align}
+Q = \prod_k Q_k
+\end{align}
+This gives us the partition function for the number of particles in each discrete energy level $\epsilon_k$ as 
+\begin{align}
+Q_k = \sum_{n} e^{-\beta(\epsilon_k - \mu)n}
+\end{align}
+Where we sum over $n$, which can take on as many values as are allowed for that discrete level. From here, we can do some playing around with the mini partition function $Q_k$ to find the average amount of particles in the discretized state $\epsilon_k$ is
+\begin{align}
+    \langle n_k \rangle = \sum_n nP_n = \frac{1}{Q_k} \sum_n n e^{-\beta(\epsilon_k-\mu)n}
+\end{align}
+We see that this is basically the same thing as taking the derivative of the partition function $Q_k$. Working everything out, we find
+
+\begin{align}\label{occupation}
+\langle n_k \rangle  =\frac{1}{\beta Q_k}\frac{\partial Q_k}{\partial \mu} = \frac{1}{\beta}\frac{\partial \ln Q_k}{\partial \mu}
+\end{align}
+
+\subsection{Fermi-Dirac}
+In Fermi Dirac statistics, because of the Pauli Exclusion principle, we have to have that
+\begin{align}
+n_k = 0~\rm{or}~1
+\end{align}
+I.e. there can only be a maximum of one particle in each of the given energy levels.
+The partition function $Q_k$ is calculated looking at all possible permutations of states and values of $n_k$, but there are only two possibilities, giving us
+\begin{align}
+Q_k= 1 + e^{-\beta(\epsilon_k-\mu)}
+\end{align}
+To calculate the average number of particles at the given energy level, we can just plug this into equation \ref{occupation} to find the average number of particles at a given energy to be
+
+\begin{align}
+\langle n_k \rangle =\frac{1}{e^{\beta(\epsilon_k - \mu)} + 1}
+\end{align}
+ This makes sense as it will never be less than 1 in most standard cases.
+
+\subsection{Boltzmann}
+This is the classical distribution expressed as
+\begin{align}
+    p_i\propto e^{-\epsilon_i/kT}
+\end{align}
+\subsection{Bose-Einstein}
+Here there can be \emph{any} number of particles in the same state, so the sum goes to infinity. Making the partition function look like
+\begin{align}
+    Q_k = \sum_{n=0}^\infty e^{-\beta(\epsilon_k - \mu)n} = \sum_{n=0}^\infty \Big(e^{-\beta(\epsilon_k - \mu)}\Big)^n
+\end{align}
+We recognize that the number inside the exponent $n$ will always be less than $1$, so this is in fact a Geometric series, giving us
+\begin{align}
+    Q_k = \frac{1}{1 - e^{-\beta(\epsilon_k - \mu)}}
+\end{align}
+Taking the same derivative with equation \ref{occupation}, we get
+\begin{align}
+\langle n_k\rangle = \frac{1}{e^{\beta(\epsilon_k-\mu)}-1}
+\end{align}
+We see that as $\beta = 1/T \rightarrow \infty$ the occupation number will explode and there will be tons of particles in the state $n_k$. Another important fact is that for photons, chemical potential $\mu = 0$. 
+
+
+\subsection{Bose-Einstein Condensate} %\todo{might have some errors here}
+Since there is not limit to how many bosons can occupy the same state, there is a certain temperature at which nearly all the particles are "condensed" to the lowest possible state. This is the Bose- Einstein Condensate. The math to figure this out is very tricky. How we will find this temperature is first looking at the average number of molecules in all the excited states. We do this by simply adding up the average number of particles in each energy level. In integral form
+\begin{align}
+    N_e = \int d\epsilon_i \frac{g_i}{e^{\beta(\epsilon_i - \mu)} -1}
+\end{align}
+Where we have already used the average number of particles in each energy level as
+\begin{align}
+    \langle n_i\rangle = \frac{1}{e^{\beta(\epsilon_k-\mu)}-1}
+\end{align}
+The real interesting thing about the Bose Einstein condensate come from the \emph{dimensionality of the phase space}. We will get different results for the critical temperature depending on the phase space allocated to the particles themselves. Let's calculate the the number of particles in the excited state in three dimensions, and just normal kinetic energy
+\begin{align}
+    N_e &= \frac{1}{h^3}\int dp^3\int dx^3 \frac{1}{e^{\beta(p^2/2m - \mu)} -1}\\
+    &=\frac{4\pi V}{h^3} \int_0^\infty  dp \frac{p^2}{e^{\beta(p^2/2m - \mu)} -1}
+\end{align}
+Remember, the ground state does \emph{not} contribute to this sum since the energy is zero. The integral looks quite intimidating, so we have to use some tricks to evaluate it. Let's start by factoring out the denominator
+\begin{align}
+    N_e &= \frac{4\pi V}{h^3} \int dp \frac{p^2}{e^{\beta(p^2/2m - \mu)}}\frac{1}{1-e^{-\beta(p^2/2m - \mu)}}
+\end{align}
+Now the energy is always going to be greater than the chemical potential $\mu$, so the right term is in fact a Geometric series, in the same way we first wrote the Bose - Einstein distribution
+\begin{align}
+    N_e &= \frac{4\pi V}{h^3} \int dp \frac{p^2}{e^{\beta(p^2/2m - \mu)}}\sum_{n=0}^\infty e^{-\beta n(p^2/2m - \mu)}\\
+    &=\frac{4\pi V}{h^3} \int dp ~p^2 \sum_{n=0}^\infty e^{-\beta (n+1)(p^2/2m - \mu)}
+\end{align}
+Now we shift the order of the sum and the integral, and shift the start of the sum, so we get
+\begin{align}
+    N_e &= \frac{4\pi V}{h^3}\sum_{n=1}^\infty e^{\beta n\mu}\int_0^\infty dp~p^2  e^{-\beta n p^2/2m}
+\end{align}
+We can evaluate this integral just doing our normal Gaussian integration after taking the derivative (see the math section) to find
+\begin{align}
+    N_e &= \frac{4\pi V}{h^3}\sum_{n=1}^\infty e^{\beta n\mu} \frac{\sqrt{\pi}}{4}\Big(\frac{2m}{\beta n}\Big)^{3/2}\\
+    &= V\Big(\frac{2\pi m}{h^2\beta}\Big)^{3/2}\sum_{n=1}^\infty \frac{e^{\beta n\mu}}{n^{3/2}}
+\end{align}
+Since the ground state energy is zero, and it is necessary that $\epsilon - \mu > 0$ for all energies, we need that
+\begin{align}
+    \mu < 0
+\end{align}
+Looking the largest possible value this sum could be (where $\mu = 0$), we get the definition of the Riemann Zeta function (See ...)
+\begin{align}
+    N_e = V\Big(\frac{2\pi m}{h^2\beta}\Big)^{3/2}\sum_{n=1}^\infty \frac{1}{n^{3/2}} &= \Big(\frac{2\pi m kT}{h^2}\Big)^{3/2} \zeta(3/2)
+\end{align}
+So this is the \emph{maximum} number of particles that we can fit into a volume $V$ at temperature $T$ in the excited states when there is no chemical potential between the molecules, meaning we are free to add or subtract as many as we want. The question becomes, where do they go? Into the ground state. We must have that 
+\begin{align}
+    N = N_0 + N_e
+\end{align}
+The first fill up the excited states before condensing to the ground state. We defined a critical temperature at which all the particles go into the excited states before the condensate starts to form with %\todo{fix}
+\begin{align}
+    N &= \Big(\frac{2\pi m kT_c}{h^2}\Big)^{3/2} \zeta(3/2)
+\end{align}
+Which let's us find the critical temperature with
+\begin{align}
+    T_c = \Big(\frac{N}{V\zeta(3/2)}\Big)^{2/3} \frac{2\pi\hbar^2}{mk}
+\end{align}
+Thus
+\begin{align}
+    N_0 = N\Big[1-\Big(\frac{T}{T_c}\Big)^{3/2}\Big]&& T < T_c
+\end{align}
+With these types of integrals we will \emph{always} get something with the Zeta function, the smallest dimensionality that barely won't converge is 
+\begin{align}
+    \zeta(1) = 1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + ...
+\end{align}
+Which is the Harmonic series, which does not converge, which tells us that the Bose-Einstein condensate cannot form in one dimension. Apparently the evolution of many complex systems, including the World Wide Web follow Bose statistics and can under go Bose-Einstein condensation.\footnote{Bianconi, G.; Barabási, A.-L. (2001). "Bose–Einstein Condensation in Complex Networks." Phys. Rev. Lett. 86: 5632–35.} 
+
+\subsection{Stefan-Boltzmann Law}
+From the partition function for a photon gas, we can get a function for the average energy of a photon gas as usual. Remember that the energy of a photon is $\epsilon = |\textbf{p}|c$, since they don't have mass. Eventually we find that the power, which is energy per unit time goes as 
+\begin{align}
+    P = A\varepsilon \sigma T^4
+\end{align}
+This tells us the power radiated from a black-body, (which just means it absorbs everything that hits it) is proportional to the temperature to the fourth power. $A$ is the surface area of the object, $\varepsilon$ is the emissivity, which is 1 if it is a perfect blackbody, and $\sigma$ is a constant from the partition function.
+
+\subsection{Gas - Liquid - Solids}
+An Einstein solid assumes all atoms oscillate in all directions with the same frequency $\omega$. We can easily calculate the partition function for one of particles in one of the dimensions, knowing that the energy goes as a harmonic oscillator
+\begin{align}
+    Z_0 &= \sum_{n=0}^\infty e^{-\beta\hbar\omega(n+1/2)}\\
+    &= e^{-\beta\hbar\omega/2} \sum_{n=0}^\infty e^{-\beta\hbar\omega n}\\
+    &= \frac{e^{-\beta\hbar\omega/2}}{1-e^{-\beta\hbar\omega}}\\
+    &= \frac{1}{2\sinh(\beta\hbar\omega/2)}
+\end{align}
+We assume all of these oscillators are independent, so to get the full wave function, we just have to exponentiate this 3 times, for each dimension of the single atom, then $N$ to consider all of the atoms in the solid.
+\begin{align}
+    Z = Z_0^{3N}
+\end{align}
+Einstein solid particles are said to be distinguishable, so the partition function is not weighted by $1/N!$
+
+\subsection{Chemical Potential}
+We know that if we add up the average number of particles in each energy level, we should simply get back the total number of particles, which is a constant if particles are not allowed to leave. For both Fermi and Bose statistics we have
+\begin{align}
+    N = \sum_{i=0}^\infty \frac{1}{e^{\beta(\epsilon_i - \mu)} \pm 1}
+\end{align}
+ Let's first consider the Fermi case (with the plus sign). If we look at zero temperature, or $\beta = \infty$, we see that if 
+\begin{align}
+    \epsilon_i < \mu  && n_i \sim \frac{1}{e^{-\infty} +1} = 1\\
+    \epsilon_i > \mu  && n_i \sim \frac{1}{e^{\infty} +1} = 0
+\end{align}
+Trying the same thing for the Bose case
+\begin{align}
+    \epsilon_i < \mu  && n_i \sim \frac{1}{e^{-\infty} -1} = -1
+\end{align}
+We obviously can't have an expectation value of a negative particle\footnote{Could this actually account for antiparticles?}, so the previous expression is wrong, the only valid energies must be
+\begin{align}
+    \epsilon_i > \mu && n_i\sim \frac{1}{e^{\infty} -1} = 0
+\end{align}
+But since we need to conserve particle number, we must have that all the particles  have the same energy with
+\begin{align}
+    \epsilon_i = \mu && n_i = N
+\end{align}
+This is another way to see Bose-Einstein condensation. %\todo{Verify this last part.}
+
+
+\subsection{Averages}
+For some reason if we want to find the average of a quantity that obeys Fermi or Bose statistics, we can use
+\begin{align}
+    \langle A \rangle = \frac{1}{(2\pi\hbar)^3}\int d^3p \int d^3r A~\frac{g(E_{pr})}{e^{\beta(E_{pr} - \mu)}\pm 1}
+\end{align}
+
+\section{Fermi Energy}
+Within a box of length $L = L_x = L_y = L_z$, from quantum mechanics, we know we can expression the energy of any given state as
+\begin{align}
+E = \frac{\hbar^2\pi^2}{2mL^2}\Big(n_x^2+n_y^2+n_z^2\Big)
+\end{align}
+We can see these energy levels are degenerate, so it is conventional to imagine something called the "Fermi Sphere" which shifts the $n$'s to spherical geometry, with
+\begin{align}
+n^2 = n_x^2 + n_y^2+n_z^2
+\end{align}
+Since the $n$'s must always be positive, we take only the positive quadrant, so $1/8$th of the sphere. Since an electron can be in two spin states, this gives the total amount of electrons in the spherical portion as
+\begin{align}
+N = 2\cdot\frac{1}{8}\cdot\frac{4}{3}\pi n_F^3
+\end{align}
+Where $n_F$ is the maximum in magnitude occupied state.
+Rearranging to solve for this maximum magnitude, we have that
+\begin{align}
+n_F = \Big(\frac{3N}{\pi}\Big)^{1/3}
+\end{align}
+The Fermi energy is defined as the energy at this maximum occupied state, so plugging in we have
+\begin{align}
+E_F &= \frac{\hbar^2\pi^2}{2mL^2}\Big(\frac{3N}{\pi}\Big)^{1/3}\\
+&=\frac{\hbar^2}{2m}\Big(\frac{3\pi^2N}{V}\Big)^{2/3}
+\end{align}
+
+
+\section{Liouville Theorem}
+We first imagine that we have some arbitrary number of systems that obey the same Hamitonian (a ton of harmonic oscillators for example) that are each started with different initial conditions (one is moving at $5~m/s$ started at the origin, one starts at $\theta = \pi/2$ with no speed, ...) we can take note of each of their positions $x_i$ and momenta $p_i$ and draw them all together in phase space. When drawn together we get something that looks like a density $\rho$ that is all the points plotted together, with more in one location than another etc. What we look for is how this density changes in time from the continuity equation, with
+\begin{align}
+\frac{d\rho}{dt} &= \frac{\partial\rho}{\partial t} + \nabla\cdot(\rho\textbf{v})\\
+&=\frac{\partial\rho}{\partial t} + \sum_{i=1}^n \frac{\partial (\rho x_i)}{\partial x_i}\dot{x}_i + \frac{\partial (\rho p_i)}{\partial p_i}\dot{p}_i
+\end{align}
+
+
+
+
+This theorem turns out to be valid for both equilibrium and non-equilibrium systems.
+%\todo{finish!}
+
+
+
+
+
+\section{Ising Model}
+Used to model spin systems which have a favored state. Each object has a given "spin" ($s_1, s_2, ..., s_N$) and has an interaction energy with its neighbors.
+
+% TODO $$picture$$
+
+The Hamiltonian is given by
+\begin{align}
+H = -\varepsilon\sum_{i=1}^N s_is_{i+1} - \sum_{i=1}^Nh s_i
+\end{align}
+We see that when the spins are aligned (directions are the same), we minimize the energy, thus alignment is favorable. The second term is just the interaction of the spin itself with the magnetic field. Using the mean field approximation, we just pretend they are all uncorrelated and get
+
+\begin{align}
+h' &= \varepsilon\nu \langle s\rangle + h\\
+\implies H &= -\sum_{i=1}^N h's_i
+\end{align}
+
+Where $\nu$ is the number of nearest neighbors (i.e. in a 2D square lattice, it is 4). %TODO Will's thoughts - you have an field created by the thing $h$ which is created by the totality of the spins, and the interation between the spins given by the first terms... This is why there is hysteresis for ferromagnets. Feynman might have something good for this? 
+Expanding 
+
+\begin{align}
+m = \tanh\Big(\frac{h + \varepsilon\nu m}{T}\Big)
+\end{align}
+With $T\approx T_c$, $h=0$, $m\ll 1$ We get 
+\begin{align}
+m = \sqrt{3}\Big(1-\frac{T}{T_c}\Big)^{1/2}
+\end{align}
+Where $T_c = \varepsilon\nu$. Actual $T_C = 2.269\varepsilon$ in 2D, but our approximation gives us that it is $\nu/2 = 4/2 = 2$ considering only the nearest neighbors. % TODO Check Kamil's notes
+
+%TODO
+%\section{Brownian Motion}
+%A botanist named Robert Brown first noticed that particles will jiggle around, eventually moving an appreciable amount from where they started, but didn't know why. In 1905, Einstein published a paper explaining this mechanism as a product atomic motion. We first look at the density of particles (here in one dimension) as a function of position and time. In a small time, we can take the first order in the Taylor expansion, with
+%\begin{align}
+%   \rho(x,t + \tau) = \rho(x,t) + \tau\frac{\partial\rho}{\partial t} + ...
+%\end{align}
+%Our goal is to somehow relate this to how far they go, and match what Brown had seen. To do this we look at ... expand probability density
+%
+%\begin{itemize}
+%\item \begin{align}
+% \frac{dv(t)}{dt} = -\frac{1}{\tau} v(t) + \Gamma(t)
+% \end{align}
+%
+%\item Diffusion, EInstein Relation
+%\item Solving for velocity as a function of time, given some arbitrary stocastic force $\Gamma(t)$
+%\item Obtained using Green's functions...
+%\begin{align}
+% v(t) = v(0)e^{-t/\tau} + e^{-t/\tau}\int_0^t dt' e^{t'/\tau}\Gamma(t')
+% \end{align}
+% \item This gives us that
+% \begin{align}
+% \langle v(t)^2\rangle &= v(0)^2 e^{-2t/\tau} + 2v(0)e^{2t/\tau}\int dt'\langle  \Gamma \rangle + e^{-2t/\tau}\int_0^t dt'\int_0^t dt'' e^{(t'+t'')/\tau} \langle \Gamma(t')\Gamma(t'')\rangle
+% \end{align}
+% The second term is zero since the $\langle \Gamma(t)\rangle = 0$. But we now have to find the correlation function between the stocastic term. We should have that the function is uncorrelated with itself after some significant amount of time has passed $s \ge \tau_0$, since it is a random function.
+% \begin{align}
+% \langle \Gamma(t)\Gamma(t+s)\rangle = \langle \Gamma\rangle\langle\Gamma\rangle = 0
+% \end{align}
+% 
+% Thus we can Taylor expand this integral since the correlation happens only when the times in question are close to each other.
+% \begin{align}
+% \int_0^t dt'\int_0^t dt'' e^{(t'+t'')/\tau} \langle \Gamma(t')\Gamma(t'')\rangle &= \int_0^t dt'\int^{-t'+t}_{-t'} du e^{(2t'+u)/\tau}\langle \Gamma(t')\Gamma(t'+u)\rangle\\
+% &= 
+% \end{align}
+%
+%\begin{align}
+%\langle v^2(t)\rangle &= v^2(0)e^{-2t/\tau} + \frac{\tau}{2}(1-e^{-2t/\tau})\int_{-\infty}^\infty du \langle \Gamma(t)\Gamma(t+u)\rangle
+%\end{align}
+%But we know that
+%\begin{align}
+%\frac{1}{2}m\langle v^2(t)\rangle &= \frac{3}{2}kT
+%\end{align}
+%Plugging everything in, you get (might have another factor of $k$)
+%\begin{align}
+%\int_{-\infty}^\infty du \langle \Gamma(0)\Gamma(u)\rangle  = \frac{6Tm}{\tau}
+%\end{align}
+%
+%
+%
+%\end{itemize}
+%\section{TODO}
+%
+%\begin{itemize}
+%
+% 
+%\item Laser works because normally, for high temperatures, all states are equally likely, but we can pump extra stuff into higher states with lasers, which are non-equilibrium states, then weird stuff happens...
+%
+%
+%
+%\item Joule Thompson Coefficient / Process
+%\item Poisson Distribution -Grand Canonical Ensemble
+%\item Hysteresis in Ising model with Magnetization
+%
+%\item Pg 43 Schroeder
+%\item Density of air molecules, Comp 2011, 6
+%\end{itemize}
+%
+

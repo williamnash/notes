@@ -1,0 +1,852 @@
+
+\chapter{Particle Physics Theory}
+There are four so called "fundamental forces" that are able to describe the interactions and dynamics of every single thing in the universe. 
+
+\begin{itemize}
+    \item Electromagnetism: Describes the propagation of light and pushing and pulling of charges around each other. This force is responsible for the majority of what we as humans see and feel in everyday life. Lifetimes of decay's coming from this force are $10^{-20} - 10^{-16}$ s. $\pi^0\rightarrow \gamma\gamma$ decay's through this force in $10^{-17}$ s.
+    \item The Weak Force: This describes how radioactive decay happens within a nucleus and is responsible for the strange particle called the neutrino. In some way, this force is "unified" with electromagnetism at some large energy scale, meaning the two merge together into one. Lifetimes of decay's coming from this force are $10^{-13} - 10^{3}$ s. $\pi^{+/-} \rightarrow \mu+\nu$ decay from this force in a much longer time of $10^{-8}$ s.
+    \item The Strong Force: This is what keeps the constituents of a nucleus (protons) from getting pushed away from each other due to electromagnetic repulsion (they are all the same charge). This force is weak at short distances, but gets stronger as you get further away and is described by Quantum Chromodynamics. Lifetimes of decay's coming from this force are $10^{-23} - 10^{-20}$ s. 
+    \item Gravity: This is what pulled the earth together and keeps you from flying off into space. It is extremely weak when compared to electromagnetism. Each of the other forces can be put into a framework consistent with Quantum Mechanics except Gravity.
+\end{itemize}
+
+
+%\begin{center}
+%\begin{tabular}{ | c | c| c |} 
+%\hline
+% Particle & Mass & Rule of thumb\\ \hline
+% Electron & 0.5 MeV $m_e$ & \\ 
+% Proton & 1 GeV  &$m_p \approx 2000 ~m_e$\\
+%Muon & 0.1 GeV & $m_\mu \approx 200 ~m_e$  \\ 
+%\hline
+%\end{tabular}
+%\end{center}
+
+\section{Continuum Mechanics}
+Each of the three forces we actually understand in detail (Electromagnetism, the Weak Force, and the Strong Force) can be described by something called Quantum Field Theory (QFT). To understand how any of it makes sense, it is nice to begin with a set of things that are simpler to understand then build on what we know. Continuum mechanics deals with the "field" aspect of QFT, and is typically the aspect that people have seen the least of. 
+
+Particle physics typically uses Lagrangian mechanics, since the Lagrangians can be made relativistically invariant, as opposed to  Hamiltonians (an energy) which cannot be.
+
+Imagine a set of identical masses $m$ attached to each other by identical springs with constant $k$ all put in a row. The Lagrangian, which tells us how each mass will move, is simply given by the sum of each masses kinetic energy $T$ minus its potential energy $V$ from the spring it is attached to
+
+\begin{align}
+    L = T - V = \frac{1}{2}\sum_i \Big[m \dot{x}_i^2 - k(x_i - x_{i+1})^2\Big]
+\end{align}
+The meaning of continuum mechanics is that we take the distance between the springs to be effectively zero. This has an effect of making the potential term turn into
+\begin{align}
+    V_i =\lim_{a\to 0} ~k a^2 \Big(\frac{x_i - x_{i+1}}{a}\Big)^2 = ka^2 \Big(\frac{d x_i}{d a}\Big)^2
+\end{align}
+The quantity $ka = Y$ turns out to be a physical quantity independent of size called Young's modulus which is derived from Hooke's law\footnote{Goldstein ch. 13}. This allows us to write the Lagrangian as 
+\begin{align}
+    L = \lim_{a\to 0} \frac{1}{2}\sum_i a\Big[\mu \dot{x}_i^2 - Y\Big(\frac{d x_i}{d a}\Big)^2\Big]
+\end{align}
+With $\mu = m/a$, mass per unit length. Since $a$ is infinitesimally small, what we are really doing is integrating over all the different masses along the line. To match notation later, we write the displacement of each mass from it's equilibrium position as $\phi$ and the position of wherever we are along the chain as $x$. Our Lagrangian thus becomes
+\begin{align}
+    L = \frac{1}{2}\int dx \Big[\mu \dot{\phi}^2 - Y\Big(\frac{d\phi}{d x}\Big)^2\Big]
+\end{align}
+This was sleight of hand, what we have actually done is create a "field" of the harmonic oscillators, i.e. for each point in space, there is a specific value of the spring's displacement from zero. We describe the integrand as the "Lagrangian Density" which generalizes to three dimensions with
+\begin{align}
+    L = \int dx^3 ~\mathcal{L}
+\end{align}
+What this tells us is that in general, a given Lagrangian (or equivalently a Lagrangian density) can be a function of
+
+\begin{align}
+    \mathcal{L} = \mathcal{L}\Big(\phi, \frac{d\phi}{dx},\frac{d\phi}{dt}, x,t\Big)
+\end{align}
+Hamilton's principle says that the Action of any physical system should be minimized to have it occur, so we use the standard tricks of Classical Mechanics to solve for the Euler-Lagrange equations of the system.
+\begin{align}
+    \delta S = \delta\int_1^2 dt \int dx ~\mathcal{L} = 0
+\end{align}
+Typically, a system of $n$ degrees of freedom have $n$ Lagrange equations of motion, so one would expect an infinite number of Euler-Lagrange equations in the limit of a spring at each point. It turns out that by considering $d\phi/dx$ as a variable and re-deriving the equations of motion, we find just one\footnote{Goldstein ch.13}, of the form
+\begin{align}
+    \frac{d}{dt}\left(\frac{\partial\mathcal{L}}{\partial\frac{d\phi}{dt}}\right) + \frac{d}{dx}\left(\frac{\partial\mathcal{L}}{\partial \frac{d\phi}{dx}}\right) - \frac{\partial\mathcal{L}}{\partial \phi} = 0
+\end{align}
+
+Deriving the equations of motion for a three dimensional case is straightforward and gives us another term for each spatial component. It is typical to use four-dimensional space coordinates to represent the equations of motion with
+\begin{align}
+    x^\mu = (x^0, x^1, x^2, x^3) = (t, x, y,z)
+\end{align}
+In units where $c=1$, typical in Particle Physics. We can use a shorthand for derivatives with 
+\begin{align}
+    \partial^\mu \equiv \frac{\partial}{\partial x_\mu} && \partial_\mu \equiv \frac{\partial}{\partial x^\mu}
+\end{align}
+So we can write the three dimensional case concisely as
+\begin{align}
+    \frac{d}{dt}\left(\frac{\partial\mathcal{L}}{\partial\frac{d\phi}{dt}}\right) + \frac{d}{dx}\left(\frac{\partial\mathcal{L}}{\partial \frac{d\phi}{dx}}\right) +\frac{d}{dy}\left(\frac{\partial\mathcal{L}}{\partial \frac{d\phi}{dy}}\right) + \frac{d}{dz}\left(\frac{\partial\mathcal{L}}{\partial \frac{d\phi}{dz}}\right) = \partial_\mu \left(\frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi)}\right)
+\end{align}
+Thus the Euler-Lagrange equations for a field in three dimensions is given by
+\begin{align}\label{euler-lagrange}
+    \boxed{\partial_\mu \left(\frac{\partial\mathcal{L}}{\partial(\partial_\mu\phi)}\right) - \frac{\partial\mathcal{L}}{\partial \phi} = 0}
+\end{align}
+Using this notation, we can even simplify the form of the Lagrangian itself. In three dimensions, the Lagrangian for a field of harmonic oscillators becomes
+\begin{align}\label{harm-osc-lagrange}
+    \mathcal{L} = \frac{1}{2}(\partial_\mu\phi)(\partial^\mu \phi) \equiv \frac{1}{2}(\partial\phi)^2
+\end{align}
+
+\section{Noether's Theorem}
+
+
+Noether's theorem is of critical importance in modern theoretical physics and tells us that for every symmetry of the action, we will have a conserved quantity that is associated with it. Let's consider whatever it is we want to do to the system as a change in the field $\phi$ at any point $x$. We can even think of changing the coordinates themselves as changing the field itself at any position or time.
+
+\begin{align}
+    \phi'(x) = \phi(x) + \delta\phi(x)
+\end{align}
+Since our Lagrangian is written in terms of these fields, in general, we expect a change it how it looks as well
+
+\begin{align}\label{lprime}
+    \mathcal{L}'(x) = \mathcal{L}(x) +\delta\mathcal{L}(x)
+\end{align}
+This will also amount to a change in our Action, with
+
+\begin{align}\label{daction}
+    \delta S = \int d^4x~\delta\mathcal{L}(x) 
+\end{align}
+
+We can expand the change in the Lagrangian to first order in the change of the fields, since we consider only an infinitesimal change in our field.
+
+\begin{align}
+    \delta\mathcal{L} &= \frac{\partial\mathcal{L}(x)}{\partial\phi}\delta\phi + \frac{\partial\mathcal{L}(x)}{\partial(\partial_\mu\phi)}(\partial_\mu\delta\phi) \\
+    &= \left(\frac{\partial\mathcal{L}(x)}{\partial\phi}- \partial_\mu\frac{\partial\mathcal{L}(x)}{\partial(\partial_\mu\phi)}\right)\delta\phi + \partial_\mu\left(\frac{\partial\mathcal{L}(x)}{\partial(\partial_\mu\phi)}\delta\phi\right)
+\end{align}
+Where we used the chain rule to rewrite the terms on the right. If the fields minimize the Action, they must obey the Euler-Lagrange equation (\ref{euler-lagrange}). So we have that the change in the action is 
+\begin{align}\label{deltaS1}
+    \delta S  &= \int d^4x~\partial_\mu\left(\frac{\partial\mathcal{L}(x)}{\partial(\partial_\mu\phi)}\delta\phi\right) 
+\end{align}
+This term is in general not zero, but we can use a trick to leave the action invariant, which is our definition of a symmetry. When deriving the Euler-Lagrange equations, we take the actual variation in the fields $\delta\phi$ to be zero at the boundaries of integration, which means it doesn't care if we add a full derivative\footnote{Peskin pg. 17}
+\begin{align}
+\mathcal{L}(x)\rightarrow\mathcal{L}(x) + \partial_\mu\mathcal{J}^\mu(x)
+\end{align}
+This is because the volume integral of a full derivative can be converted into a surface integral by the generalization of the divergence theorem. 
+Knowing that we will always get a change in the Action given by equation (\ref{deltaS1}), and that we have the freedom to add an arbitrary surface term $\partial_\mu\mathcal{J}^\mu(x)$ which can change the Action but not the Euler-Lagrange equations, we can combine the two to give us no change in the action. 
+\begin{align}
+\delta S = 0 = \int d^4x~\partial_\mu\left(\frac{\partial\mathcal{L}(x)}{\partial(\partial_\mu\phi)}\delta\phi-\mathcal{J}(x)\right) 
+\end{align}
+
+We see the integrand here must zero, which allows us to define the conserved current
+\begin{align}\label{noether}
+j^\mu(x) = \frac{\partial\mathcal{L}(x)}{\partial(\partial^\mu\phi)}\delta\phi-\mathcal{J}(x) &&\partial_\mu j^\mu(x) = 0
+\end{align}
+The conservation law tells us that 
+\begin{align}
+Q = \int j^0 d^3x
+\end{align}
+Is a constant in time, derived from the fact that the change in our fields $\delta\phi$ add a total derivative term to our Lagrangian which is the exact opposite the one we get from changing the Lagrangian to first order in the fields $\phi$. Our symmetries must be defined in a way that give us this property, the general method for finding symmetries of a system goes as 
+
+\begin{enumerate}
+    \item For a Lagrangian $\mathcal{L}$, concoct a field symmetry transformation $\delta\phi$
+    \item Plug in the new field to see how the Lagrangian changes, and verify it is by a total derivative $\partial_\mu\mathcal{J}^\mu(x)$. This tells us we have a valid symmetry.
+    \item Now calculate the term from the Lagrangian to find the conserved current by equation (\ref{noether})
+\end{enumerate}
+
+Some typical examples of symmetries and their corresponding conserved quantity are given below
+
+\begin{center}
+\begin{tabular}{ | c | c|} 
+\hline
+ Symmetry & Conserved Quantity\\ \hline
+ Time Translation & Energy  \\ 
+ Space Translation & Momentum  \\
+Rotation in Space & Angular Momentum \\ 
+Coordinate Inversion & Spatial Parity\\
+Charge Conjugation & Charge parity \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\section{Relativistic Quantum Mechanics}
+\footnote{HEP Summer 2015 Notes}The standard equation for the evolution of a wave function in non-relativistic quantum mechanics is given by the Schrodinger equation (in natural units $c=1,\hbar=1$)
+
+\begin{align}
+i\frac{\partial}{\partial t}\psi(x,t) =\Big(-\frac{1}{2m}\nabla^2 + V(x)\Big)\psi(x,t)
+\end{align}
+This equation is analogous to
+\begin{align}
+E = \frac{\textbf{p}^2}{2m} + V
+\end{align}
+By making the quantum mechanical replacements
+\begin{align}
+E &\rightarrow i\frac{\partial}{\partial t}\\
+\textbf{p} &\rightarrow i\nabla
+\end{align}
+We can make a quantum mechanical equivalent to Einstein's relativistic formula
+\begin{align}
+E^2 = \textbf{p}^2 + m^2
+\end{align}
+Giving us
+\begin{align}
+- \frac{\partial^2}{\partial t^2}\phi(x,t) = \Big(-\nabla^2 + m^2\Big)\phi(x,t)
+\end{align}
+Simplifying the notation using
+\begin{align}
+\frac{\partial^2}{\partial t^2} - \nabla^2 = \partial_\mu\partial^\mu
+\end{align}
+We can write the \textbf{Klein-Gordon equation} as 
+\begin{align}
+\boxed{(\partial_\mu\partial^\mu + m^2)\phi(x,t) = 0}
+\end{align}
+This is of course, an equation of motion. We want to find a Lagrangian that gives us the Euler-Lagrange equations equivalent to this. It turns out that\footnote{Peskin pg.16} the Lagrangian we need is
+
+\begin{align}
+\mathcal{L}(x) = \frac{1}{2}(\partial\phi)^2 - \frac{1}{2}m^2\phi^2
+\end{align}
+
+We see that the first term is the same as (Eq. \ref{harm-osc-lagrange}) the classical Lagrangian for a field of harmonic oscillators, with an additional term involving a mass $m$ associated with the field $\phi$ itself. This term is not analogous to the mass in a classical spring system, since in the infinitesimal limit it's value at any point in space would be near zero. We note that this term is \emph{quadratic} in the field. The term can be thought of as being associated with having the field having a non-zero value at all\footnote{Peskin pg. 17}; a \emph{potential} term instead of kinetic, as it was classically.
+
+\section{Important Lagrangians}
+\subsection{Lagrangian for a Scalar Field (Spin-0)}
+The equation for a single, scalar field $\phi$ is given by the Klein-Gordon equation
+\begin{align}\label{kg-lagrange}
+\mathcal{L}(x) = \frac{1}{2}(\partial\phi)^2 - \frac{1}{2}m^2\phi^2
+\end{align}
+\subsection{Dirac Lagrangian for a Spinor (Spin-$\frac{1}{2}$)}
+The spinor field is relevant for particles of spin $\frac{1}{2}$ and mass $m$. We treat $\psi$ and $\bar{\psi}$ as independent field variables. The Lagrangian turns out to be
+\begin{align}\label{dirac_lagrangian}
+\mathcal{L}(x) = i\bar{\psi}\gamma^\mu\partial_\mu\psi - m\bar{\psi}\psi
+\end{align}
+This gives two separate Euler-Lagrange equations
+\begin{align}
+i\gamma^\mu\partial_\mu\psi - m\psi = 0 && i\partial_\mu\bar{\psi}\gamma^\mu + m \bar{\psi} = 0
+\end{align}
+\subsection{Proca Lagrangian for a Vector Field (Spin-1)}
+Used for particles of spin-1 and mass $m$
+\begin{align}\label{proca}
+\mathcal{L}(x) = -\frac{1}{16\pi}F^{\mu\nu}F_{\mu\nu} +\frac{1}{8\pi}m^2A^\nu A_\nu
+\end{align}
+Where 
+\begin{align}
+F^{\mu\nu}\equiv \partial^\mu A^\nu -\partial^\nu A^\mu
+\end{align}
+Gives Euler-Lagrange equation
+\begin{align}
+\partial_\mu F^{\mu\nu} + m^2A^\nu = 0
+\end{align}
+If we set $m$ equal to 0, this is exactly the equations for Maxwell's equation in empty space.
+
+\section{Gauge Invariance}\label{gauge-inv}
+Looking at the Dirac Lagrangian (Equation \ref{dirac_lagrangian} used for particles with spin-$\frac{1}{2}$) we try to make it locally gauge invariant for no good reason at all\footnote{Griffith's 11.3 Local Gauge Invariance} with
+\begin{align}
+\psi(x) \rightarrow e^{iq\lambda(x)}\psi
+\end{align}
+Since there is a derivative term, by the chain rule we get an extra term that falls out from the exponent, which requires us to add an extra term to the Lagrangian in the first place to cancel it
+\begin{align}
+    \mathcal{L}(x) = [i\bar{\psi}\gamma^\mu\partial_\mu\psi - m\bar{\psi}\psi] - (q\bar{\psi}\gamma^\mu\psi)A_\mu
+\end{align}
+This is equivalent to replacing each derivative with the covariant derivative
+\begin{align}
+\partial_\mu \rightarrow \mathcal{D}_\mu \equiv \partial_\mu +iqA_\mu
+\end{align}
+Where $A_\mu$ is a "gauge" field with a transformation rule
+\begin{align}\label{gauge-transform}
+A_\mu \rightarrow A_\mu + \partial_\mu\lambda
+\end{align}
+
+Since we introduce this new field $A_\mu$, we have to include it's "free" term in the Lagrangian. It is a vector field since is a 4-vector, which requires us to use the Proca Equation (\ref{proca}) for the rest of it and also makes it so any type of particle associated with it has Spin-1. The second term in the Proca equation is not invariant, so we require that the mass associated with the particle from this field is zero. The full Lagrangian, with both the Spinor field and the new and necessary Proca Field is
+\begin{align}
+\mathcal{L}(x) = [i\bar{\psi}\gamma^\mu\partial_\mu\psi - m\bar{\psi}\psi] + \left[\frac{-1}{16\pi}F^{\mu\nu}F_{\mu\nu}\right]- (q\bar{\psi}\gamma^\mu\psi)A_\mu
+\end{align}
+With $F^{\mu\nu}\equiv \partial^\mu A^\nu - \partial^\nu A^\mu$ Therefore by the requirement of local gauge invariance on a spin-1/2 field, we are required to add a spin-1 field that couples to it. This equation in fact reproduces all of electrodynamics with $J^\mu = q(\bar{\psi}\gamma^\mu\psi)$.
+
+\section{Yang Mills Theory}
+\footnote{Griffiths pg. 351}
+If we have a Lagrangian which contains multiple fields, i.e. two spin $\frac{1}{2}$ fields $\psi_1, \psi_2$
+\begin{align}
+\mathcal{L} = [i\bar{\psi}_1\gamma^\mu\partial_\mu\psi_1 - m_1\bar{\psi}_1\psi_1] + [i\bar{\psi}_2\gamma^\mu\partial_\mu\psi_2 - m_1\bar{\psi}_2\psi_2]
+\end{align}
+
+We notice there is a symmetry in the Lagrangian which inspires us to write them as a two component column vector
+\begin{align}
+\psi \equiv \begin{pmatrix}
+\psi_1\\
+\psi_2
+\end{pmatrix}
+\end{align}
+So the Lagrangian becomes
+\begin{align}
+\mathcal{L} = i\bar{\psi}\gamma^\mu\partial_\mu\psi - \bar{\psi}M\psi
+\end{align}
+with
+\begin{align}
+M = \begin{pmatrix}
+m_1 & 0\\
+0 & m_2
+\end{pmatrix}
+\end{align}
+
+This allows us to come up with transformations on the Lagrangian that look like
+
+\begin{align}
+\psi\rightarrow U\psi
+\end{align} 
+Where $U$ is any unitary matrix, which can be written as
+\begin{align}
+U = e^{iH}
+\end{align}
+With $H$ being Hermitian. The most general form of a Hermitian $2\times2$ matrix is
+\begin{align}
+H = \theta 1 + \boldsymbol{\tau}\cdot\textbf{a}
+\end{align} 
+Where $\boldsymbol{\tau}$ are the Pauli matrices. These would be global symmetries of whatever Lagrangian we have, none of this is Yang Mills yet. The idea behind Yang-Mills theory is to let exponent be dependent on $x^\mu$, making the Lagrangian locally invariant instead of globally invariant.
+\begin{align}
+\psi\rightarrow S\psi && S\equiv e^{-iq\boldsymbol{\tau}\cdot\boldsymbol{\lambda}(x)}
+\end{align}
+After you do this, the derivative terms get screwed with again a la Section \ref{gauge-inv}, so you need to swap all the derivatives to covariant derivatives
+\begin{align}
+\mathcal{D}_\mu \equiv \partial_\mu + iq\boldsymbol{\tau}\cdot\textbf{A}
+\end{align}
+Since the Pauli matrices form $SU(2)$ which is non-Abelian, the field ends up transforming in a different way with $\textbf{A}$ following the transformation rule
+\begin{align}
+\textbf{A}_\mu \rightarrow\textbf{A}_\mu + \partial_\mu\boldsymbol{\lambda} + 2q(\boldsymbol{\lambda}(x)\times\textbf{A})
+\end{align}
+Similar to equation \ref{gauge-transform}. We now have to add 3 new vector fields to the Lagrangian, each of which have their mass term excluded by the invariance again. The field strength also changes because of the non-Abelian nature of $SU(2)$ with
+\begin{align}
+\textbf{F}^{\mu\nu}\equiv \partial^\mu\textbf{A}^\nu - \partial^\nu\textbf{A}^\mu - 2q\textbf{A}^\mu\times\textbf{A}^\nu
+\end{align}
+Finally we get the complete Yang-Mills Lagrangian as 
+\begin{align}
+\mathcal{L} = i\bar{\psi}\gamma^\mu\partial_\mu\psi - m\bar{\psi}\psi - \frac{1}{4}\textbf{F}^{\mu\nu}\textbf{F}_{\mu\nu} - (q\bar{\psi}\gamma^\mu\boldsymbol{\tau}\psi)\cdot\textbf{A}
+\end{align}
+This kind of procedure is extendable to higher order symmetry groups.
+
+
+\section{Electro-Weak Mixing and the Higgs}
+\footnote{Quarks and Leptons pg. 275}
+Data on electromagnetic and weak processes suggest the interactions are invariant under weak isospin $SU(2)_L$ and weak hypercharge $U(1)_Y$. The trick with the Higgs is we add a scalar field $\phi$ which is an $SU(2)$ doublet that also respects the symmetries we already have.
+
+\begin{align}
+\phi = \begin{pmatrix}
+\frac{1}{\sqrt{2}}(\phi_1+i\phi_2)\\
+\frac{1}{\sqrt{2}}(\phi_3 +i\phi_4)
+\end{pmatrix}
+\end{align}
+This inspires us to write the electroweak Lagrangian (without anything other than this new scalar field and Spin-1 fields coming from the requirement of $SU(2)$ and $U(1)$ gauge invariance) as
+\begin{align}
+\mathcal{L} = (\mathcal{D}_\mu\phi)^\dagger(\mathcal{D}^\mu\phi) + \mu^2\phi^\dagger\phi- \frac{\lambda}{4}(\phi^\dagger\phi)^2 -\frac{1}{4}\textbf{F}_{\mu\nu}\textbf{F}^{\mu\nu} - \frac{1}{4}G_{\mu\nu}G^{\mu\nu}
+\end{align}
+With 
+\begin{align}
+\mathcal{D}^\mu &= \partial^\mu + ig\boldsymbol{\tau}\cdot\textbf{W}^\mu/2 + ig'B^\mu/2\\
+\textbf{F}^{\mu\nu} &= \partial^\mu\textbf{W}^\nu - \partial^\nu - g\textbf{W}^\mu\times\textbf{W}^\nu\\
+G_{\mu\nu} &= \partial^\mu B^\nu - \partial^\nu B^\mu
+\end{align}
+
+Where $\textbf{W}$ is the field corresponding to weak isospin from coming from $SU(2)$ and $B$ is weak hypercharge from $U(1)$. These are just putting together the two things in the last sections. The unique addition to the Lagrangian is the potential that is unstable at $\phi = 0$. The symmetry of the system is then hidden because the minimum of the potential (about which the Lagrangian will be moved around) requires us to arbitrarily pick some (asymmetrical) ground state. We pick
+\begin{align}\label{higgs_vacuum}
+\phi = \begin{pmatrix}
+0\\
+\frac{1}{\sqrt{2}}(v+H)
+\end{pmatrix}
+\end{align}
+Where $v$ represents the non-zero expecation value of the vacuum, shifting the field to the true minimum of the potential, and $H$ is the field representing small oscillations about that minimum. Keeping terms that are second order, writing everything out gives us
+\begin{align}\label{higgs-lagrangian}
+\mathcal{L} &= \frac{1}{2}\partial_\mu H\partial^\mu H -\mu^2H^2\\
+&-\frac{1}{4}(\partial_\mu W_{1\nu} - \partial_\nu W_{1\mu})(\partial^\mu W^\nu_{1} - \partial^\nu W^\mu_{1}) +\frac{1}{8}g^2v^2W_{1\mu}W^\mu_1\\
+&-\frac{1}{4}(\partial_\mu W_{2\nu} - \partial_\nu W_{2\mu})(\partial^\mu W^\nu_{2} - \partial^\nu W^\mu_{2}) +\frac{1}{8}g^2v^2W_{2\mu}W^\mu_2\\
+&-\frac{1}{4}(\partial_\mu W_{3\nu} - \partial_\nu W_{3\mu})(\partial^\mu W^\nu_{3} - \partial^\nu W^\mu_{3}) - \frac{1}{4}G_{\mu\nu}G^{\mu\nu}\\
+&+\frac{1}{8}v^2(gW_{3\mu}-g'B_\mu)(gW_3^\mu - g'B^\mu)
+\end{align}
+Our Lagrangian now looks very suggestive. The $H$ field, which arose from the addition of the scalar field, now has a mass term $M_H = \sqrt{2}\mu$ when looked at in the form of the Klein-Gordon Lagrangian (Eq. \ref{kg-lagrange}), similarly two of the Spin-1 fields also gain a mass according to the Proca Lagrangian (Eq. \ref{proca}) with
+\begin{align}
+M_1 = M_2 = qv/2 = M_W
+\end{align}
+The last lines show $W_3$ and $B$ are mixed. You can take a normalized linear combination of the two defining
+\begin{align}
+Z^\mu = \cos\theta_W W_3^\mu -\sin\theta_W B^\mu
+\end{align}
+with 
+\begin{align}
+\cos\theta_W = g/\sqrt{g^2+g'^2}
+\end{align}
+and the orthogonal combination
+\begin{align}
+A^\mu = \sin\theta_W W_3^\mu + \cos\theta_W B^\mu
+\end{align}
+Which let you rewrite the last two lines of equation \ref{higgs-lagrangian} as
+\begin{align}
+-\frac{1}{4}(\partial_\mu Z_\nu - \partial_\nu Z_\mu)(\partial^\mu Z^\nu -\partial^\nu Z^\mu) + \frac{1}{8}v^2(g^2 + g'^2)Z_\mu Z^\mu - \frac{1}{4}F_{\mu\nu}F^{\mu\nu}
+\end{align}
+This lets us find another mass term with
+\begin{align}
+M_Z = \frac{1}{2}v(g^2+g'^2)^{1/2} = M_W/\cos\theta_W
+\end{align}
+and
+\begin{align}
+M_A = 0
+\end{align}
+These masses and fields correspond exactly to the $W^{+/-}$, $Z$, and $\gamma$ bosons.
+\section{Masses of the Fermions}
+ If you consider the mass term of an electron
+\begin{align}
+-m_e\bar{e}e &= -m_e\bar{e}[\frac{1}{2}(1-\gamma^5)+\frac{1}{2}(1+\gamma^5)]e\\&= -m_e(\bar{e}_R e_L + \bar{e}_L e_R)
+\end{align}
+"Since $e_L$ is a member of an isospin double and $e_R$ is a singlet, this term manifestly breaks gauge invariance".\footnote{Quarks \& Leptons pg. 334} Because of this, we can't put this term into the Lagrangian initially, resulting in all the fermions being massless.
+
+It turns out that the same Higgs doublet we added to give the weak bosons mass, can be used again to give masses to the leptons and quarks. You add a coupling term to the fermions that looks like
+\begin{align}
+\mathcal{L}_e = -G_e\left[ (\bar{\nu}_e,\bar{e})_L\begin{pmatrix}
+\phi^+\\
+\phi^0
+\end{pmatrix}e_R + \bar{e}_R(\phi^-,\bar{\phi}^0)\begin{pmatrix}
+\nu_e\\
+e
+\end{pmatrix}_L\right]
+\end{align}
+Using the same definition for the field as in Equation \ref{higgs_vacuum}, we find
+\begin{align}
+L_e = -\frac{G_e}{\sqrt{2}}v(\bar{e}_Le_R+\bar{e}_R+e_L) -\frac{G_e}{\sqrt{2}}(\bar{e}_le_r+\bar{e}_Re_L)H
+\end{align}
+If we choose $G_e$ so
+\begin{align}
+m_e = \frac{G_ev}{\sqrt{2}}
+\end{align}
+we end up with a term for the electron mass, a similar procedure is done for the rest of the fermions. $G_e$ is arbitrary, so the actual electron mass is not predicted and the coupling term is so small it hasn't produced a detectable effect in electroweak interactions.
+
+%
+%\section{Classical Quantization}\footnote{HEP 2015 Notes}
+%In classical mechanics, we define the conjugate momentum as 
+%\begin{align}
+%p_q = \frac{\partial L}{\partial \dot{q}}
+%\end{align}
+%We follow an analogous procedure for the fields, writing 
+%\begin{align}
+%\pi(x) = \frac{\partial \mathcal{L}}{\partial \dot{\phi}}
+%\end{align}
+%The next thing we do is make the fields "quantum" by giving them an analogous relation to their wavefunction counterparts
+%\begin{align}
+%[\hat{x}_i,\hat{p}_j] &= i\delta_{ij}\\
+%[\hat{p}_i,\hat{p}_j] &= [\hat{x}_i,\hat{x}_j] = 0
+%\end{align}
+%The first step is to think of the fields now as operators acting on a Hilbert space. This means we treat the fields as observables acting on states.\footnote{Add more here}. 
+%\begin{align}
+%\phi(x)\rightarrow \hat{\phi}(x) && \pi(x)\rightarrow \hat{\pi}(x)
+%\end{align}
+%We give them the equivalent relations, with
+%\begin{align}
+%[\hat{\phi}(\textbf{x},t),\hat{\pi}(\textbf{y},t)] &= i\delta(\textbf{x}-\textbf{y})\\
+%[\hat{\pi}(\textbf{x},t),\hat{\pi}(\textbf{y},t)] &= [\hat{\phi}(\textbf{x},t),\hat{\phi}(\textbf{y},t)] = 0
+%\end{align}
+%
+%
+%Check HEP Summer school 2015 Notes
+%
+%pg. 21 canonical quantization
+%pg. 23 how ladder operators turn out to be the same in QFT
+%pg. 25 simple definition of renormalization
+%pg. 26 why we label $|k\rangle$ a one particle state
+%pg. 27 scalar boson fields commute (?)
+%pg. 30 scattering matrix? probably want to read another paper on this
+%
+%pg. 59 has good dirac equation stuff
+%
+%
+%Peskin pg. 14 antiparticle stuff?
+%pg. 17 physical interpretation of Klein Gordon hamiltonian
+%\section{Group Theory}
+%
+%A group is a set of elements that can move between themselves. By calling the entire group itself $G$, which contains $g_1, g_2, ... g_N$ elements ($N$ is the order og $G$). The group is defined in the following way
+%\begin{enumerate}
+%   \item $g_1g_2\exists G$ for all $g_1, g_2\exists G$. Which says when we multiply two elements, we get another element that is still within the group back
+%   \item $(g_1g_2)g_3 = g_1(g_2g_3)$ for $g_1, g_2, g_3\exists G$. Which says when given a specific order to multiply the elements, the sequencing of multiplication doesn't matter
+%   \item There is an identity element $e$ which gives $eg = ge = g$ for all $g\exists G$. This says there is one element that does not change any of the other elements.
+%   \item For every element $g$, there is an inverse $g^{-1}$ such that $gg^{-1} = e$. Which allows us, from any element, to return to the identity
+%\end{enumerate}
+%
+%Groups themselves are abstract entities defined by just the rules to get between elements. In physics, we use a \textbf{representation} of a group, which is the group put into matrix form such that it obeys the same rules as its definition.
+%\begin{gather}
+%\begin{align}
+%\textrm{Group} && \textrm{Representation}\\
+%g_1g_2 = g_3 && D(g_1)D(g_2) = D(g_3)
+%\end{align}
+%\end{gather}
+%\footnote{make this look nicer} Where $D(g_1)$ is a matrix representation of the group element $g_1$ etc. 
+%
+%TODO:
+%\begin{itemize}
+%   \item SO(3) can have matrices that represent it of arbitrary size?
+%   \item Put example of what a matrix tensor product looks like (from comp notes)
+%   \item Irreducible representation
+%\end{itemize}
+%
+%
+%\subsection{Lie Groups}
+%Of particular importance in physics are \textbf{Lie groups}, groups in which you can change infinitesimally between their elements. This allows you to Taylor expand ... TODO
+%
+%\subsection{SO(3)}
+%Consider the addition of angular momentum of two spin $1/2$ particles, $a$ and $b$ the Hilbert space in which they live both have dimension
+%\begin{align}
+%d_i = (2j_i + 1)
+%\end{align}
+%where $i ~\exists~(a,b)$. So $d_i = 2$ in the case of spin 1/2 particles ($\uparrow$ and $\downarrow$). The dimension of their combination is the product of both dimensions
+%\begin{align}
+%d_{ab} = (2j_a+1)(2j_b+1)
+%\end{align}
+%giving us 4. Considering each particle individually, we have a set of operators that "represent" the legal group operations that are allowed to make on the ket that would match with another potential bra. Following the same notation we look for the tensor product of the two representations
+%\begin{align}
+%D^{(j_a)}\otimes D^{(j_b)}
+%\end{align}
+%
+%It can be shown\footnote{Sakurai pg 230} that when you combine any two particles with angular momentum $j, j'$ you can describe any transformation on the system as a whole in terms of a sum of irreducible representations.
+%
+%\begin{align}
+%D^{(j)}\otimes D^{(j')} = \bigoplus^{j+j'}_{l=|j-j'|} D^{(l)}
+%\end{align}
+%
+%TODO remind what the sum looks like. This in effect means the particles, when put together, act as if they are an independent set of particles with different spin.
+%
+%
+%\section{Transformation of Fields}
+%Lorentz symmetry tells whatever theory you make to obey the laws of special relativity. It dictates that however fast you are going, you won't see anything going faster than the speed of light. Poincare symmetry is a generalization of Lorentz symmetry that dictates that however fast, and wherever you are, you won't find anything going faster than the speed of light. The transformation law is 
+%
+%\begin{align}
+%x'^\mu = a^\mu + \Lambda^{\mu}_\nu x^\nu
+%\end{align}
+%
+%Where $a^\mu$ is the translation in space between the two coordinate systems, and $\Lambda^\mu_\nu$ is a matrix characterizing whatever boost you apply to the system. 
+%
+%
+%DO WE NEED THE POINCARE STUFF HERE??
+%
+%One can consider an infinitesimal Lorentz transformation as
+%
+%\begin{align}
+%\Lambda^\mu_\nu = \delta^\mu_\nu + \omega^\mu_\nu
+%\end{align}
+%
+%Where $\delta^\mu_\nu$ is just the identity matrix, and $\omega^\mu_\nu$ characterizes the small transformation of the vector from where it was before. In shorthand, one writes
+%\begin{align}\label{infinitesimallorentz}
+%\Lambda = 1 + \omega
+%\end{align}
+% We can now consider how the fields themselves change under Lorentz transforms. It turns out that\footnote{Huang pg.45} relativistic fields transform according to irreducible representations of the Lorentz group in the same way wavefunctions in a central potential transform under irreducible representations of SO(3). We can write the transformation in general as
+%
+%\begin{align}
+%\phi_a'(x') = S_{ab}(\Lambda)\phi_b(x)
+%\end{align}
+%
+%Where $a = 1,2,..., K$ where $K$ is the dimension of whatever irreducible representation of the Lorentz group we need for our field. Since the Lorentz group is a Lie group, we can consider infinitesimal transformations, and Taylor expand $S_{ab}$ using equation (\ref{infinitesimallorentz})
+%
+%\begin{align}
+%S_{ab}(\Lambda) = S_{ab}(1+\omega)  \approx S_{ab}(1) + \omega_{\mu\nu} S'^{\mu\nu}_{ab} = \delta_{ab} + \omega_{\mu\nu} S'^{\mu\nu}_{ab}
+%\end{align}
+%We can instead write
+%
+%\begin{align}\label{fieldtransform}
+%S_{ab} = \delta_{ab} +\frac{1}{2}\omega_{\mu\nu}\Sigma_{ab}^{\mu\nu}
+%\end{align}
+%Which will be convenient later. We can also expand the left side of the equation, since $x' = \Lambda x$ with
+%\begin{align}
+%\phi'_a(x) = \phi_a'(x + \omega x) = \phi'_a(x) + \omega_{\mu\nu}x^\nu\partial^\mu\phi'_a(x)
+%\end{align}
+%
+%It turns out that\footnote{Huang pg.43} $\omega^{\mu\nu} = -\omega^{\nu\mu}$, which allows us to write
+%\begin{align}
+%\phi'_a(x) = \phi_a(x) - \frac{1}{2}\omega_{\mu\nu}(x^\mu\partial^\nu - x^\nu\partial^\mu)\phi'_a(x)
+%\end{align}
+%The rightmost term happens to be the generalized angular momentum operator. When putting everything together, we see that 
+%\begin{align}
+%\phi'_a(x) = \phi_a(x) + \frac{1}{2}\omega_{\mu\nu}[(x^\mu\partial^\nu - x^\nu\partial^\mu)\delta_{ab} + \Sigma^{\mu\nu}_{ab}]\phi_b(x)
+%\end{align}
+%This identifies $\Sigma^{\mu\nu}$ as \emph{spin} matrices, since they are added to the generalized angular momentum.
+%
+%\subsection{Scalar Field}
+%   A scalar field by definition does not change under a Lorentz transform
+%   \begin{align}
+%   \phi_a'(x') = \phi_a(x)
+%   \end{align}
+%   This means that the new field has same as the value as the old field in same effective location when swapping frames. Since in this case $S_{ab} = \delta_{ab}$, this implies that 
+%   \begin{align}
+%   \Sigma_{ab}^{\mu\nu} = 0
+%   \end{align}
+%   Or simply put, the spin of the scalar field is zero.
+%\subsection{Vector Field}
+%   A vector field by changes as a four vector under Lorentz transformation. Typically written as $A^\mu$, we have
+%   \begin{align}
+%   A'^\mu(x') = \Lambda^\mu_\nu A^\nu(x)
+%   \end{align}
+%   By equation (\ref{fieldtransform}), we identify
+%   \begin{align}
+%   \omega_{ab} = \frac{1}{2}\omega_{\mu\nu}\Sigma^{\mu\nu}_{ab}
+%   \end{align}
+%   It can be shown\footnote{Huang pg. 78} (TODO) that this field has spin 1.
+%\subsection{Spinor Field}
+%These fields are more complicated TODO
+%
+%
+%
+%
+%\subsection{Misc}
+%Introduced Poincare group, and finite dimensional representations of the Lorentz Algebra (D'Hoker pg.29). This will cover what scalars, pseudoscalars, etc actually are.
+%
+%\begin{itemize}
+%   \item Somehow from poincare invariance of the theory, all group elements in the theory break down into being elements of the tensor product of two spin groups?
+%   \item Similarity transformation
+%   \begin{align}
+%   A' = PAP^{-1}
+%   \end{align}
+%\end{itemize}
+%
+%\section{Construction of the Standard Model}
+%In general, the way field theories are constructed are by
+%\begin{enumerate}
+%\item Write down the symmetries you want your system to have (i.e. angular momentum conservation, parity conservation, Lorentz invariance)
+%\item With the help of Noether's theorem, write down the most general renormalizable Lagrangian that obeys these symmetries 
+%\item Test that whatever your wrote down has predictions that experiment has actually shown
+%\end{enumerate}
+%
+%Pg. 68 Huang has good stuff from the point of view of symmetries
+%
+%\section{Electricity and Magnetism}
+%
+%Special Relativity tells us that the maximum speed anything can travel at is $c$ and that the laws of physics must remain the same in any frame. This gives us Lorentz symmetry, which we take as true for all Quantum Field Theories going forward. This means the equations we write down to describe physical laws must be \emph{covariant}, or that both sides must transform in the same way under a Lorentz transformation.
+%
+%
+%Electricity and Magnetism was the first force to be put in the framework of Quantum Field Theory, called Quantum Electrodynamics (QED). 
+% 
+%
+%\section{Extra stuff to squeeze in}
+%E and M - We know that the kinetic energy of a particle is given by
+%\begin{align}
+%   T = \frac{\textbf{p}^2}{2m} = \frac{(m\textbf{v}+q\textbf{A})^2}{2m}
+%\end{align}
+%And the potential energy of an electromagnetic system is given by
+%\begin{align}
+%   U = q\phi
+%\end{align}
+%This gives us the full Lagrangian of a particle in an electromagnetic field as
+%\begin{align}
+%   L = T - U = \frac{(m\textbf{v}+q\textbf{A})^2}{2m} - q\phi - \frac{1}{2}\epsilon_0\int dr^3(E^2 + c^2B^2)
+%\end{align}
+%
+%
+%
+%"method becomes applicable to MAxwell's theory when we regard the electromagnetic field/potential at every point in space as independent generalized coordinates - equal footing with coordinates of a charged particle.
+%
+%\section{Quantum Field Theory}
+%In quantum field theory, it is useful to describe the dynamics of a system in terms of the Lagrangian, which happens to be Lorentz invariant as opposed to the Hamiltonian which is not (since energy changes under a boost). 
+%
+%A field $\psi(\textbf{x},t)$ is just something that has a value at every point in space $\textbf{x}$ and time $t$
+%-- derive e\&m lagrangian, show that it is stress tensor thing
+%-- show how e\&M lagrangian has a conserved current $\partial^\mu j_\mu$ and show that it is charge conservation
+%-- generalize it for qcd, etc, then do qft?
+%
+%
+%Huang is good
+%\begin{itemize}
+%   \item Lagrangian density is Lorentz invariant, so we use that instead of the Hamiltonian density, which is not (energy changes as we change frames).
+%   \item Positive frequency part of $\psi$ annihilates a particle and its negative frequency part creates an antiparticle. Similarly, $\psi^\dagger$ either creates a particle or annihilates an antiparticle. In light of this we can say that for the real field, the particle is its own antiparticle
+%\end{itemize}
+%Things to eventually understand
+%\begin{itemize}
+%   \item What is a quantum field /  how to come to the formalism that is used
+%    \begin{itemize}
+%       \item Particles/ Antiparticles
+%       \item Why Lagrangian?
+%       \item Equation of motion from action
+%       \item Relativistic vs non-relativistic
+%   \end{itemize}
+%   \item How Feynman diagrams / perturbation theory makes sense from QFT formalism
+%   \begin{itemize}
+%       \item How things get put into propagator, vertices, etc (Griffiths?)
+%   \end{itemize}
+%   \item Relationship between field and particles
+%   \item Conserved currents / charges
+%    \begin{itemize}
+%    \item Should also include convincing explanation of Higgs boson giving everything mass
+%    \item "Instantaneous forces acting at a distance, such as appear in New
+%    ton’s gravitational
+%    force and Coulomb’s electrostatic force, are incompatible with spec
+%    ial relativity. No signal
+%    can travel faster than the speed of light. Instead, in a relativistic
+%    theory, the interaction
+%    must be
+%    mediated
+%    by another particle." D;Hoker
+%    \item 
+%    \end{itemize}
+%   \item 
+%\end{itemize}
+%
+%\section{Misc}
+%
+%More Stuff:
+%\begin{itemize}
+%\item Charge conjugation $C|p\rangle = |\bar{p}\rangle $
+%\end{itemize}
+%
+%
+%\begin{align}
+%   \pi^\mu \equiv \frac{\partial \mathcal{L}}{\partial \phi_\mu}
+%\end{align}
+%We write the canonical momentum as 
+%\begin{align}
+%   \pi \equiv \pi^0 = \frac{\partial\mathcal{L}}{\partial \dot{\phi}}
+%\end{align}
+%
+%$\phi(\textbf{x})$ is a scalar field, just like potential in electromagnetism (correct?) and $\pi(\textbf{x})$ is the momentum density of the field with
+%\begin{align}
+%   \dot{\phi}(\textbf{x}) = \pi(\textbf{x})
+%\end{align}
+%
+%\begin{align}
+%   [\phi(\textbf{x}),\pi(\textbf{x}')] = -i\delta(\textbf{x}-\textbf{x}')
+%\end{align}
+%This tells us we can know the position and momentum at two different points (?), called Microcausality.
+%
+%The gamma matrices are
+%\begin{align}
+%   \gamma^0 = 
+%\left(
+%{\begin{array}{cc}
+%I&0\\
+%0&-I\\
+%\end{array}}
+%\right) 
+%&& \gamma^i = 
+%\left(
+%{\begin{array}{cc}
+%0&\sigma_i\\
+%-\sigma_i &0\\
+%\end{array}}
+%\right)
+%\end{align}
+%
+%The ideal for QFT is you write the action in terms of a field, which you minimize like in normal classical mechanics.
+%
+%
+%
+%The Euler Lagrange equation for a field are given by
+%\begin{align}
+%   \frac{\partial\mathcal{L}}{\partial\phi_r} = \partial_\mu \frac{\partial \mathcal{L}}{\partial(\partial_\mu\phi_r)}
+%\end{align}
+%This is actually 4 or 8 equations? index notation?
+%
+%\begin{align}
+%   \partial\!\!\!/ = \gamma^\mu\partial_\mu
+%\end{align}
+%
+%\begin{align}
+%   \bar{\psi} \equiv \psi^\dagger\gamma^0
+%\end{align}
+%
+%\begin{align}
+%   \gamma^5 = i\gamma^0\gamma^1\gamma^2\gamma^3
+%\end{align}
+%
+%
+%A global symmetry is $\psi \rightarrow \psi' = e^{i\alpha G}\psi$. A broken symmetry is where you have a potential well that is not centered at zero(?). Local symmetry is $\psi(x) \rightarrow \psi'(x) = e^{i\alpha(x)G}\psi(x)$. Can't turn all global symmetries in local symmetries. Look at Gauge Theories in particle physics pg. 42
+%
+%Normal naming conventions go like
+%
+%\begin{align}
+%   \textrm{scalar~field}&& \phi \\
+%   \textrm{spinor~field}&& \phi \\
+%   \textrm{vector~field}&& A^\mu \\
+%\end{align}
+%
+%\section{Pop Culture}
+
+\section{Outstanding Puzzles}
+\begin{itemize}
+    \item Matter-Antimatter Asymmetry
+    \item Dark Matter
+    \item Dark Energy
+    \item Hierarchy Problem
+\end{itemize}
+
+
+\subsection{Dark Matter}
+Weird velocity curves in galaxy suggest that there is matter there. Also apparently the universe would stabilize quickly enough to for galaxies / solar systems if there wasn't the mass from dark matter [cite]. Ordinary matter does not clump enough to be a dark matter candidate [Bob Cousins].
+\section{Modern Topics}
+\subsection{Supersymmetry}
+
+\subsection{Neutrino Oscillation}
+It turns out neutrinos oscillate between each other, violating individual lepton number (still globally conserved) because their mass eigenstates are not weak eigenstates. The probability for a $\nu_e$ to turn into a $\nu_\mu$ is given by
+\begin{align}
+P(\nu_e\rightarrow\nu_\mu) = \sin^22\theta\sin^2\frac{1.27\Delta m^2L}{E}
+\end{align}
+Where $L$ is the distance traveled in m and $E$ is the neutrino energy in MeV. This also tells us there is a difference in mass between the neutrinos (i.e. at least two have mass at all). Can tell this happens by creating a $\nu_\mu$ beam, by slamming protons into a wall, then detecting (Section \ref{neutrino}) the neutrinos far away, seeing that you have more $\nu_e$ than you expect. Led to Nobel Prize in 2015 (Kajita and McDonald). 
+
+\subsection{Neutrinoless Double Beta Decay}
+Reaction in which two neutrons of a nucleus decay to protons at the same time. This emits two electrons, and two electron neutrinos with it. If the neutrinos are Majorana fermions (i.e. they are their own antiparticle) it is hypothesized that this decay could happen without the neutrinos being emitted at all, since they would both annihilate each other. It is measured by looking at the summed electron energy and knowing the energy difference between the nuclear states.
+
+
+\subsection{Proton Decay}
+Baryon number (amount of quarks) conservation currently prevents the proton from decaying, since it is the lightest baryon (made of three quarks). The decay is proposed to look like
+\begin{align}
+    p^+ \rightarrow \pi^0 + e^+
+\end{align}
+
+Where the $\pi^0$ is a meson (only two quarks). Some "Grand Unified Theories" (GUTs) predict another force that mediates this decay outside of the standard model with a very heavy mediator $m_X \sim 10^{15}$ GeV. Assuming the coupling is similar to that of weak coupling, you can extract a rough lifetime with
+\begin{align}
+\frac{\tau_p}{\tau_W} = \frac{\Gamma_W}{\Gamma_p} = \propto\frac{|\mathcal{M}_W|^2}{|\mathcal{M}_p|^2}
+\end{align}
+Taking a typical weak lifetime of $\tau_W = 10^{-11}$ and knowing
+\begin{align}
+|\mathcal{M}|^2\propto\frac{1}{m^4}
+\end{align}
+We have that \begin{align}
+\tau_p = \frac{m_X^4}{m_W^4}\tau_W
+\end{align}
+After plugging everything in, the lifetime then comes out huge
+
+\begin{align}
+    \tau_p \sim 10^{34} ~\textrm{years}
+\end{align}
+
+You can look for these decays using huge water tanks (50,000 tons) that look for Cherenkov light from the initial positron and similar signatures from the $\pi^0 \rightarrow \gamma\gamma$ where the $\gamma\rightarrow e^+e^-$ and those leptons then radiate as well. This is works because the lifetime is exponential, so even if you have an extremely long lifetime, if you look at a huge amount of protons, you will find some small number (something like 10 a year are expected in the 50,000 ton tank).
+
+\subsection{Hidden Sector}
+
+\subsection{Displaced Particles}
+\footnote{Illuminating Dark Photons with Higgs - Curtin2015}
+
+Models
+\begin{itemize}
+    \item Hidden Sector - 
+\end{itemize}
+
+
+\subsection{Misc}
+
+Plank scale mass is limit of elementary particle size, if it was larger, would form a blackhole
+Bhabha scattering = $e^+e^-\rightarrow e^+e^-$
+
+\subsection{Drell-Yan Process}
+Occurs when a quark-antiquark pair annihilate to create a virtual (off-shell) photon or $Z$ boson. The force carrier then pair produces leptons and is a large background in most particle physics experiments looking at lepton pairs.
+
+
+\centerline{
+\feynmandiagram [horizontal=a to b] {
+i1 [particle=\(\overline q\)] -- [fermion] a -- [fermion] i2 [particle=\(q\)],
+a -- [photon, edge label=\(\gamma^*\)] b,
+f1 [particle=\(l^+\)] -- [fermion] b -- [fermion] f2 [particle=\(l^-\)],
+};
+}
+\section{Misc}
+
+\subsection{CKM Matrix}
+Lepton number is always conserved\footnote{Except for neutrino oscillations}, meaning that if you have one flavor of lepton (say a muon) you have to keep it around in the form of either a muon or a muon neutrino. Quarks violate "flavor" through something called the Cabibbo-Kobayashi-Maskawa (CKM) matrix.
+
+\begin{align}
+\begin{pmatrix}
+d'\\
+s'\\
+b'
+\end{pmatrix} = \begin{pmatrix}
+V_{ud}&V_{us}&V_{ub}\\
+V_{cd}&V_{cs}&V_{cb}\\
+V_{td}&V_{ts}&V_{tb}
+\end{pmatrix} \begin{pmatrix}
+d\\
+s\\
+b
+\end{pmatrix}
+\end{align}
+The matrix clues us into the transition probabilities from one type of quark to another. The transition is proportional to $|V_{ij}|^2$ from one quark $i$ to another $j$. You can notice that all the transitions are from a quark with one charge to a different charge, this is because flavor can only change through exchange of a $W$. The use of $(d,s,b)$ as a vector is convention, to get the transition from $u$ to whatever, need to invert the matrix.
+
+\subsection{OZI Rule}\label{ozi}
+If you can separate a Feynman diagram into a part just containing the incoming state and one containing the outgoing state by cutting out gluon lines, it will be strongly suppressed.
+
+%\begin{itemize}
+%   \item Introduce continuum mechanics (QFT Intro pdf)
+%   \item Show how free field is derived for E\&M (https://physics.stackexchange.com/questions/34241/deriving-lagrangian-density-for-electromagnetic-field
+%   \item Write full Lagrangian for E\&M
+%\end{itemize}

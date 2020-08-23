@@ -1,0 +1,244 @@
+\chapter{Statistics}
+
+
+\label{ch:statistics}
+
+\section{Probability}
+The mathematics of probability translate chances into dice rolls.
+
+\subsection{Random Variables}
+"A random variable is one whose values have an associated probability distribution".\cite{grus}
+
+\subsection{Neyman Pearson Lemma}
+The main idea is that you want to maximize your detection probability $P_D$ under then constraint that your Type I error (false alarm) probability $P_{FA}$ is equal to a set value $\alpha$. This is done looking for a maximum with a Lagrange multiplier. TODO
+
+\begin{equation}
+	\textrm{max}[P_D - \gamma(P_{FA}-\alpha)]
+\end{equation}
+
+Given two simple hypotheses $\theta_0$ (the null hypothesis) and $\theta$, (simple hypotheses specify uniquely the probability distributions), we pick 
+
+\subsection{Cross Entropy}
+TODO
+
+\subsection{Characteristic Function}
+The characteristic function is the Fourier transform of a distributions PDF $p(x)$. Defined as 
+\begin{align}
+\phi_x(k) = E[e^{ikx}] = \int_{-\infty}^\infty e^{ikx}p(x)dx
+\end{align}
+This function has a one to one relationship with the PDF, and is useful in proving things. It turns out that when adding a whole bunch of random numbers $x_1, x_2, ..., x_n$, all pulled from different PDFs $p_1(x_1), p_2(x_2), ..., p_n(x_n)$
+\begin{align}
+s = x_1 + x_2 + ... + x_n
+\end{align}
+the characteristic function has the property that
+\begin{align}
+\phi_s(k) =\phi_1(k)\phi_2(k)...\phi_n(k)
+\end{align}
+
+
+\subsection{Central Limit Theorem}
+States that if you have a bunch of random variables $x_1, x_2, ... x_n$, each coming from an arbitrary pdf with mean $\mu_1, \mu_2, ... \mu_n$, and variance $\sigma_1^2, \sigma_2^2, ...\sigma_n^2$, if you add them all up in the limit of large $n$, it should approach a Gaussian distribution with mean $\mu = \sum_i \mu_i$ and variance $\sigma^2 = \sum_i\sigma_i^2$
+
+TODO
+
+\subsection{Distributions}
+The Binomial distribution is given by
+\begin{align}
+P(k;n,p) = \begin{pmatrix}
+n\\
+k
+\end{pmatrix}p^k(1-p)^{n-k}
+\end{align}
+Where 
+\begin{align}
+\begin{pmatrix}
+n\\
+k
+\end{pmatrix} = \frac{n!}{k!(n-k)!}
+\end{align}
+Which tells us, if we try something $n$ times, each of which has a chance $p$ of succeeding, that we get $k$ successes. If we now consider the trying that same thing an infinite number of times ($n\rightarrow\infty$) while considering a finite amount of times $\mu$ we would have a success we have
+\begin{align}
+p = \frac{\mu}{n}
+\end{align}
+Therefore we find
+
+\begin{align}
+P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\mu}{n}\right)^k\left(1-\frac{\mu}{n}\right)^{n-k}\\
+&= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\mu^k}{n^k}\left(1-\frac{\mu}{n}\right)^{n-k}
+\end{align}
+Using the definition of the exponential function we find
+\begin{align}
+P(k; \mu) = \frac{\mu^ke^{-\mu}}{k!}
+\end{align}
+
+This is the Poisson distribution, a limiting case of the Binomial distribution.
+In summary:
+\begin{itemize}
+	\item Poisson is limit of binomial for $p$ small and $n\gg \mu$
+	\item Gaussian is limit of Poisson for large $\mu$
+	\item Gaussian is limit of binomial for large $\mu=np$
+\end{itemize}
+
+Jeffery's prior allows two people to come up with an equal parameter(?) model that looks different, but have the statistics for the two come out the same, when they otherwise wouldn't (Jacobian, etc.)
+
+\subsection{Laplace's Rule of Succession}
+Consider the problem of flipping a coin $N$ times and getting $A$ heads. If each flip has a probability $\rho$ to come up heads, the probability for any amount of heads is given by the Binomial distribution
+\begin{align}
+p(A) = {N\choose A}\rho^A(1-\rho)^{N-A}
+\end{align}
+If we want to figure out how fair the coin is, i.e. the value of $\rho$, we know that the probability of a given $\rho$ should be proportional to this function as we
+\begin{align}
+	p(\rho) \propto {N\choose A}\rho^A(1-\rho)^{N-A}
+\end{align}
+We also know that $\rho$ must be in $[0,1]$. Knowing that the sum of probabilities over $\rho$ must equal 1, the normalization constant must be
+\begin{align}
+	p(\rho) =\ffrac{ {N\choose A}\rho^A(1-\rho)^{N-A}}{\int_0^1{N\choose A}\rho^A(1-\rho)^{N-A} d\rho}
+\end{align}
+Since ${N\choose A}$ is constant and common in both numerator and denominator, we have
+\begin{align}
+	p(\rho) =\ffrac{ \rho^A(1-\rho)^{N-A}}{\int_0^1\rho^A(1-\rho)^{N-A} d\rho}
+\end{align}
+It so happens the integral is Euler's beta function\footnote{todo}, which evaluates to 
+\begin{align}
+	\int_0^1\rho^A(1-\rho)^{N-A} d\rho = \frac{A!(N-A)!}{(N+1)!}
+\end{align}
+This then simplifies our expression with
+\begin{align}
+	p(\rho) =(N+1){N\choose A}\rho^A(1-\rho)^{N-A}
+\end{align}
+This then literally tells us what the chances are of a given $\rho$ given any number of flips $N$ and heads $A$. The question answered by Laplace's rule of succession answers: If I flip a coin $N$ times with $A$ heads, what is the probability of getting heads on the next flip $N+1$?
+
+This is the same thing as asking, what is $\rho$, which is the probability of getting a heads on any single flip. Therefore, all we need to do is take the expectation value of $\rho$
+\begin{align}
+	\langle \rho\rangle &= \int_0^1\rho ~p(\rho) d\rho\\
+	&= (N+1){N\choose A}\int_0^1 ~\rho^{A+1}(1-\rho)^{N-A} d\rho
+\end{align}
+Using the same beta function relation (or alternatively using the chain rule) we get
+\begin{align}
+	\langle \rho\rangle &= \int_0^1\rho ~p(\rho) d\rho\\
+	&= (N+1)\frac{N!}{A!(N-A)!}\frac{(A+1)!(N-A)!}{(N+2)!}
+\end{align}
+Therefore, the chance that we get a heads on the next flip, is given by
+\begin{align}
+	\langle\rho\rangle = \frac{A+1}{N+2}
+\end{align}
+
+
+\subsection{Bin Error}
+A histogram bin can be treated using Poisson statistics, which makes it's error $\sqrt{n}$ where $n$ is the number of entries in the bin.
+
+
+
+\subsection{Limits}
+Typically in physics papers, we look in regions where we expect no events. Often we are looking for limits on crazy models people cook up that would expect some events there. The number of events should follow a Poisson distribution with $\mu\neq 0$ (forgetting about background). An important value is $\mu=3$, which tells us that there is only a $5\%$ chance that we find 0 events, any higher $\mu$ would have even less of a chance of seeing 0 events. This is obtained by integrating the Poisson distribution.
+
+ In particle physics, $\mu=3$ is held as a the benchmark for if your theory is testable or not, if $\mu < 3$ you have a large chance that even if your theory is correct, you would still see nothing. 
+
+
+\subsection{P-Value}
+The $p$-value is defined as the probability under the null hypothesis of obtaining a result equal to or more extreme than what was actually observed. The smaller the $p$-value, the more it tells investigators that the null hypothesis may not adequately explain the observation.
+
+\subsection{Uncertainties?}
+Study email from Jay "CLCT output to Track Finder" to understand why it makes sense to add errors in quadrature, and write it up here.
+
+
+\subsection{Bayes Theorem}
+The conditional probability, written as $P(A|B)$ is understood as the chance that $A$ happens, given that $B$ has already happened. The chance that both $A$ and $B$ happen $P(A \cap B)$ is the same as the chance $B$ happens at all $P(B)$, multiplied by $P(A|B)$.
+\begin{align}
+P(A\cap B) = P(A|B)P(B)
+\end{align}
+This can of course be looked at the other way, with
+\begin{align}
+P(A\cap B) = P(B|A)P(A)
+\end{align}
+Therefore
+\begin{align}
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+\end{align}
+
+\subsection{Likelihood Function}
+
+Start with a probability distribution of some vector of observables $\textbf{x}$, and model parameters $\boldsymbol{\mu}$. Turn the probability distribution into a likelihood function by considering the observables as the objects held constant (since we observed them) and allow our model parameters to vary.
+
+\begin{align}
+	P(\textbf{x}|\boldsymbol{\mu}) = \mathcal{L}(\boldsymbol{\mu}|\textbf{x})
+\end{align}
+
+
+Now eliminate all the nuisance parameters to make the Likelihood function only dependent on the quantities you care about ($\boldsymbol{\mu}\rightarrow \mu$) (TODO, see profile likelihood talk). Find the maximum Likelihood estimator with
+
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial \mu} = 0 \rightarrow \mu_{ML}
+\end{align}
+This tells us that if the model had the parameter $\mu_{ML}$ the observation we made would be the most likely, out of the space of all possible $\mu$'s it could have been. To find the \textbf{confidence interval}, we use
+
+\begin{align}
+-2\ln\mathcal{L} \simeq \chi^2
+\end{align}
+This is because (TODO: Learn more about this) most things tend towards Gaussians in the limit of large numbers and in the product of many Likelihood functions one gets
+\begin{align}
+	-2\ln\prod_i\mathcal{L}_i = -2\ln\prod_i e^{(x_i-\mu)^2/2\sigma^2} = \sum_i\frac{(x_i-\mu)^2}{\sigma^2} = \chi^2
+\end{align}
+(TODO, $i$'s are correct?). Now using Wilk's Theorem (TODO), one can look at the change in $\chi^2$ as you change the value of $\mu$. Once you increase $\mu$ in one direction from $\mu_{ML}$, the $\chi^2$ will grow. $\chi^2$ will of course also grow if you decrease it from $\mu_{ML}$. You can quantify how much you can change $\mu$ to some limit of $\chi^2$ given by (SOME THEORY). Depending on what kind of confidence interval you are looking for, or the amount of parameters you still have, this change in $\chi^2$ will be different. 
+
+This defines your confidence interval, which tells you, given whatever data you have, what the values of $\mu$,  [$\mu_1, \mu_2$] would be such that what you saw was on the tail end of its distribution (e.g. outside of 95\% of the entire distribution)
+
+\subsection{Least Squares Fit}
+Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
+
+\begin{align}
+y_i = ax_i + b
+\end{align}
+
+Now the thing we want to do is minimize $\chi^2$ for the full combination of points. We do this of course, by taking a derivative to find the minimum. For simple illustrative purposes, lets take $\sigma_i$, the measurement error, to be the same for each point. For $a$ we have
+\begin{align}
+\frac{\partial \chi^2}{\partial a} = 0 &= \frac{\partial}{\partial a} \sum_i \frac{\Big(y_i - (ax_i + b)\Big)^2}{\sigma_i^2} \\
+&= - \frac{2}{\sigma^2}\sum_i \Big(y_i - (ax_i+b)\Big)x_i\\
+&= \sum_i y_i x_i - a\sum_ix_i^2 - b\sum_i x_i
+\end{align}
+Similarly, for $b$
+\begin{align}
+\frac{\partial \chi^2}{\partial b} = 0 &= -\frac{2}{\sigma^2}\sum_i \Big(y_i-(ax_i+b)\Big)\\
+&= \sum_i y_i - a \sum_i x_i - b
+\end{align}
+Now we have a set of linear equations. We can easily calculate all of the sums, since they are by definition the data we are fitting to, and after some algebra, we can solve for the $a$ and $b$ which minimize $\chi^2$.
+\begin{align}
+b &= \sum_i y_i - a \sum_i x_i\\
+\rightarrow 0 &= \sum_i y_i x_i - a\sum_ix_i^2 - \Big(\sum_i y_i - a \sum_i x_i\Big)\sum_i x_i\\
+\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big]\\
+a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big] 
+\end{align}
+In a computer program, it would look like
+\begin{verbatim}
+int main(){
+//random data
+	const unsigned int data_points = 3;
+	float x[data_points] = {1.1, 1.5, 3.2};
+	float y[data_points] = {3.3, 4.5, 9.0};
+	
+	//calculate the sums we need
+	float sum_x = 0;
+	float sum_y = 0;
+	float sum_x2 = 0;
+	float sum_xy = 0;
+	for(unsigned int i = 0; i < data_points; i++){
+		sum_x += x[i];
+		sum_y += y[i];
+		sum_x2 += x[i]*x[i];
+		sum_xy += x[i]*y[i];
+	}
+	
+	//now we just plug them into the equations we found
+	float a = (sum_xy - sum_y*sum_x)/(sum_x2 + sum_x*sum_x);
+	float b = sum_y - a*sum_x;
+	return 0;
+}
+\end{verbatim}
+
+TODO: Describe how procedure is done, and include simple code illustrating a linear / polynomial fit
+
+\section{Machine Learning}
+
+\subsection{Sigmoid Function}
+Value between 0 and 1 so can be interpreted as a probability. TODO: Identical to something in stat mech?
+

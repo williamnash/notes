@@ -1,0 +1,1278 @@
+\chapter{Vector Calculus}
+
+\section{Formalism}
+Typically to avoid writing $\sum$'s all over the place there is a short hand for repeated indices with
+\begin{align}
+\textbf{a}\cdot\textbf{b} = \sum_{i=1}^3 a_ib_i = a_ib_i
+\end{align}
+Where $i = x,y,z$. This notation is called Einstein notation.
+
+
+\subsection{Levi-Cevita Symbol}
+ Levi-Civita symbol ($\varepsilon_{ijk}$)  is an antisymmetric tensor and is equal to $1$ if the components are in order right to left (i.e. $ijk = 123$ or $312$ or $231$), is $-1$ if the are out of order, and 0 if not a cycle (i.e. $ijk = 122$). Some useful identities while using tensor notation are
+ \begin{align}
+ \varepsilon_{ijk}\varepsilon_{imn} = \delta_{jm}\delta_{kn} - \delta_{jn}\delta_{km}
+ \end{align}
+
+
+\subsection{Reducing Vector Identities to Components}
+For order of operations, remember that you just take the curl before doing the divergence! A nice way to break down complicated vector functions is to break them down into components. For instance
+\begin{align}
+(\textbf{A} \times \textbf{B})_i = \epsilon_{ijk}A_jB_k
+\end{align}
+Where the summation over $j$ and $k$ is implied. An example of how it is used is given below
+\begin{align}
+\nabla\cdot\textbf{A}\times\textbf{B} &= \sum \partial_i(\epsilon_{ijk}A_jB_k) \\
+&= \partial_0(\epsilon_{012}A_1B_2 + \epsilon_{021}A_2B_1) + ...\\
+&= B_2\partial_0A_1 + A_1\partial_0B_2 - B_1\partial_0A_2 - A_2\partial_0B_1 + ...\\
+&= (\nabla\times\textbf{A})\cdot\textbf{B} - \textbf{A}\cdot(\nabla\times\textbf{B})
+\end{align}
+Another nice identity, in somewhat sloppy notation is
+\begin{align}
+	\nabla r = \partial_i r &= \partial_i \sqrt{\sum r_j^2} = \frac{1}{2}\frac{1}{\sqrt{\sum r_j^2}}\partial_ir_j^2\\
+	&= \frac{1}{r}\delta_{ij} r_j\\
+	&= \frac{r_i}{r} = \hat{r}
+\end{align}
+
+
+
+\section{Special Functions}
+\subsection{Complete and Orthogonal Sets of Functions}
+A set of eigenfunctions $\psi_n$ is said to be \emph{complete} on the interval $a\le x\le b$, if we can write any function as some linear combination of those eigenfunctions 
+\begin{align}\label{complete}
+f(x) = \sum_{n=0}^\infty A_n \psi_n(x) && a\le x\le b
+\end{align}
+This property actually falls out of the \emph{closure relation}
+\begin{align}
+\sum_n \psi_n(x)\psi_n^*(x') = \delta(x-x')
+\end{align}
+since 
+\begin{align}
+f(x) &= \int_a^b dx' \delta(x-x')f(x')\\
+&= \sum_n \psi_n(x) \int dx' \psi_n^*(x') f(x')
+\end{align}
+Which lets us find the coefficients, matching terms with equation \ref{complete}
+\begin{align}
+A_n = \int_{a}^b dx f(x)\psi^*_n(x)
+\end{align}
+Using $f(x) = \psi_m(x)$ we see that
+\begin{align}
+\psi_m(x) = \sum_n \psi_n(x) \int dx' \psi_n^*(x') \psi_m(x')
+\end{align}
+Which, because we are summing orthogonal functions, we have to have the integral in the sum evaluate to
+\begin{align}
+ \int dx' \psi_n^*(x') \psi_m(x') = \delta_{nm}
+\end{align}
+This is the \emph{orthonormal} relation. A simple example is with sines and cosines, with the relation
+\begin{align}
+\int_0^\pi dx\sin (mx)\sin (m'x) = \frac{\pi}{2}\delta_{mm'}
+\end{align}
+Which can be remembered putting the trigfunctions in exponential form because
+\begin{align}
+\int_0^{2\pi} d\theta~ e^{i(m-m')\theta} = 2\pi\delta_{mm'}
+\end{align}
+
+
+%TODO \subsection{Polynomials}
+%Polynomials are also complete (?) so we can Taylor expand stuff.
+
+
+\subsection{Legendre Polynomials}\label{legendrepoly}
+In Electrodynamics, it is common when looking at potentials to have expressions that look like
+\begin{align}
+\frac{1}{|\textbf{r} - \textbf{r}'|} = \frac{1}{r\sqrt{1-2\frac{r'}{r}\cos\theta + \frac{r'^2}{r^2}}}
+\end{align}
+
+Where $\theta$ is the angle between $\textbf{r}$, the point you are looking at and $\textbf{r}'$ the location of the charge. Conveniently, the Legendre Polynomials are defined as 
+
+\begin{equation}\label{legendre}
+\frac{1}{\sqrt{1-2xt+t^2}} \equiv \sum_{l=0}^\infty t^l P_l(x)
+\end{equation}
+So taking $t = \frac{r'}{r}$ and $x = \cos\theta$, we can write
+
+\begin{align}
+\frac{1}{|\textbf{r} - \textbf{r}'|} = \frac{1}{r} \sum_{l=0}^\infty \Big(\frac{r'}{r}\Big)^l P_l(\cos\theta) && r' < r
+\end{align}
+We can also expand in the opposite case, just dividing a bit differently, yielding
+\begin{align}
+\frac{1}{|\textbf{r} - \textbf{r}'|} = \frac{1}{r'} \sum_{l=0}^\infty \Big(\frac{r}{r'}\Big)^l P_l(\cos\theta) && r < r'
+\end{align}
+These are easy to remember thinking about how they look at zero. The first few are given by
+\begin{align}
+P_0(x) &= 1\\
+P_1(x) &= x\\
+P_2(x) &= \frac{1}{2}(3x^2 -1)
+\end{align}
+
+One nice thing to remember is that the subscript tells us the highest power of the polynomial in the series. If you ever need to derive these on a test, you can just Taylor expand equation \ref{legendre} to find them. These function also obey a nice set of properties that are usually exploited in various Electrostatic problems. They are complete (up to a constant), with
+
+\begin{align}
+\int^1_{-1} dx~ P_n(x) P_{m}(x) &= \frac{2}{2n+1}\delta_{nm}
+\end{align}
+and 
+\begin{align}
+\sum_{n=0}^\infty \frac{2n+1}{2}P_n(x)P_n(x') &= \delta(x-x')
+\end{align}
+They are also somewhat symmetric with respect to $x$, with
+\begin{align}
+P_n(-x) = (-1)^nP_n(x)
+\end{align}
+It also happens that for any polynomial 
+\begin{align}
+P_n(1) = 1
+\end{align}
+Which can be seen because Equation \ref{legendre} breaks down into the equation for a Geometric series
+\begin{align}
+\frac{1}{\sqrt{(1-t)^2}} = \frac{1}{1-t} = 1 + t + t^2 + t^3 + ...
+\end{align}
+
+
+%The Legendre polynomials can also be written using Rodrigues' formula with
+%\begin{align}
+%P_l(x) = \frac{1}{2^nn!}~\frac{d^n}{dx^n} (x^2-1)^n
+%\end{align}
+
+The Legendre Polynomials can also be defined as the solution to the differential equation
+\begin{align}\label{legendrediffeq}
+\frac{d}{dx}\Big[(1-x^2)\frac{d}{dx} P_n(x)\Big] + n(n+1)P_n(x) = 0
+\end{align}
+
+
+
+
+
+
+\subsection{Associated Legendre Polynomials}
+
+By just taking the derivative of the standard Legendre polynomials with respect to $x$ a total of $m$ times then multiplying by some extra stuff, we get a whole bunch of new equations that also happen to be very important with
+\begin{align}\label{associated}
+P^m_l(x) = (-1)^m(1-x^2)^{m/2}\frac{d^m}{dx^m}P_l(x)
+\end{align}
+We can then find negative $m$ ones with
+\begin{align}
+P^{-m}_l = (-1)^m\frac{(l-m)!}{(l+m)!}P_l^m
+\end{align}
+They are also solutions to the differential equation
+\begin{align}\label{associatedlegendre}
+\frac{d}{dx}\Big[(1-x^2)\frac{d}{dx}P_l^m(x)\Big] + \Big[l(l+1) - \frac{m^2}{1-x^2}\Big]P_l^m(x) = 0
+\end{align}
+
+It turns out that the associated Legendre polynomials aren't even in general actual polynomials, but just carry the name from the their relation to the Legendre generating function. The first few go like
+\begin{align}
+P_0^0(x) &= 1\\
+P_1^{-1}(x) &= -\frac{1}{2}P_1^1(x)\\
+P_1^0(x) &= x\\ 
+P_1^1(x) &= -(1-x^2)^{1/2}
+\end{align}
+Where all of the associated Legendre polynomials should be identical to the regular Legendre polynomials when $m = 0$ as seen in equation \ref{associated}.
+
+
+
+\subsection{Spherical Harmonics}
+
+
+Typical notation goes as 
+\begin{align}
+\int d\Omega = \int_0^{2\pi} d\phi \int_0^\pi d\theta \sin\theta
+\end{align}
+Where $\Omega$ is called the \emph{solid angle}. These guys are also orthonormal (note the complex conjugate!)
+
+\begin{align}
+\int d\Omega~Y^*_{lm}(\Omega)Y_{l'm'}(\Omega) = \delta_{ll'}\delta_{mm'}
+\end{align}
+
+They're analogous to $\sin\theta$  except in two dimensions instead of just one. They are also complete with
+
+\begin{align}
+\sum_{l=0}^\infty \sum_{m=-l}^l Y^*_{lm}(\Omega)Y_{l'm'}(\Omega) = \frac{1}{\sin\theta}\delta(\theta-\theta')\delta(\phi-\phi')
+\end{align}
+
+When we have spherical, but non-azimuthal symmetry when using Laplace's equation, since the argument is actually $P_l(\cos\gamma)$, where $\gamma$ is the angle between one point in spherical coordinates ($\theta,\phi$) and another ($\theta',\phi'$) , we can expand the Legendre Polynomials in terms of the Spherical Harmonics, since they are complete.
+
+\begin{align}
+P_l(\cos\gamma) = \frac{4\pi}{2l+1}\sum_{m=-l}^l Y_{lm}^*(\theta', \phi')Y_{lm}(\theta,\phi)
+\end{align}
+
+
+Their polar portion come from the associated Legendre polynomials, with
+\begin{align}
+Y^m_l(\theta,\phi) \sim P_l^m(\cos\theta)e^{im\phi}
+\end{align}
+
+
+\begin{align}
+Y^{m*}_{l}= (-1)^mY^{-m}_l
+\end{align}
+The first few look like
+
+\begin{align}
+Y_0^0 &= \Big(\frac{1}{4\pi}\Big)^{1/2}\\
+Y_1^0 &= \Big(\frac{3}{4\pi}\Big)^{1/2}\cos\theta\\
+Y_1^{\pm 1} &= \mp \Big(\frac{3}{8\pi}\Big)^{1/2}\sin\theta e^{\pm i\phi}
+\end{align}
+
+A nice trick to evaluating certain integrals is recognizing how to put Cartesian variables into the forms of spherical harmonics, with
+\begin{align}
+x &= r\sin\theta \cos\phi = r\sqrt{\frac{2\pi}{3}}\Big(Y^{-1}_1 - Y^1_1\Big)\\
+y &= r\sin\theta\sin\phi = ir\sqrt{\frac{2\pi}{3}}\Big(Y^{-1}_1 + Y^1_1\Big)\\
+z &= r\cos\theta = 2r\sqrt{\frac{\pi}{3}}Y_1^0
+\end{align}
+
+
+\subsection{Bessel Functions}\label{bessel}
+
+These show up in Laplace's equation in Cylindrical coordinates. $J(x)$ is the Bessel function of the first kind, and $N(x)$ the Bessel function of the second kind. Often in problem we can get rid of the second kind ones since
+\begin{align}
+N_\alpha(x\rightarrow 0) =-\infty
+\end{align}
+
+
+In the limit of $x\gg 1$, they break down into a somewhat more palatable form, with
+\begin{align}
+J_\alpha \sim \frac{1}{\sqrt{x}}\cos\Big(x - \phi(\alpha)\Big)\\
+N_\alpha \sim \frac{1}{\sqrt{x}}\sin\Big(x - \phi(\alpha)\Big)
+\end{align}
+Where $\phi(\alpha)$ is some phase dependent on $\alpha$ 
+
+%They can be found through iteration of the formula
+%\begin{align}
+%\frac{d}{dx}\Big(\frac{J_m(x)}{x^m}\Big) = -\frac{J_{m+1}}{x^m}
+%\end{align}
+
+\subsection{Spherical Bessel Functions}
+These come from the radial portion of the Helmholtz equation in spherical coordinates
+\begin{align}
+j_l(x) &= (-x)^l \Big(\frac{1}{x}\frac{d}{dx}\Big)^l~\frac{\sin x}{x}\\
+y_l(x) &= -(-x)^l\Big(\frac{1}{x}\frac{d}{dx}\Big)^l~\frac{\cos x}{x}
+\end{align}
+The first one is known as the (unnormalized) sinc function with
+\begin{align}
+j_0(x) = \frac{\sin x}{x}
+\end{align}
+
+\subsection{Airy Functions}
+When looking at linear potentials in quantum mechanics, which happen when looking at the first order Taylor expansion on a potential wall, the Schrodinger equation usually boils down (after $u$ substituting away the constant energy term) into the form of
+\begin{align}
+0 = \Big(\frac{d^2}{dx^2} - x\Big) \psi(x)
+\end{align}
+This equation is solved by
+\begin{align}
+\psi(x) = a\textrm{Ai}(x) + b\textrm{Bi}(x)
+\end{align}
+I don't imagine we will ever need to know much more about this function outside of its limits, which look like
+\begin{align}
+\textrm{Ai}(x) &\approx e^{-x} && x\gg 0\\
+\textrm{Bi}(x) &\approx e^{x} && x\gg 0\\
+\end{align}
+These functions are not symmetric about the origin (because of the non-symmetric potential $x$) which causes them to look differently when $x$ is negative, with
+\begin{align}
+\textrm{Ai}(x) &\approx \sin x && x\ll 0\\
+\textrm{Bi}(x) &\approx \cos x && x\ll 0\\
+\end{align}
+Intuitively, this happens because the energy is greater than the potential on one side, which swaps signs at the origin. which changes the exponential oscillation into growth or decay.
+
+\subsection{Dirac Delta Function}
+The Dirac delta function in other coordinate systems can be found knowing that always
+\begin{align}
+\int_{-\infty}^\infty dx \delta(x-x') = 1
+\end{align}
+As long as the region you are integrating over contains $x'$. Extrapolating to Cylindrical
+\begin{align}
+\int dr^3 \delta(\textbf{r}-\textbf{r}') = \int_0^{2\pi} d\theta \int_{-\infty}^\infty dz \int_0^\infty dr r ~\delta(\textbf{r}-\textbf{r}') = 1
+\end{align}
+This tells us that in \textbf{cylindrical} coordinates
+\begin{align}
+\delta(\textbf{r}-\textbf{r}') = \frac{1}{r}\delta(r-r')\delta(\theta-\theta')\delta(z-z')
+\end{align}
+Similarly in \textbf{spherical} coordinates
+\begin{align}
+\delta(\textbf{r}-\textbf{r}') = \frac{1}{r^2\sin\theta}\delta(r-r')\delta(\theta-\theta')\delta(\phi-\phi')
+\end{align}
+
+
+
+
+
+\subsection{Heaviside Function}
+Incidentally not named because one side is "heavier" than the other but actually from Oliver Heaviside
+\begin{align}
+H(x) =
+\begin{cases}
+0 & x < 0\\
+1 & x\ge 0
+\end{cases}\\
+\end{align}
+
+It also has an infinite slope at the origin, so the derivative of it is in fact the Dirac delta function
+\begin{align}
+\frac{d}{dx} H(x) = \delta(x)
+\end{align}
+
+
+This function is also useful in expressing charge densities as it implicitly changes the bounds of integrals. For instance if we have a charged disk with charge per unit area $\sigma = Q/\pi R^2$, we can express the volume charge density knowing that
+
+\begin{align}
+Q = \int dr^3 \rho(\textbf{r}) = \int_{-\infty}^\infty dz \int_0^{2\pi} d\theta \int_0^\infty dr~r \sigma f(z)g(\theta)h(r)
+\end{align}
+Charge is only in the middle where $z=0$, so
+\begin{align}
+f(z) = \delta(z)
+\end{align}
+Charge distribution is independent of $\theta$, so
+\begin{align}
+g(\theta) = 1
+\end{align}
+Charge distribution only extends to $r=R$, and everything else will make the integral evaulate to $\sigma\pi R^2$ so
+\begin{align}
+h(r) = H(R-r)
+\end{align}
+Therefore we have
+\begin{align}
+\rho(\textbf{r}) = \delta(z)H(R-r)
+\end{align}
+
+
+
+
+
+\subsection{Green's Functions}\label{green}
+In Physics, there are often times where you are given some differential equation that looks like
+\begin{align}\label{lindifeq}
+L u(x) = f(x)
+\end{align}
+Where $L$ is some linear differential operator, like $d/dx$ or $(3x+d^2/dx^2)$. The idea with Green's functions is that it is often easier to solve the equation
+\begin{align}
+L G(x,s) = \delta(x-s)
+\end{align}
+Where $s$ is an arbitrary parameter that $L$ does not act on. By only solving this equation, we can add up any arbitrary amount of delta functions that we want, thus reconstructing $f(x)$, and incidentally get an expression for $u(x)$, with
+\begin{align}
+L\Big(\int ds~G(x,s)f(s)\Big) = \int ds~\delta(x-s) f(s) = f(x)
+\end{align}
+By comparing this equation to equation \ref{lindifeq}, we see that
+\begin{align}
+u(x) = \int ds~G(x,s)f(s)
+\end{align}
+So if we have both the Green's function and $f(x)$, we can plug it into this expression to solve for $u(x)$. % Solving for Green's function's is also usually tough, but can be done in a few ways... TODO
+
+
+
+\subsection{Riemann-Zeta Function}
+
+Defined as
+\begin{align}
+	\zeta(s) = \frac{1}{\Gamma(s)} \int_{0}^{\infty} \frac{1}{e ^ x - 1}\,x ^ s \frac{\mathrm{d}x}{x} 
+\end{align}
+For all (potentially complex) $s$ with real part greater than 1. This integral shows up often in Bose-Einstein statistics integrals. It can also be defined as 
+\begin{align}
+	\zeta(s) = \sum_{n=1}^\infty n^{-s} = \frac{1}{1^s} + \frac{1}{2^s} + \frac{1}{3^s} + ...
+\end{align}
+
+\begin{multicols}{2}
+	This looks not so bad, but, remember $s$ is potentially a \emph{complex} number, which makes these functions nutty. See the picture to the right, which is a plot of the Riemann-Zeta function as a function of a complex number $\zeta(z)$ This summation is the \emph{analytic continuation} of this series if it were just a real number. 
+\columnbreak
+
+
+
+	%\includegraphics[width=0.5\textwidth]{img/Riemann-Zeta-Func.png}
+
+
+\end{multicols}
+
+
+
+
+\section{Non-Cartesian Geometries}
+
+The best way to remember these is remembering the gradient in whichever coordinate system
+\begin{align}
+\nabla f = \rm{whatever}
+\end{align}
+And also the divergence
+\begin{align}
+\nabla\cdot\textbf{A} = \rm{something}
+\end{align}
+Then using the identity
+\begin{align}
+\nabla^2 f = \nabla\cdot\nabla f
+\end{align}
+to get the Laplacian
+
+
+\subsection{Spherical Coordinates}\label{sphere}
+Taking $\theta$ as the polar angle (goes from 0 to $\pi$) and $\phi$ as the azimuthal angle (goes from $0$ to $2\pi$), we have the relations that
+\begin{align}\label{sphere}
+x &= r\sin\theta\cos\phi\\
+y &= r\sin\theta\sin\phi\\
+z &= r\cos\theta
+\end{align}
+The gradient is given by
+\begin{align}
+\nabla f = \frac{\partial f}{\partial r}\hat{r} +\frac{1}{r}\frac{\partial f}{\partial \theta}\hat{\theta} + \frac{1}{r\sin\theta}\frac{\partial f}{\partial\phi}\hat{\phi}
+\end{align}
+And the divergence
+\begin{align}
+\nabla\cdot\textbf{A} = \frac{1}{r^2}\frac{\partial(r^2A_r)}{\partial r} + \frac{1}{r\sin\theta}\frac{\partial}{\partial\theta}(A_\theta\sin\theta) + \frac{1}{r\sin\theta}\frac{\partial A_\phi}{\partial\phi}
+\end{align}
+Using the method outlined before, the Laplacian in Spherical coordinates is then given as
+\begin{align}
+\nabla^2\equiv \frac{1}{r^2} \frac{\partial}{\partial r}\Big(r^2\frac{\partial}{\partial r}\Big) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\frac{\partial}{\partial\theta}\Big) +\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial\phi^2} 
+\end{align}
+We can also show that 
+\begin{align}\label{dirac}
+\boxed{\nabla^2 ~\frac{1}{r}= -\nabla\cdot\frac{\hat{r}}{r^2} = -4\pi\delta(\textbf{r})}
+\end{align}
+Since
+\begin{align}
+\int d^3r ~\delta(\textbf{r}) = 1
+\end{align}
+And
+\begin{align}
+\int d^3r \nabla^2\Big(\frac{1}{r}\Big) = \int d^3r \nabla\cdot\nabla\Big(\frac{1}{r}\Big) = \int d^3 r \nabla\cdot -\frac{1}{r^2}\hat{r}
+\end{align}
+This looks like it is zero now, but using Gauss' law we see that
+\begin{align}
+- \int d^3 r \nabla\cdot \frac{1}{r^2}\hat{r} = -\int d\textbf{S}\cdot \frac{1}{r^2}\hat{r} = -\int_0^{2\pi}d\phi\int_{-1}^1 d(\cos\theta) = -4\pi
+\end{align}
+Where we converted the volume integral on the left to a \emph{surface} integral which does not depend on $r$ at all. Thus we see we can match the integrands, giving us the result of equation \ref{dirac}.
+\begin{align}
+\begin{bmatrix}\mathbf{\hat x} \\ \mathbf{\hat y}  \\ \mathbf{\hat z} \end{bmatrix}
+  = \begin{bmatrix} \sin\theta\cos\phi & \cos\theta\cos\phi & -\sin\phi \\
+                    \sin\theta\sin\phi & \cos\theta\sin\phi &  \cos\phi \\
+                    \cos\theta         & -\sin\theta        & 0 \end{bmatrix}
+    \begin{bmatrix} \boldsymbol{\hat\rho} \\ \boldsymbol{\hat\theta} \\ \boldsymbol{\hat\phi} \end{bmatrix}
+\end{align}
+An easy way to "derive" these in a pinch is looking at equation \ref{sphere}, then taking the derivative in the order $r,\theta,\phi$, getting rid of all the terms dependent on the last variable as you proceed (elaborate more).
+
+
+\subsection{Cylindrical Coordinates}
+The gradient is
+\begin{align}
+\nabla f = \frac{\partial f}{\partial \rho}\hat{\rho} + \frac{1}{\rho}\frac{\partial f}{\partial \theta}\hat{\theta} + \frac{\partial f}{\partial z}\hat{z}
+\end{align}
+The divergence is
+\begin{align}
+\nabla\cdot\textbf{A} = {1 \over \rho}{\partial \left( \rho A_\rho  \right) \over \partial \rho}
++ {1 \over \rho}{\partial A_\theta \over \partial \theta}
++ {\partial A_z \over \partial z}
+\end{align}
+This gives the Laplacian as
+\begin{align}
+\nabla^2 f = {1 \over \rho}{\partial \over \partial \rho}\left(\rho {\partial f \over \partial \rho}\right)
++ {1 \over \rho^2}{\partial^2 f \over \partial \theta^2}
++ {\partial^2 f \over \partial z^2}
+\end{align}
+
+
+\begin{align}
+\begin{bmatrix}\mathbf{\hat r} \\ \boldsymbol{\hat\theta} \\ \mathbf{\hat z}\end{bmatrix}
+  = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\
+                   -\sin\theta & \cos\theta & 0 \\
+                   0 & 0 & 1 \end{bmatrix}
+    \begin{bmatrix} \mathbf{\hat x} \\ \mathbf{\hat y} \\ \mathbf{\hat z} \end{bmatrix}	
+\end{align}
+
+\section{Vector Calculus}
+
+\begin{align}
+\nabla\cdot u\textbf{v} = \nabla u\cdot\textbf{v} + u\nabla\cdot\textbf{v}
+\end{align}
+\subsection{Spherical Poisson Equation}
+Let's say we have a differential equation that looks like
+\begin{align}
+\Big[\nabla^2 -k^2 + f(r)\Big]\psi(r,\theta,\phi) = 0
+\end{align}
+We first assume separability of the function
+\begin{align}
+\psi(r,\theta,\phi) = R(r)Y(\theta,\phi)
+\end{align}
+Use the spherical Laplacian (Section \ref{sphere}) to turn the equation into
+\begin{align}
+\frac{Y}{r^2}\frac{\partial}{\partial r}\Big(r^2\frac{\partial R}{\partial r}\Big) + \frac{R}{r^2\sin\theta}\frac{\partial} {\partial\theta}\Big(\sin\theta\frac{\partial Y}{\partial \theta}\Big) + \frac{R}{r^2\sin^2\theta}\frac{\partial^2 Y}{\partial\phi^2}+\Big(k^2 -f(r)\Big)RY= 0
+\end{align}
+Now we can divide everything by $YR/r^2$ to get
+\begin{align}
+&\Big[\frac{1}{R}\frac{\partial}{\partial r}\Big(r^2\frac{\partial R}{\partial r}\Big) -\Big(k^2 - f(r)\Big)r^2\Big]\\
+&+ \Big[ \frac{1}{Y\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\frac{\partial Y}{\partial\theta}\Big) + \frac{1}{Y\sin^2\theta}\frac{\partial^2 Y}{\partial\phi^2}\Big] = 0
+\end{align}
+Because we can isolate all of the variables together and they are all independent of each other, each of the equations in brackets alone must be equal at least to a constant that cancels out. So calling that constant $C$ we have
+\begin{align}
+\frac{1}{R}\frac{\partial}{\partial r}\Big(r^2\frac{\partial R}{\partial r}\Big) -\Big(k^2-f(r)\Big)r^2 &= C\\
+\frac{1}{Y\sin\theta}\frac{\partial}{\partial\theta}\Big(\sin\theta\frac{\partial Y}{\partial\theta}\Big) + \frac{1}{Y\sin^2\theta}\frac{\partial^2 Y}{\partial\phi^2} &= -C
+\end{align}
+\begin{itemize}
+\item Let's take a tangent and pretend that the solution is not dependent on $\phi$ at all (Azimuthal symmetry), then our equation becomes
+\begin{align}\label{radiallegendre}
+\frac{1}{Y\sin\theta}\frac{\partial}{\partial \theta}\Big(\sin\theta\frac{\partial Y}{\partial\theta}\Big) =-C
+\end{align}
+\item We can create a new variable
+\begin{align}\label{xsub}
+x = \cos\theta \rightarrow \frac{\partial}{\partial\theta} &=\frac{dx}{d\theta} \frac{\partial}{\partial x}\\
+&= -\sin\theta\frac{\partial}{\partial x}
+\end{align}
+\item Rewriting equation \ref{radiallegendre} in terms of $x$, we see that
+\begin{align}
+\frac{1}{Y}\frac{\partial}{\partial x}\Big(\sin^2\theta\frac{\partial Y}{\partial x}\Big) = -C
+\end{align}
+\item Using $\sin^2\theta = 1-\cos^2\theta = 1-x^2$, we get the differential in the form
+\begin{align}
+\frac{d}{dx}\Big((1-x^2)\frac{d}{dx}Y\Big) + CY = 0
+\end{align}
+Which is the exact form of the Legendre Polynomials in equation \ref{legendrediffeq} with $C = l(l+1)$ and $Y(\theta) = P_l(\cos\theta)$. Thus we see if we have azimuthal symmetry, we are free to use these for things to solve Laplace's equation.
+\end{itemize}
+From now on, we write $C = l(l+1)$, because of the reduction to Legendre polynomials that happens when we have no angular dependence. Looking now at the angular portion, we again use seperation of variables
+\begin{align}
+Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
+\end{align}
+We plug this into the angular equation and moving things around we get
+\begin{align}
+\frac{1}{\Theta}\Big[\sin\theta\frac{\partial}{\partial\theta}\Big(\sin\theta\frac{\partial \Theta}{\partial\theta}\Big)\Big] +l(l+1)\sin^2\theta  &= -\frac{1}{\Phi}\frac{\partial^2 \Phi}{\partial\phi^2}
+\end{align}
+We do the same trick with the constants, here using a bit of foresight, calling 
+\begin{align}
+\frac{1}{\Theta}\Big[\sin\theta\frac{\partial}{\partial\theta}\Big(\sin\theta\frac{\partial \Theta}{\partial\theta}\Big)\Big] +l(l+1)\sin^2\theta &= m^2\\
+\frac{1}{\Phi}\frac{\partial^2 \Phi}{\partial\phi^2} &= -m^2
+\end{align}
+Solve the easy $\phi$ one, without caring for normalization
+\begin{align}
+\frac{d^2\Phi}{d\phi^2} = -m^2\Phi \rightarrow \Phi(\phi) = e^{im\phi}
+\end{align}
+Since $\Phi(\phi) = \Phi(\phi+2\pi)$ we have to have that 
+\begin{align}
+m = 0,\pm 1, \pm 2, \pm 3, ...
+\end{align}
+For the $\theta$ equation, we have that
+\begin{align}
+\sin\theta\frac{\partial}{\partial\theta}\Big(\sin\theta\frac{\partial \Theta}{\partial\theta}\Big) +\Big[l(l+1)\sin^2\theta-m^2\Big]\Theta &= 0
+\end{align}
+We can then make the same substitution as in equation \ref{xsub} to write the equation as
+\begin{align}
+(1-x^2)\frac{d}{dx}\Big((1-x^2)\frac{d\Theta}{dx}\Big) + \Big(l(l+1)(1-x^2)-m^2\Big)\Theta = 0
+\end{align}
+The solution to this is the same as the associated Legendre Polynomials defined in \ref{associatedlegendre} with $\Theta(\theta) = P_l^m(\cos\theta)$. So up to a constant, we have 2/3rd's of the solution, with 
+\begin{align}
+Y_l^m(\theta,\phi) = \alpha_{lm}~P_l^m(\cos\theta)e^{im\phi}
+\end{align}
+The radial portion is therefore
+\begin{align}
+\frac{1}{R}\frac{\partial}{\partial r}\Big(r^2\frac{\partial R}{\partial r}\Big) -\Big(k^2 - f(r)\Big)r^2 = l(l+1)
+\end{align}
+We now change variables to simply the equations with
+\begin{align}
+u(r) \equiv rR(r)
+\end{align}
+Which simplifies the kinetic term with
+\begin{align}
+\frac{\partial}{\partial r}\Big(r^2\frac{\partial }{\partial r}\frac{u(r)}{r}\Big)  &= \frac{\partial}{\partial r}\Big[r\frac{\partial u(r)}{\partial r} - u(r)\Big]\\
+&= \frac{\partial u(r)}{\partial r} + r\frac{\partial^2 u(r)}{\partial r^2} - \frac{\partial u(r)}{\partial r}\\
+&= r\frac{\partial^2 u(r)}{\partial r^2}
+\end{align}
+So the equation becomes
+\begin{align}
+\frac{\partial^2 u(r)}{\partial r^2} -\Big(k^2 - f(r)\Big)u(r)-\frac{l(l+1)}{r^2}u(r) = 0
+\end{align}
+From here, we need the form of $f(r)$ to proceed.
+
+
+
+\subsection{Cylindrical Laplaces Equation}\label{cylinderlaplacian}
+We first assume seperability of the potential
+\begin{align}
+\varphi(r,\theta,z) = R(r)\Theta(\theta)Z(z)
+\end{align}
+In cylindrical coordinates we have
+\begin{align}
+\nabla^2 \varphi = {Z\Theta \over \rho}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
++ {ZR \over \rho^2}{\partial^2 \Theta \over \partial \theta^2}
++ R\Theta {\partial^2 Z\over \partial z^2}= 0
+\end{align}
+Dividing by the potential, we get
+\begin{align}
+\nabla^2 \varphi = {1 \over R\rho}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
++ {1 \over \Theta\rho^2}{\partial^2 \Theta \over \partial \theta^2}
++ \frac{1}{Z} {\partial^2 Z\over \partial z^2}= 0
+\end{align}
+We now have the $z$ part seperated out so we can set that equal to a constant, with
+\begin{align}
+- \Big[{1 \over R\rho}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
++ {1 \over \Theta\rho^2}{\partial^2 \Theta \over \partial \theta^2}\Big]
+= k^2 = \frac{1}{Z} {\partial^2 Z\over \partial z^2}
+\end{align}
+We can solve the $z$ part relatively easily, shown in section \ref{cylinderlaplace}. Rewriting the the left side, with the constant, we have
+\begin{align}
+ \Big[{\rho \over R}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
+ +k^2\rho^2\Big]
++ {1 \over \Theta}{\partial^2 \Theta \over \partial \theta^2} = 0
+\end{align}
+Calling the $\Theta$ equation a constant, we get
+\begin{align}
+{\rho \over R}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
+ +k^2\rho^2= \alpha^2 = -{1 \over \Theta}{\partial^2 \Theta \over \partial \theta^2}
+\end{align}
+The $\Theta$ one is again easy to solve, but the remaining one becomes tough, with
+\begin{align}
+{\rho }{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
+ +(k^2\rho^2-\alpha^2)R = 0
+\end{align}
+This one is solved with Bessel functions, or other things depending on what form  the constants take.
+
+
+
+
+
+
+
+%\section{Variational Calculus}
+%TODO
+
+
+
+
+\section{Lagrange Multipliers}\label{lagrange-mult}
+Given some function $F(x,y,z,...)$ under the constraint that $G(x,y,z,...) = 0$, we solve for the extremum of $F$ under the constraint by minimizing 
+\begin{align}
+F' = F + \lambda G
+\end{align}
+We take the derivative with respect to each coordinate and obtain some function that lets us solve for one of the variables in terms of the multiplier $\lambda$, then once we do that for all the variables $x,y,z,...$ we can plug it back into our original constraint, solve for $\lambda$ numerically, then obtain what the values of $x,y,z,...$ are from our previous expressions which gave them in terms of $\lambda$. For example
+\begin{align}
+F(x,y) = x^2 + y^2 && G(x,y) = x + y -1 = 0\\
+\end{align}
+$$\implies F' = x^2 + y^2 + \lambda(x+y-1)$$
+This gives us the equations
+\begin{align}
+2x + \lambda &= 0\\
+\implies x &= -\lambda/2\\
+2y + \lambda &= 0\\
+\implies y &=-\lambda/2\\
+\end{align}
+Plugging back into our constraint gives us
+\begin{align}
+-\lambda - 1 = 0\\
+\implies \lambda = -1
+\end{align}
+Which tells us that $F$ is at an extremum when $x = y = 1/2$. This is then generalized with more constraints by simply adding more Lagrange multipliers for each constraint, and minimizing in the same way. These constraints are the essence of statistical mechanics, where we try to maximize the entropy, under constraints of total energy, etc.
+
+
+\section{Taylor Expansion}
+
+
+Taylor expansion is an incredibly useful tool if we know how some function behaves at one place, and want to see what would happen if we changed one of the parameters it depends on by a small amount.
+
+\begin{align}
+	f(x+\delta) = f(x) + \delta f'(x) + \frac{\delta^2}{2!}f''(x) + ...
+\end{align}
+
+So if we have a crazy looking function that we don't know how it looks, we can just take the derivative of it a bunch of times (usually just once) and multiply it by different factors of the small quantity $\delta$. 
+
+\subsection{Taylor Expanding Vectors}
+
+%\todo{This is bad, fix it}
+We can write a vector as 
+
+$$\textbf{r} = (r_x,r_y,r_z)$$
+
+If we want to Taylor expand to find the function at some point $\textbf{r}'$, we have
+
+\begin{align}
+f(\textbf{r}') &= f(r_x',r_y',r_z')\\
+\end{align}
+First Taylor expand around $r_x'-r_x$
+\begin{align}
+ f(r_x',r_y',r_z') &= f(r_x,r_y',r_z') + (r_x'-r_x)\frac{\partial}{\partial x}f(r_x,r_y',r_z') + ...
+\end{align}
+Then Taylor expand all these terms around $r_y'-r_y$
+
+\begin{align}
+f(r_x',r_y',r_z') &= \Big[f(r_x, r_y,r_z') + (r_y'-r_y)\frac{\partial}{\partial y}f(r_x,r_y,r_z') + ...\Big]\\ 
+&+ (r_x'-r_x)\frac{\partial}{\partial x}\Big[f(r_x,r_y, r_z') + \frac{\partial}{\partial y}f(r_x,r_y, r_z')\Big]
+\end{align}
+Neglecting second order terms, we have
+\begin{align}
+f(r_x',r_y',r_z') &= f(r_x,r_y,r_z') + (r_x'-r_x)\frac{\partial}{\partial x}f(r_x,r_y,r_z') + (r_y'-r_y)\frac{\partial}{\partial y}f(r_x,r_y,r_z')
+\end{align}
+Now expanding these around $r_z'-r_z$, we get
+\begin{align}
+f(r_x',r_y',r_z') &= \Big[f(r_x,r_y,r_z) + (r_z'-r_z)\frac{\partial}{\partial z}f(r_x,r_y,r_z)\Big]\\ 
+&+ (r_x'-r_x)\frac{\partial}{\partial x}\Big[f(r_x,r_y,r_z) + (r_z'-r_z)\frac{\partial}{\partial z}f(r_x,r_y,r_z)\Big]\\  
+&+ (r_y'-r_y)\frac{\partial}{\partial y}\Big[f(r_x,r_y,r_z) + (r_z'-r_z)\frac{\partial}{\partial z}f(r_x,r_y,r_z)\Big]
+\end{align}
+Again neglecting second order terms, we get
+\begin{align}
+f(r_x',r_y',r_z') &= f(r_x,r_y,r_z) + (r_x'-r_x)\frac{\partial}{\partial x}f(r_x,r_y,r_z)\\ 
+&+ (r_y'-r_y)\frac{\partial}{\partial y}f(r_x,r_y,r_z) + (r_z'-r_z)\frac{\partial}{\partial z}f(r_x,r_y,r_z)\\
+&= f(r_x,r_y,r_z) + \Big[(r_x'-r_x)\frac{\partial}{\partial x} + (r_y'-r_y)\frac{\partial}{\partial y} + (r_z'-r_z)\frac{\partial}{\partial z}\Big] f(r_x,r_y,r_z)\\
+ &= f(\textbf{r}) + (\textbf{r}'\cdot\nabla) f(\textbf{r})
+\end{align}
+
+In general, the expansion looks just like
+
+$$f(\textbf{r}') = f(\textbf{r}) + (\textbf{r}'\cdot\nabla) f(\textbf{r}) + \frac{1}{2}(\textbf{r}'\cdot\nabla)^2 f(\textbf{r}) + ...$$
+
+
+\section{Differential Equations}
+Many differential equations can be solved by simply guessing a set of polynomials, then coming up with a relationship between coefficients (e.g. the Hermite Polynomials).
+\begin{align}
+	y(x) = \sum_{n=0}^\infty c_n x^n
+\end{align}
+
+
+\subsection{Wronskian}
+If we have some differential equation to which we found multiple solutions for (lets say there are just two $\phi_1(x), \phi_2(x)$), we can check if they are linearly independent by computing the Wronskian $W(\phi_1,\phi_2)$. 
+\begin{align}
+W(\phi_1,\phi_2) = \phi_1\phi_2'-\phi_2\phi_1' \neq 0
+\end{align}
+Where the $'$ is the derivative operator. If this quantity is non zero, then the solutions \textbf{are} linearly independent. Which then let's us write a general solution to the differential equation as
+\begin{align}
+\phi(x) = A_1\phi_1(x) + A_2\phi_2(x)
+\end{align}
+
+\subsection{Continuity Equation}
+Just take the total time derivative of the whole thing, set it to zero, and match vector components.
+
+
+\subsection{Forced Differential Equations}
+Given some differential equation, such as for the Foucault pendulum\footnote{Taylor pg. 354}, whose first order equation looks like
+\begin{align}
+\ddot{y} + \omega_0^2y = 2\Omega\omega_0 x_0\sin(\omega_0 t)
+\end{align}
+We see we can solve the equation easily if it were only the lefthand side. In order to solve a forced differential equation (which has the righthand side), the algorithm is as follows
+\begin{enumerate}
+\item Solve the equation as if it didn't have the forcing term (the \emph{homogeneous} solution), in this case
+\begin{align}
+\ddot{y}_h + \omega_0^2y_h &= 0\\
+\implies y_h(t) &= A_h\cos(\omega_0 t) + B_h\sin(\omega_0 t)
+\end{align}
+\item Guess what the forced solution will look like (see Table \ref{forcing}), called the \emph{particular} solution. Here we will have
+\begin{align}
+y_p(t) = A_p\cos\omega_0 t + B_p\sin\omega_0 t
+\end{align}
+\item Plug it in and solve for constants. If it doesn't work, multiply the solution by the independent variable. In this case, the trial function doesn't work (everything cancels on the left side), so we have to multiply by $t$
+\begin{align}
+y_p'(t) &= t(A_p\cos\omega_0 t + B_p\sin\omega_0 t)\\
+\implies \dot{y}_p'(t) &= A_p\cos\omega_0 t + B_p\sin\omega_0 t + t(-\omega_0A_p\sin\omega_0 t + \omega_0B_p\cos\omega_0 t)\\
+\implies \ddot{y}_p'(t) &= -2\omega_0A_p\sin\omega_0 t + 2\omega_0B_p\cos\omega_0 t +t(-\omega_0^2 A_p\cos\omega_0t -\omega_0^2B_p\cos\omega_0 t)\\
+\end{align}
+Plugging into the initial differential equation
+\begin{align}
+\implies & -2\omega_0A_p\sin\omega_0 t + 2\omega_0B_p\cos\omega_0 t = 2\Omega\omega_0 x_0\sin(\omega_0 t)\\
+\end{align}
+This tells us that
+\begin{align}
+B_p &= 0\\
+-2\omega_0A_p &= 2\Omega \omega_0x_0\\
+\implies A_p &= -\Omega x_0
+\end{align}
+Thus
+\begin{align}
+y_p'(t) = -\Omega x_0 t\cos\omega_0 t
+\end{align}
+
+\item The summation of the two gives us the full solution
+\begin{align}
+y(t) &= y_h(t) + y_p(t)\\
+ &= (A-\Omega x_0 t)\cos\omega_0 t + B\sin\omega_0 t
+\end{align}
+\item Then plugging in for initial conditions lets us find the constants. Let's say that $y(0) = 0, \dot{y}(0) = 0$
+
+\begin{align}
+y(0) = 0 &= A\\
+\dot{y}(0) = 0 &= -\Omega x_0 +\omega_0 B\\
+\implies B &= \Omega x_0/\omega_0
+\end{align}
+
+Thus the full solution is given by
+\begin{align}
+y(t) = -\Omega x_0 t\cos\omega_0 t +\frac{\Omega}{\omega_0} x_0\sin\omega_0 t
+\end{align}
+
+
+
+\end{enumerate}
+
+
+\begin{center}
+ \begin{tabular}{||c c||} 
+ \hline
+Forcing Function & Trial Forced Solution \\ [0.5ex] 
+ \hline\hline
+ const & $A$  \\ 
+ \hline
+ $t$ & $At+ B$  \\
+ \hline
+ $t^n$ & $At^n + Bt^{n-1} + ... Et + F$  \\
+ \hline
+ $e^{st}$ & $Ae^{st}$ \\
+ \hline
+ $\sin\omega t, \cos\omega t$ & $A\sin\omega t + B\cos\omega t$   \\ 
+ \hline
+\end{tabular}\label{forcing}
+\end{center}
+\section{Linear Algebra}
+A unimodular matrix has determinant $\pm 1$
+
+
+$$\rm{det}(\bf{AB}) = \rm{det}(\bf{A})\rm{det}(\bf{B})$$
+The trace is invariant under cyclic permutations
+\begin{align}
+	\textrm{tr}(ABC) = \textrm{tr}(CAB) = \textrm{tr}(BCA)
+\end{align}
+
+$$a_i b_{ij} c_j = \textbf{a}\cdot\textbf{B}\cdot\textbf{b} = \sum_{i} a_i \sum_{j} b_{ij} c_j$$
+
+\subsection{Tensors}
+The rank of a tensor is simply the number of indices needed to describe it. A vector is a tensor of the first rank, and a general $n \times m$ matrix is a tensor of the second rank. The tensor product of two 2x2 matrices is given by
+\begin{align}
+\begin{bmatrix}
+a_{11} & a_{21} \\
+a_{21} & a_{22}
+\end{bmatrix}
+\otimes
+\begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix} &=
+\begin{bmatrix}
+a_{11} \begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}& a_{21} \begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}\\
+a_{21} \begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}& a_{22}\begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}
+\end{bmatrix}
+\end{align}
+We can do this for any vector space by generalizing the form above. For instance
+
+\begin{align}
+\begin{bmatrix}
+a_{1}  \\
+a_{2} 
+\end{bmatrix}
+\otimes
+\begin{bmatrix}
+b_{1}\\
+b_{2}
+\end{bmatrix} = 
+\begin{bmatrix}
+a_{1}  \begin{bmatrix}
+b_{1}\\
+b_{2}
+\end{bmatrix} \\
+a_{2} \begin{bmatrix}
+b_{1}\\
+b_{2}
+\end{bmatrix} 
+\end{bmatrix}
+\end{align}
+
+Another important tensor operator is the direct sum, which is written as
+\begin{align}
+	\begin{bmatrix}
+a_{11} & a_{21} \\
+a_{21} & a_{22}
+\end{bmatrix}
+\oplus
+\begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix} &=
+\begin{bmatrix}
+a_{11} & a_{21} & 0 & 0\\
+a_{21} & a_{22} & 0 & 0\\
+0 & 0& b_{11} & b_{12}\\
+0 & 0 & b_{21} & b_{22}
+\end{bmatrix}
+\end{align}
+
+\subsection{Determinant}
+For an arbitrarily sized matrix, can iterate this procedure.
+\begin{enumerate}
+\item Write out each value in the top row, alternating sign ($+,-,+,-,...$)
+\item Multiply each respective value by the determinant of the square matrix created by the rows and columns that the value does not belong to
+\end{enumerate}
+As an example a 4 x 4
+\begin{align}
+\begin{vmatrix} a & b & c & d\\e & f & g & h\\i & j & k & l\\m & n & o & p \end{vmatrix}=a\,\begin{vmatrix} f & g & h\\j & k & l\\n & o & p \end{vmatrix}-b\,\begin{vmatrix} e & g & h\\i & k & l\\m & o & p \end{vmatrix}+c\,\begin{vmatrix} e & f & h\\i & j & l\\m & n & p \end{vmatrix}-d\,\begin{vmatrix} e & f & g\\i & j & k\\m & n & o \end{vmatrix}
+\end{align}
+The matrix of a 3 x 3 is 
+\begin{align}
+ \begin{vmatrix} a & b & c\\d & e & f\\g & h & i \end{vmatrix} &= a\,\begin{vmatrix} e & f\\h & i \end{vmatrix} - b\,\begin{vmatrix} d & f\\g & i \end{vmatrix} + c\,\begin{vmatrix} d & e\\g & h \end{vmatrix}\end{align}
+ And 2 x 2
+ \begin{align}\begin{vmatrix} a & b\\c & d \end{vmatrix}=ad - bc .\end{align}
+
+
+
+\subsection{Matrix Diagonalization}\label{diagolize}
+\footnote{Griffith's Quantum Mechanics pg. 90}
+
+\begin{enumerate}
+\item Find eigenvalues ($\lambda_1, \lambda_2, ... , \lambda_N$) of matrix $\bf{M}$ with det($\bf{M}-\lambda\bf{I}$) = 0
+\item Using the eigenvalues, find the corresponding eigenvectors by plugging in each to $(\bf{M}-\lambda_i\bf{I})\bf{a_i} = 0$
+\item The diagonalized matrix $\bf{T}$ is now 
+
+$$\bf{T} = \left(
+{\begin{array}{cccc}
+\lambda_1 & 0 &...&0 \\
+0 & \lambda_2 & ...&0\\
+\vdots & \vdots &\ddots & \vdots \\
+0 & 0 & ... &\lambda_N
+\end{array}}
+\right)
+$$
+
+\item We need to find$$ \bf{M} = \bf{STS^{-1}}$$
+\item $\bf{S^{-1}}$ is equal to each eigenvector laid out as a column of the matrix, placed according to where you place it with $\bf{T}$
+
+$$\bf{S^{-1}} = \left(
+{\begin{array}{cccc}
+a(\lambda_1)_1 & a(\lambda_2)_1 &...&a(\lambda_N)_1 \\
+a(\lambda_1)_2 & a(\lambda_2)_2 & ...&a(\lambda_N)_2\\
+\vdots & \vdots &\ddots & \vdots \\
+a(\lambda_1)_N & a(\lambda_2)_N & ... &a(\lambda_N)_N
+\end{array}}
+\right)
+$$
+
+\item $\bf{S}$ can be calculated by simply inverting the matrix $\bf{S^{-1}}$
+\end{enumerate}
+
+\subsection{Simultaneous Eigenstates}
+To find a simultaneous set of eigenvectors for two operators, follow this:
+\begin{itemize}
+\item Given two 3x3 matrices
+
+$$\bf{M} = 
+\left(
+{\begin{array}{ccc}
+1&0&1\\
+0&0&0\\
+1&0&1\\
+\end{array}}
+\right)
+~~~~\bf{D} = 
+\left(
+{\begin{array}{ccc}
+2&1&1\\
+1&0&-1\\
+1&-1&2\\
+\end{array}}
+\right)$$
+
+\item First solve for their eigenvalues ($\lambda_M = 0,0,2$, $\lambda_D = -1,2,3$)
+\item Next find both sets of unnormalized eigenvectors
+$$
+\lambda_M\rightarrow  
+\left(
+{\begin{array}{c}
+a\\
+b\\
+-a
+\end{array}}
+\right),
+\left(
+{\begin{array}{c}
+a\\
+b\\
+-a
+\end{array}}
+\right),
+\left(
+{\begin{array}{c}
+a\\
+0\\
+-a
+\end{array}}
+\right)~~~~
+\lambda_D\rightarrow
+\left(
+{\begin{array}{c}
+0\\
+0\\
+0
+\end{array}}
+\right),\left(
+{\begin{array}{c}
+a\\
+a\\
+-a
+\end{array}}
+\right),
+\left(
+{\begin{array}{c}
+a\\
+0\\
+-a
+\end{array}}
+\right)$$
+\item Because $\textbf{D}$ is not degenerate, correspond each vector to another vector for degenerate $\textbf{M}$. 
+\item Then just normalize the vectors as usual, and you have a set of eigenvectors for both matrices
+\end{itemize}
+
+
+\section{Complex Analysis}
+In general one can write \emph{any} complex number as the sum of its real and complex part with
+\begin{align}
+	z = x + iy\\
+\end{align}	
+	The \emph{complex conjugate} is the same thing as the normal complex number, but with the sign in front of  $i$ switched
+\begin{align}
+	z^* = x - iy\\
+\end{align}
+The absolute value of any complex number is just
+\begin{align}
+	|z|^2 = zz^* = (x+iy)(x-iy) = x^2 +y^2
+\end{align}
+We can also find the real part  or imaginary part of any complex number by rearranging the equation for it and its complex conjugate to find
+\begin{align}
+	x &= \frac{z+z^*}{2}\\
+	y &= \frac{z - z^*}{2i}
+\end{align}
+
+% TODO Book by Roger Penrose has good stuff about $re^{i\theta}$
+
+
+
+\section{Combinatorics}
+A critical combinatorics formula is 
+\begin{align}
+{{n}\choose{k}} = \frac{n!}{k!(n-k)!}
+\end{align}
+Which tells us how may ways we can pick $k$ objects out of a total of $n$ of them. Obviously we should have $n>k$, so the number is positive, which means we should have $n$ on the top.
+
+
+
+\subsection{Stirlings Approximation}
+\begin{align}
+\ln N! &= \ln \Big(1\times 2\times 3\times...\times N\Big)\\
+&= \sum_{x=1}^N \ln x\\
+&\approx \int_1^N dx~\ln x\\
+&\approx x\ln x - x\Big|_1^N\\
+&\approx \Big(N\ln N- N \Big) - 1\ln 1 - 1\\
+&\approx N\ln N - N\\
+\end{align}
+Exponentiating both sides we get
+\begin{align}
+N! &\approx e^{N\ln N - N}\\
+&\approx e^{\ln N^N}e^{-N}\\
+&\approx N^Ne^{-N}
+\end{align}
+
+When $N$ is large enough to make the conversion to the integral valid.
+\section{Integration}
+\subsection{Exponentials}
+The Gaussian integral can be evaluated using a trick
+\begin{align}
+	\int_{-\infty}^\infty dx~e^{-ax^2} = ?
+\end{align}
+We square whatever it evaluates to, which allows us to write
+\begin{align}
+	(?)^2 = \Big(\int_{-\infty}^\infty dx~e^{-ax^2}\Big)^2 = \int_{-\infty}^\infty dx \int_{-\infty}^\infty dy~e^{-a(x^2+y^2)}
+\end{align}
+Since both $x$ and $y$ are dummy variables. This is now effectively a 2 dimensional area integral over the entire plane, which we can actually evaluate in polar coordinates quite easily
+\begin{align}
+	\int_{-\infty}^\infty dx \int_{-\infty}^\infty dy~e^{-a(x^2+y^2)} = \int_0^{2\pi} d\theta \int_0^\infty dr~re^{-ar^2} = \frac{\pi}{a} \int_0^\infty du~ e^{-u} = \frac{\pi}{a}
+\end{align}
+So we see that we have that this gives us the relation, below. With just these two equations, we can find expressions containing arbitrary powers of $x$ by taking the derivative of both sides with respect to the constant $a$.
+
+\begin{align}
+\int_{-\infty}^\infty dx ~e^{-ax^2} = \sqrt{\frac{\pi}{a}}
+&&\int_0^\infty dx~e^{-a x} = \frac{1}{a}
+\end{align}
+For instance
+\begin{align}
+\frac{d}{da}\int_0^\infty dx e^{-a x} &= \frac{d}{da}\frac{1}{a}\\
+\int_0^\infty dx~ x e^{-ax} &= \frac{1}{a^2}
+\end{align}
+One that comes up often that can be found by completing the square on the normal Gaussian integral is
+\begin{align}
+	\int_{-\infty}^\infty dx ~e^{-ax^2 + bx} = \sqrt{\frac{\pi}{a}}~e^{b^2/4a}
+\end{align}
+
+
+
+\subsection{Tabular Integration by Parts}
+Given some integral that looks like
+\begin{align}
+\int dx~x^3\cos x 
+\end{align}
+We want use integration by parts to see what it evaluates to. We would normally have to use integration by parts many times, until we got the $x$ term to evaluate to zero, but there is a nice convention to evaluating all of these quickly \footnote{Thanks to Bobby Dorst}. The algorithm goes as
+\begin{itemize}
+\item Find the part of the equation which, when differentiated enough, eventually goes to zero, in our case this would be $x^3$. At the same time, we want to find we can integrate the remaining piece over and over again without issues. $\cos x$ works
+\item Lay the two out in columns. Differentiate one side \emph{flipping the sign} in each other row, and integrate the right column
+\begin{center}
+\begin{tabular}{ c c }
+ $+x^3$ & $\cos x$  \\ \hline
+ $-3x^2$& $\sin x$  \\  
+ $+6x$ & $-\cos x$   \\
+ $-6$ &  $-\sin x$ \\
+ $0$ & $\cos x$
+\end{tabular}
+\end{center}
+
+\item Now multiply diagonally, taking the top left, multiplying by right column one row lower. Then move down a row, summing it with what you had before, until you reach the end. So we get
+\begin{align}
+\int x^3\cos x &= x^3\sin x +3x^2\cos x -6x\sin x-6\cos x
+\end{align}
+
+\end{itemize}
+
+% TODO \subsection{Jacobian}
+%Useful for when you want to change variables that you want to integrate over
+%\begin{align}
+%	\int \int f(x,y) dx ~dy = \int \int f\Big(x(u,v),y(u,v)\Big) \Big|\frac{\partial(x,y)}{\partial(u,v)}\Big| du~dv
+%\end{align}
+%Where
+%\begin{align}
+%\frac{\partial(x,y)}{\partial(u,v)}  = 	\Big|
+%{\begin{array}{cc}
+%\partial x/\partial u & \partial x / \partial v\\
+%\partial y/\partial u &\partial y/ \partial v\\
+%\end{array}}
+%\Big|
+%\end{align}
+%\section{Statistics}
+%First let's consider a fair coin, meaning the probability that the coin will land on either heads or tails is $50\%$. Let's consider all the possibilities for the coins in two consecutive flips INSERT TABLE.
+%
+%The chance to obtain these events is the same as multiplying their probabilities...
+%
+%
+%Statisticians usually write probabilities as
+%
+%\begin{align}
+%	p(x | \mu)
+%\end{align}
+%where $x$ is a vector of all the data observed, and $\mu$ is another vector of all of the parameters of your model. In virtually all cases, we record a bunch of data and collect all of our $x = x_1,x_2,x_3... x_n$ values, which we hope will tell us about the parameters of our model $\mu = \mu_1, \mu_2, ... \mu_m$. One way to do that is using the maximizing the likelihood function. We say, given our model, which has all our specified parameters $\mu$, what is the \emph{likelihood} that we would observe the data that we received. This is the same question as the coin flips 
+%
+%\subsection{Covariance}
+%
+\section{Misc}
+
+\subsection{Geometric Series}
+The geometric series is defined as 
+\begin{align}
+	\sum_{n=0}^{N-1} ar^n =a\Big( \frac{1-r^{N}}{1-r}\Big)
+\end{align}
+Which is only convergent for $r < 1$. To prove it, let's call whatever the value of the total series is equal to $s$, so we have
+\begin{align}
+	s = a + ar + ar^2 + ar^3 + ... + ar^{N-1}
+\end{align}
+Let's multiply it by $r$
+\begin{align}
+	rs =  ar + ar^2 + ar^3 + ... + ar^{N}
+\end{align}
+We recognize that the portion on the right is basically the same as the earlier expression for $s$, so let's plug in exactly what that is
+\begin{align}
+	rs = (s - a) + ar^N
+\end{align}
+Rearranging this, we find
+\begin{align}
+	(r-1)s = a(r^N - 1)
+\end{align}
+Dividing through, we see that
+\begin{align}
+	\sum_{n=0}^{N-1} ar^n = s = a\Big( \frac{1-r^{N}}{1-r}\Big)
+\end{align}
+
+
+\subsection{Completing the Square}
+If we have some function that looks like
+\begin{align}
+ax^2 + bx + c
+\end{align}
+and we want it to look like
+\begin{align}
+d(x+e)^2 + f
+\end{align}
+We have that 
+\begin{align}
+ax^2 + bx + c = dx^2 + 2ed x + de^2 + f
+\end{align}
+Matching powers of $x$, we get that
+\begin{align}
+a &= d\\
+b &= 2ed\\
+c &= de^2+f
+\end{align}
+Solving these gives us
+\begin{align}
+d = a && e =\frac{b}{2a}  && f = c-\frac{b^2}{4a}
+\end{align}
+
+
+
+
+\subsection{Trigonometric Identities}
+
+\begin{align}
+\sin(\alpha\pm\beta) = \sin\alpha\cos\beta\pm\cos\alpha\sin\beta\\
+\cos(\alpha\pm\beta) = \cos\alpha\cos\beta\mp\sin\alpha\sin\beta
+\end{align}
+
+With these identities we can derive the double angle formula, setting $\alpha = \beta$ so
+\begin{align}
+\cos2\alpha &= \cos^2\alpha -\sin^2\alpha\\
+&= 2\cos^2\alpha-1
+\end{align}
+The Law of Cosines is 
+\begin{align}
+c^2 = a^2 + b^2 -2ab\cos\theta
+\end{align}
+Where $\theta$ is the angle between $a$ and $b$. Can remember this because reduces to the Pythagorean Theorem for $\theta = \pi/2$ and when $\theta = \pi$ we have
+\begin{align}
+c^2 = a^2 + b^2 +2ab = (a+b)^2
+\end{align}
+A much simpler way to recover this same identity is to draw out the vectors themselves
+\begin{align}
+	\textbf{a} + \textbf{c} = \textbf{b} \rightarrow \textbf{c} = \textbf{a} - \textbf{b}
+\end{align}
+Looking at the square of this, we have
+\begin{align}
+	c^2 &= a^2 + b^2 - 2\textbf{a}\cdot\textbf{b}\\
+	&= a^2 + b^2 -2ab\cos\theta 
+\end{align}
+
+You can always remember the derivatives of a trigonometric function by looking at it's Taylor expansion, and taking the derivative of that
+\begin{align}
+	\sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} + ...\\
+	\cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{41} + ...
+\end{align}
+Taking the derivative of sin for instances gives us
+\begin{align}
+	\frac{d}{dx}\sin x &= \frac{d}{dx}\Big( x - \frac{x^3}{3!} + \frac{x^5}{5!} + ...\Big)\\
+	&= 1 - \frac{x^2}{2!} + \frac{x^4}{41} + ...\\
+	&= \cos x
+\end{align}
+
+
+
+
+
+
+\subsection{Polynomial Algebra}
+
+Can find roots of polynomial equations with
+$$
+\begin{array}{rc@{}c@{}c@{}c@{}}
+& -x^2 +& x + &2 & \\ \cline{2-4}
+\multicolumn{1}{r|}{x+1} &-x^3+ & 0 + & 3x +&2\\
+-&-x^2 -&x  &\\ \cline{2-3}
+& 0 +& x^2 &\\ 
+-&  & x^2 +&x\\ \cline{3-4}
+& & 0 +&2x &\\ 
+-& &  &2x +&2\\ \cline{4-5}
+& & & &0\\
+\end{array}
+$$
+
+
+%\subsection{TODO}
+%
+%\begin{itemize}
+%\item Jacobian Comp 2012 question 10 variable change
+%\end{itemize}
