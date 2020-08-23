@@ -35,7 +35,7 @@ The meaning of continuum mechanics is that we take the distance between the spri
 \begin{align}
     V_i =\lim_{a\to 0} ~k a^2 \Big(\frac{x_i - x_{i+1}}{a}\Big)^2 = ka^2 \Big(\frac{d x_i}{d a}\Big)^2
 \end{align}
-The quantity $ka = Y$ turns out to be a physical quantity independent of size called Young's modulus which is derived from Hooke's law\footnote{Goldstein ch. 13}. This allows us to write the Lagrangian as 
+The quantity $ka = Y$ turns out to be a physical quantity independent of size called Young's modulus which is derived from Hooke's law \cite{goldstein}. This allows us to write the Lagrangian as 
 \begin{align}
     L = \lim_{a\to 0} \frac{1}{2}\sum_i a\Big[\mu \dot{x}_i^2 - Y\Big(\frac{d x_i}{d a}\Big)^2\Big]
 \end{align}
@@ -56,7 +56,7 @@ Hamilton's principle says that the Action of any physical system should be minim
 \begin{align}
     \delta S = \delta\int_1^2 dt \int dx ~\mathcal{L} = 0
 \end{align}
-Typically, a system of $n$ degrees of freedom have $n$ Lagrange equations of motion, so one would expect an infinite number of Euler-Lagrange equations in the limit of a spring at each point. It turns out that by considering $d\phi/dx$ as a variable and re-deriving the equations of motion, we find just one\footnote{Goldstein ch.13}, of the form
+Typically, a system of $n$ degrees of freedom have $n$ Lagrange equations of motion, so one would expect an infinite number of Euler-Lagrange equations in the limit of a spring at each point. It turns out that by considering $d\phi/dx$ as a variable and re-deriving the equations of motion, we find just one \cite{goldstein}, of the form
 \begin{align}
     \frac{d}{dt}\left(\frac{\partial\mathcal{L}}{\partial\frac{d\phi}{dt}}\right) + \frac{d}{dx}\left(\frac{\partial\mathcal{L}}{\partial \frac{d\phi}{dx}}\right) - \frac{\partial\mathcal{L}}{\partial \phi} = 0
 \end{align}
@@ -111,7 +111,7 @@ Where we used the chain rule to rewrite the terms on the right. If the fields mi
 \begin{align}\label{deltaS1}
     \delta S  &= \int d^4x~\partial_\mu\left(\frac{\partial\mathcal{L}(x)}{\partial(\partial_\mu\phi)}\delta\phi\right) 
 \end{align}
-This term is in general not zero, but we can use a trick to leave the action invariant, which is our definition of a symmetry. When deriving the Euler-Lagrange equations, we take the actual variation in the fields $\delta\phi$ to be zero at the boundaries of integration, which means it doesn't care if we add a full derivative\footnote{Peskin pg. 17}
+This term is in general not zero, but we can use a trick to leave the action invariant, which is our definition of a symmetry. When deriving the Euler-Lagrange equations, we take the actual variation in the fields $\delta\phi$ to be zero at the boundaries of integration, which means it doesn't care if we add a full derivative\cite{peskin}
 \begin{align}
 \mathcal{L}(x)\rightarrow\mathcal{L}(x) + \partial_\mu\mathcal{J}^\mu(x)
 \end{align}
@@ -154,7 +154,7 @@ Charge Conjugation & Charge parity \\
 
 
 \section{Relativistic Quantum Mechanics}
-\footnote{HEP Summer 2015 Notes}The standard equation for the evolution of a wave function in non-relativistic quantum mechanics is given by the Schrodinger equation (in natural units $c=1,\hbar=1$)
+The standard equation for the evolution of a wave function in non-relativistic quantum mechanics is given by the Schrodinger equation (in natural units $c=1,\hbar=1$) \cite{banfi}
 
 \begin{align}
 i\frac{\partial}{\partial t}\psi(x,t) =\Big(-\frac{1}{2m}\nabla^2 + V(x)\Big)\psi(x,t)
@@ -184,13 +184,13 @@ We can write the \textbf{Klein-Gordon equation} as
 \begin{align}
 \boxed{(\partial_\mu\partial^\mu + m^2)\phi(x,t) = 0}
 \end{align}
-This is of course, an equation of motion. We want to find a Lagrangian that gives us the Euler-Lagrange equations equivalent to this. It turns out that\footnote{Peskin pg.16} the Lagrangian we need is
+This is of course, an equation of motion. We want to find a Lagrangian that gives us the Euler-Lagrange equations equivalent to this. It turns out that\cite{peskin} the Lagrangian we need is
 
 \begin{align}
 \mathcal{L}(x) = \frac{1}{2}(\partial\phi)^2 - \frac{1}{2}m^2\phi^2
 \end{align}
 
-We see that the first term is the same as (Eq. \ref{harm-osc-lagrange}) the classical Lagrangian for a field of harmonic oscillators, with an additional term involving a mass $m$ associated with the field $\phi$ itself. This term is not analogous to the mass in a classical spring system, since in the infinitesimal limit it's value at any point in space would be near zero. We note that this term is \emph{quadratic} in the field. The term can be thought of as being associated with having the field having a non-zero value at all\footnote{Peskin pg. 17}; a \emph{potential} term instead of kinetic, as it was classically.
+We see that the first term is the same as (Eq. \ref{harm-osc-lagrange}) the classical Lagrangian for a field of harmonic oscillators, with an additional term involving a mass $m$ associated with the field $\phi$ itself. This term is not analogous to the mass in a classical spring system, since in the infinitesimal limit it's value at any point in space would be near zero. We note that this term is \emph{quadratic} in the field. The term can be thought of as being associated with having the field having a non-zero value at all \cite{peskin}; a \emph{potential} term instead of kinetic, as it was classically.
 
 \section{Important Lagrangians}
 \subsection{Lagrangian for a Scalar Field (Spin-0)}
@@ -223,7 +223,7 @@ Gives Euler-Lagrange equation
 If we set $m$ equal to 0, this is exactly the equations for Maxwell's equation in empty space.
 
 \section{Gauge Invariance}\label{gauge-inv}
-Looking at the Dirac Lagrangian (Equation \ref{dirac_lagrangian} used for particles with spin-$\frac{1}{2}$) we try to make it locally gauge invariant for no good reason at all\footnote{Griffith's 11.3 Local Gauge Invariance} with
+Looking at the Dirac Lagrangian (Equation \ref{dirac_lagrangian} used for particles with spin-$\frac{1}{2}$) we try to make it locally gauge invariant for no good reason at all\cite{griffiths_ep} with
 \begin{align}
 \psi(x) \rightarrow e^{iq\lambda(x)}\psi
 \end{align}
@@ -247,8 +247,7 @@ Since we introduce this new field $A_\mu$, we have to include it's "free" term i
 With $F^{\mu\nu}\equiv \partial^\mu A^\nu - \partial^\nu A^\mu$ Therefore by the requirement of local gauge invariance on a spin-1/2 field, we are required to add a spin-1 field that couples to it. This equation in fact reproduces all of electrodynamics with $J^\mu = q(\bar{\psi}\gamma^\mu\psi)$.
 
 \section{Yang Mills Theory}
-\footnote{Griffiths pg. 351}
-If we have a Lagrangian which contains multiple fields, i.e. two spin $\frac{1}{2}$ fields $\psi_1, \psi_2$
+If we have a Lagrangian which contains multiple fields, i.e. two spin $\frac{1}{2}$ fields $\psi_1, \psi_2$ \cite{griffiths_ep}
 \begin{align}
 \mathcal{L} = [i\bar{\psi}_1\gamma^\mu\partial_\mu\psi_1 - m_1\bar{\psi}_1\psi_1] + [i\bar{\psi}_2\gamma^\mu\partial_\mu\psi_2 - m_1\bar{\psi}_2\psi_2]
 \end{align}
@@ -309,8 +308,7 @@ This kind of procedure is extendable to higher order symmetry groups.
 
 
 \section{Electro-Weak Mixing and the Higgs}
-\footnote{Quarks and Leptons pg. 275}
-Data on electromagnetic and weak processes suggest the interactions are invariant under weak isospin $SU(2)_L$ and weak hypercharge $U(1)_Y$. The trick with the Higgs is we add a scalar field $\phi$ which is an $SU(2)$ doublet that also respects the symmetries we already have.
+Data on electromagnetic and weak processes suggest the interactions are invariant under weak isospin $SU(2)_L$ and weak hypercharge $U(1)_Y$ \cite{halzen}. The trick with the Higgs is we add a scalar field $\phi$ which is an $SU(2)$ doublet that also respects the symmetries we already have.
 
 \begin{align}
 \phi = \begin{pmatrix}
@@ -378,7 +376,7 @@ These masses and fields correspond exactly to the $W^{+/-}$, $Z$, and $\gamma$ b
 \begin{align}
 -m_e\bar{e}e &= -m_e\bar{e}[\frac{1}{2}(1-\gamma^5)+\frac{1}{2}(1+\gamma^5)]e\\&= -m_e(\bar{e}_R e_L + \bar{e}_L e_R)
 \end{align}
-"Since $e_L$ is a member of an isospin double and $e_R$ is a singlet, this term manifestly breaks gauge invariance".\footnote{Quarks \& Leptons pg. 334} Because of this, we can't put this term into the Lagrangian initially, resulting in all the fermions being massless.
+"Since $e_L$ is a member of an isospin double and $e_R$ is a singlet, this term manifestly breaks gauge invariance" \cite{halzen}. Because of this, we can't put this term into the Lagrangian initially, resulting in all the fermions being massless.
 
 It turns out that the same Higgs doublet we added to give the weak bosons mass, can be used again to give masses to the leptons and quarks. You add a coupling term to the fermions that looks like
 \begin{align}
@@ -793,15 +791,15 @@ After plugging everything in, the lifetime then comes out huge
 
 You can look for these decays using huge water tanks (50,000 tons) that look for Cherenkov light from the initial positron and similar signatures from the $\pi^0 \rightarrow \gamma\gamma$ where the $\gamma\rightarrow e^+e^-$ and those leptons then radiate as well. This is works because the lifetime is exponential, so even if you have an extremely long lifetime, if you look at a huge amount of protons, you will find some small number (something like 10 a year are expected in the 50,000 ton tank).
 
-\subsection{Hidden Sector}
+%\subsection{Hidden Sector}
 
-\subsection{Displaced Particles}
-\footnote{Illuminating Dark Photons with Higgs - Curtin2015}
-
-Models
-\begin{itemize}
-    \item Hidden Sector - 
-\end{itemize}
+%\subsection{Displaced Particles}
+%\footnote{Illuminating Dark Photons with Higgs - Curtin2015}
+%
+%Models
+%\begin{itemize}
+%    \item Hidden Sector - 
+%\end{itemize}
 
 
 \subsection{Misc}

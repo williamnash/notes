@@ -26,7 +26,8 @@ $$\Delta S \ge 0$$ Is a statement that the equilibrium state is preferred for a 
 \section{Thermodynamics}
 Thermodynamics has to do with huge numbers of particles that we can't easily keep track of individually. For classical mechanics, our "state variables" were things like positions and momentum in the Hamiltonian formulation. In Thermodynamics,  instead of trying to keep track of $10^{23}$ pairs of position and momenta, we just keep track of a few macroscopic things that can tell us things about the system from a macroscopic point of view. 
 
-Here our "state variables" are $p,T,V,S$ out of which we are able to describe everything.\footnote{I'm not entirely sure why these were chosen., as entropy itself is non-trivial to measure, maybe its the leftover variable?} The issue is that these variables  are all netted together in often mathematically unfriendly ways and in general are \emph{not independent} of one another. We get around this by just taking a bunch of partial derivatives all over the places, holding this or that constant.
+Here our "state variables" are $p,T,V,S$ out of which we are able to describe everything. %\footnote{I'm not entirely sure why these were chosen., as entropy itself is non-trivial to measure, maybe its the leftover variable?} 
+The issue is that these variables  are all netted together in often mathematically unfriendly ways and in general are \emph{not independent} of one another. We get around this by just taking a bunch of partial derivatives all over the places, holding this or that constant.
 
 We start with the first law of Thermodynamics
 \begin{align}
@@ -238,7 +239,7 @@ Where $\Omega$ is the number of possible ways a given system could be arranged, 
 
 
 
- The second law tells us that number of ways that the universe could be organized is \emph{always} increasing in time until it reaches equilibrium. There is speculation that this should in some way tell us more about time itself, as the two are entwined together in way a which is still one of Physics great mysteries\footnote{\url{https://en.wikipedia.org/wiki/Arrow_of_time}}. Another more general definition is given by
+ The second law tells us that number of ways that the universe could be organized is \emph{always} increasing in time until it reaches equilibrium. There is speculation that this should in some way tell us more about time itself, as the two are entwined together in way a which is still one of Physics great mysteries\cite{weinert}. Another more general definition is given by
 
 \begin{align}\label{gen-entropy}
 S = -\sum_{i=1}^N P_i\ln P_i
@@ -359,7 +360,8 @@ We are also going to pretend the system $A$ is much smaller than the other, so $
 \begin{align}
 \ln\Omega'(E^{(0)} - E_i , N^{(0)}- N_r) = \ln\Omega'(E^{(0)},N^{(0)}) - \Big[\frac{\partial\ln\Omega'}{\partial E'}\Big] E_i - \Big[\frac{\partial\ln\Omega'}{\partial N'}\Big]N_r
 \end{align}
-From here, we identify constants as \footnote{There is likely a better way to do all of this, but I haven't found it}
+From here, we identify constants as 
+%\footnote{There is likely a better way to do all of this, but I haven't found it}
 \begin{align}
 \Big[\frac{\partial\ln\Omega'}{\partial E'}\Big] = \frac{1}{kT}&&\Big[\frac{\partial\ln\Omega'}{\partial N'}\Big] = -\frac{\mu}{kT}
 \end{align}
@@ -516,7 +518,7 @@ With these types of integrals we will \emph{always} get something with the Zeta 
 \begin{align}
     \zeta(1) = 1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + ...
 \end{align}
-Which is the Harmonic series, which does not converge, which tells us that the Bose-Einstein condensate cannot form in one dimension. Apparently the evolution of many complex systems, including the World Wide Web follow Bose statistics and can under go Bose-Einstein condensation.\footnote{Bianconi, G.; Barabási, A.-L. (2001). "Bose–Einstein Condensation in Complex Networks." Phys. Rev. Lett. 86: 5632–35.} 
+Which is the Harmonic series, which does not converge, which tells us that the Bose-Einstein condensate cannot form in one dimension. Apparently the evolution of many complex systems, including the World Wide Web follow Bose statistics and can under go Bose-Einstein condensation \cite{biancoli}.
 
 \subsection{Stefan-Boltzmann Law}
 From the partition function for a photon gas, we can get a function for the average energy of a photon gas as usual. Remember that the energy of a photon is $\epsilon = |\textbf{p}|c$, since they don't have mass. Eventually we find that the power, which is energy per unit time goes as 
@@ -553,7 +555,9 @@ Trying the same thing for the Bose case
 \begin{align}
     \epsilon_i < \mu  && n_i \sim \frac{1}{e^{-\infty} -1} = -1
 \end{align}
-We obviously can't have an expectation value of a negative particle\footnote{Could this actually account for antiparticles?}, so the previous expression is wrong, the only valid energies must be
+We obviously can't have an expectation value of a negative particle
+%\footnote{Could this actually account for antiparticles?}
+, so the previous expression is wrong, the only valid energies must be
 \begin{align}
     \epsilon_i > \mu && n_i\sim \frac{1}{e^{\infty} -1} = 0
 \end{align}

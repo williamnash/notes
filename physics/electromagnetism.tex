@@ -153,7 +153,7 @@ Q_{xy} = \frac{1}{2}\int dr^3 \rho(\textbf{r})xy
 
 
 \subsection{Uniqueness}
-In order for use to have unique solutions to each electrostatics question, which lets us get the solution be literally any means, it happens that\footnote{Zangwill pg. 199}, using something called Dirichlet boundary conditions, we need the potential specified at some boundary, such that any two solutions evaluated at that boundary will be equal or $\varphi_1(\textbf{r}_s) -\varphi_2(\textbf{r}_s) = 0$ where $\textbf{r}_s$ is the location of the boundary. There are other choices such Neumann Boundary conditions, but we probably won't need to know them.
+In order for use to have unique solutions to each electrostatics question, which lets us get the solution be literally any means, it happens that\cite{zangwill}, using something called Dirichlet boundary conditions, we need the potential specified at some boundary, such that any two solutions evaluated at that boundary will be equal or $\varphi_1(\textbf{r}_s) -\varphi_2(\textbf{r}_s) = 0$ where $\textbf{r}_s$ is the location of the boundary. There are other choices such Neumann Boundary conditions, but we probably won't need to know them.
 
 \subsection{Symmetries}
 Another key to solving these equations is looking for places where you can leverage symmetries to make evaluation of many of these things near trivial. For instances if we are looking at the potential of a conducting sphere relative to infinity, we can just use Gauss' law to solve for the electric field
@@ -187,7 +187,7 @@ Laplace's equation, obtained by plugging in the expression for electric potentia
 \begin{align}
 \nabla^2\varphi = 0
 \end{align}
-And is used to solve the electric potential within a region with no charge. All the problems here involve solutions to the aptly named Laplacian operator $\nabla^2$ in various geometries using separation of variables.\footnote{Zangwill pg. 197} is a great resource here. To solve these questions follow this algorithm
+And is used to solve the electric potential within a region with no charge. All the problems here involve solutions to the aptly named Laplacian operator $\nabla^2$ in various geometries using separation of variables.\cite{zangwill} is a great resource here. To solve these questions follow this algorithm
 \begin{enumerate}
 \item Recognize geometry of the problem (Cartesian, Spherical with Azimuthal Symmetry, etc.)
 \item Shrink Laplace's equation by getting rid of any terms that the potential doesn't depend on out of the Laplacian, e.g. if it doesn't depend on $z, \frac{d^2 Z(z)}{dz^2} = 0$.
@@ -535,7 +535,9 @@ As long as the velocity $c^2$ is independent of frequency. We can then adjust co
 \begin{align}
 \textbf{E}(\textbf{r},t) &= \textbf{E}_0 f(\textbf{k}\cdot\textbf{r} -\omega t)\\
 \end{align}
-This is an electric field that propagates in the \emph{positive} $\hat{k}$ direction, which can be seen by looking at its phase. We take  $\textbf{B}$ to be an identical function of $\textbf{r}$ and $t$\footnote{Why?}, with
+This is an electric field that propagates in the \emph{positive} $\hat{k}$ direction, which can be seen by looking at its phase. We take  $\textbf{B}$ to be an identical function of $\textbf{r}$ and $t$
+%\footnote{Why?}
+, with
 \begin{align}
 \textbf{B}(\textbf{r},t) &= \textbf{B}_0 f(\textbf{k}\cdot\textbf{r} -\omega t)
 \end{align}
@@ -627,7 +629,7 @@ d = \frac{1}{\kappa}
 \subsection{Waves in Plasma}
 
 
-"The frequency dispersion of the index of refraction ... occurs because matter cannot respond instantaneously to an external perturbation".\footnote{Zangwill pg. 625} Now we again look at the motion of a charge particle in a magnetic and electric field. We first look at the forces on a charge, pretending it has a binding force $-m\omega_0^2\textbf{x}$
+"The frequency dispersion of the index of refraction ... occurs because matter cannot respond instantaneously to an external perturbation".\cite{zangwill} Now we again look at the motion of a charge particle in a magnetic and electric field. We first look at the forces on a charge, pretending it has a binding force $-m\omega_0^2\textbf{x}$
 \begin{align}
 m\ddot{\textbf{x}} = q\textbf{E} -m\gamma\dot{\textbf{x}} - m\omega_0^2\textbf{x}
 \end{align}
@@ -785,7 +787,7 @@ This is effectively an energy conservation equation. It says the decrease in ene
 
 
 \section{Radiation}
-Electromagnetic radiation is caused by the acceleration of charged particles. The primary equation that simplifies almost all of radiation and makes the math bearable takes a long time to derive\footnote{Zangwill pg. 735} gives us the power radiated per solid angle as %\todo{Not really true, i guess it is for general radiation}
+Electromagnetic radiation is caused by the acceleration of charged particles. The primary equation that simplifies almost all of radiation and makes the math bearable takes a long time to derive \cite{zangwill} gives us the power radiated per solid angle as %\todo{Not really true, i guess it is for general radiation}
 \begin{align}\label{powerdistribution}
     \frac{dP}{d\Omega} = \frac{1}{c\mu_0}\Big| \textbf{r}\times\frac{\partial \textbf{A}_{ret}}{\partial t}\Big|^2
 \end{align}
@@ -933,7 +935,7 @@ Rayleigh scattering is why the sky is blue. This type of scattering happens when
 
 %TODO - Question 13 Practice Comp Day 2 v 1. "Electron is bound to a spring with spring constant k"
 
-Rayleigh scattering is also the cause of why some eyes are blue colored. It turns out in blue eyes, there is a low concentration of melanin, which evidently acts like a dipole radiator with power radiated like $\omega^4$.\footnote{\url{https://en.wikipedia.org/wiki/Eye_color}} 
+Rayleigh scattering is also the cause of why some eyes are blue colored. It turns out in blue eyes, there is a low concentration of melanin, which evidently acts like a dipole radiator with power radiated like $\omega^4$.\cite{wiki_eye}
 \subsection{Mie Scattering}
 Mie scattering happens when the wavelength incident on the object is comparable with the size of the object itself. This type of scattering is possibly the cause of grey eyes, which have larger deposits of collagen in the stroma, which are larger in size than the melanin. This is analogous to scattering off of clouds vs scattering off the sky itself.
 

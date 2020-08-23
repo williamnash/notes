@@ -1,4 +1,3 @@
-\graphicspath{images}
 \chapter{Particles}
 
 \begin{figure}
@@ -89,7 +88,7 @@ B(W\rightarrow e\nu) = \frac{1}{1+1+1+3+3} = \frac{1}{9}\approx 11\%
 
 \subsection{$Z$ Boson}
 
-Mass of 91 GeV. Can't use the same counting arguments we used for the $W$ because there is different coupling for different fermions. The width of the $Z$ boson is dependent on the number of possile final states into which it can decay, so the measurement of the width is a good probe into the existence of a fourth generation of leptons.\footnote{Brent Stone} The relationship between the width and decay modes is as follows:
+Mass of 91 GeV. Can't use the same counting arguments we used for the $W$ because there is different coupling for different fermions. The width of the $Z$ boson is dependent on the number of possile final states into which it can decay, so the measurement of the width is a good probe into the existence of a fourth generation of leptons\cite{bstone}. The relationship between the width and decay modes is as follows:
 \begin{itemize}
     \item The uncertainty principle gives us a rule of thumb to relate energy width and time
     \begin{align}
@@ -190,8 +189,7 @@ From this, we conclude that we desire lower energy muons so that we may better m
 \noindent \underline{$H \rightarrow W^+W^- \rightarrow l \nu l \nu$}
 
 \vspace{1em}
-\noindent While the production rate is large, the mass resolution is poor due to two neutrinos, and the backgrounds are numerous. Events are divided based on the lepton flavor combination and the number of jets. Background reduction and estimation is vital in this search. For events with opposite-flavor lepton and no accompanying high $p_T$ jets, the dominant background stems from non-resonant $WW$ production. Events with same flavor leptons have large Drell-Yan contamination. $Wt$, $W$+jets (with jet misidentified as a lepton), and $t\overline{t}$ contaminate all categories.\footnote{by B. Stone} 
-
+\noindent While the production rate is large, the mass resolution is poor due to two neutrinos, and the backgrounds are numerous. Events are divided based on the lepton flavor combination and the number of jets. Background reduction and estimation is vital in this search. For events with opposite-flavor lepton and no accompanying high $p_T$ jets, the dominant background stems from non-resonant $WW$ production. Events with same flavor leptons have large Drell-Yan contamination. $Wt$, $W$+jets (with jet misidentified as a lepton), and $t\overline{t}$ contaminate all categories \cite{bstone}.
 
 \chapter{Experimental Particle Physics}
 Difference between radiation length $\chi_0$ and stopping power $dE/dx$
@@ -241,7 +239,7 @@ For relativistic particles, the angle $\theta$ scattered in a material is
 Where $p,z$ is the momentum and charge respectively of the incident particle. $X$ is the distance travelled in the medium with radiation length $X_0$. Becomes less and less relevant as particle momentum increases (depends on $1/p$)
 
 \subsection{Bremsstrahlung}
- An electron loses most of its energy through Bremsstrahlung at energies $\ge 10$ MeV. Electron energy loss by Brem $\propto E_e$, loss by ionization $\propto \ln E_e$. Shower length is roughly twice that of the radiation length of a material\footnote{pg. 29 pdg} The critical energy of a muon in Iron (i.e. the energy at which Radiative losses are equal to Ionization losses) is $E_{\mu c} = 332$ GeV. Muon energy loss goes as 
+ An electron loses most of its energy through Bremsstrahlung at energies $\ge 10$ MeV. Electron energy loss by Brem $\propto E_e$, loss by ionization $\propto \ln E_e$. Shower length is roughly twice that of the radiation length of a material \cite{pdg} The critical energy of a muon in Iron (i.e. the energy at which Radiative losses are equal to Ionization losses) is $E_{\mu c} = 332$ GeV. Muon energy loss goes as 
  \begin{align}
  -dE/dx = a(E) + b(E)E
  \end{align}
@@ -310,38 +308,10 @@ Happens when a particle travels faster than the speed of light does within a par
 \cos\theta =\frac{1}{n\beta}
 \end{align}
 Where $n$ is the index of refraction of the medium, and $\beta = v/c$ of the particle.
-\subsection{Strip Chambers}
-CMS CSCs
-\begin{center}
-    \begin{tabular}{ c c c }
-        Gas & Concentration& Purpose \\ \hline
-        Argon & 40\%& Ionization and lower operating voltage \\ 
-        CO$_2$ & 50\% & Absorbs UV light which is emitted in ionization. This would cause continuous discharge, so this is known as a "quenching gas"\\ 
-        CF$_4$ & 10\% & Prevents aging by keeping stuff from sticking to wires   
-    \end{tabular}
-\end{center}
-
-\subsection{ECAL} is made of high $Z$ (proton number) material, to maximize the charge density of the material, with which charge particles interact.
-
-\subsection{HCAL} is made of high $A$ (mass number $\sim$ protons and neutrons) to maximize the amount of nuclei the passing particles see so they have a higher chance of interacting strongly.
 
 
-
-\subsection{Tracker}
-Want it larger to get more data points, but the larger you make it, the more likely it is to shower. CMS tracker has material amounting to about 1 radiation length.
-Silicon has a "band gap" of about 1 eV, less than gas (10's of eV). A passing muon will ionize an electron from the silicon which then gets read out by something analogous to a diode in reverse polarity.
-\subsection{Algorithms}\label{id-aglos}
-\begin{itemize}
-    \item \textbf{B-Tagging} \footnote{https://profmattstrassler.com/articles-and-posts/particle-physics-basics/the-known-apparently-elementary-particles/jets-the-manifestation-of-quarks-and-gluons/b-tagging-identifying-jets-from-bottom-quarks/} $B$ Mesons (mesons containing $b$ quarks) have a lifetime of $10^{-12}$ which gives an avenue of towards reconstruction of "b-jets". Essentially there is a displaced vertex of a fraction of a millimeter. This makes the meson decay within the beam pipe, but the tracking is so precise within the tracker, you can localize where the decay happened.
-    
-    
-    Charmonium has a lifetime of $10^{-13}$, which lets similar algorithms be used (albeit less well), and strange mesons (i.e. Kaons) have a lifetime of $10^{-8}$ which makes them travel too far outside the tracker.
-    
-\end{itemize}
-
-
-\section{Cross Section and Luminosity}\footnote{Cousins - Notes on Scattering, Griffiths}
-First we define the instantaneous luminosity (typically just called the \textbf{luminosity}) of a beam of particles as 
+\section{Cross Section and Luminosity}
+First we define the instantaneous luminosity (typically just called the \textbf{luminosity}) of a beam of particles as \cite{cousins}
 \begin{align}
 \mathcal{L} = \textrm{number~of~incident~particles~per~unit~area,~per~unit~time}
 \end{align}
@@ -365,7 +335,7 @@ When we shoot two beams together, or a beam at a wall, we generally care about h
 \begin{align}
 \frac{dN}{dt} = \sigma\mathcal{L}
 \end{align}
-Where $\sigma$ is called the \textbf{cross section} for the collision to occur, having units of area. The larger the cross section, the more scattered particles you will get. In actuality, one counts how many scattered particles show up at each angle, giving us a differential $\sigma$, which is then integrated over all angles to get the full cross section.\footnote{Griffiths, Quantum Mechanics pg. 394}
+Where $\sigma$ is called the \textbf{cross section} for the collision to occur, having units of area. The larger the cross section, the more scattered particles you will get. In actuality, one counts how many scattered particles show up at each angle, giving us a differential $\sigma$, which is then integrated over all angles to get the full cross section \cite{griffiths_qm}.
 
 
 Another common value is the \textbf{integrated luminosity} which is simply the instantaneous luminosity added up over some period of time. With this, we can calculate how many scattered particles we had over a given time
@@ -407,10 +377,6 @@ Proton-antiproton collider at Fermilab (Collider Detector at Fermilab). Got to a
     \item Long lived neutral particles that decay into muons (detected in muon system, but have displaced vertex)
     \item Long lived charge particles, if they have a large mass, will go slower, can detect through timing (takes longer to get to muon system)
 \end{itemize}
-
-\subsection{Detectors}
-
-
 
 \subsection{Pseudorapidity}
 The pseudorapidity $\eta$ is used in CMS as a coordinate that directly maps to the angle $\theta$ of a particle relative to the beam line.

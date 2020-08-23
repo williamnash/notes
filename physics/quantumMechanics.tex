@@ -96,7 +96,7 @@ Which tells us the order in which we make the observations have no effect on wha
 \begin{align}
 AB - BA = [A,B] = 0
 \end{align}
-These compatible observables can be used to break degeneracy. The basic algorithm for doing this is finding all the eigenvalues and eigenvectors for $A$ and $B$, then identifying valid combinations of the vectors that still return unique eigenvalues when operated on by the respective matrix\footnote{Sakurai 1.23}. In three dimensions it is possible to have a simultaneous ket of all $x,y,z$ coordinates in Cartesian, which lets us write things like
+These compatible observables can be used to break degeneracy. The basic algorithm for doing this is finding all the eigenvalues and eigenvectors for $A$ and $B$, then identifying valid combinations of the vectors that still return unique eigenvalues when operated on by the respective matrix\cite{sakurai}. In three dimensions it is possible to have a simultaneous ket of all $x,y,z$ coordinates in Cartesian, which lets us write things like
 \begin{align}
 \hat{y}|\textbf{x}\rangle = y|\textbf{x}\rangle
 \end{align}
@@ -826,7 +826,7 @@ From here, we can just act the $a^\dagger$ operator on the state to find all the
 
 
 \section{Particle in a Magnetic Field}
-Considering just a particle in a magnetic field, the Hamiltonian of the system is given by\footnote{\url{http://www.tcm.phy.cam.ac.uk/~bds10/aqp/lec5.pdf}}
+Considering just a particle in a magnetic field, the Hamiltonian of the system is given by\cite{lecture5}
 \begin{align}
 H = \frac{1}{2m}\boldsymbol{\Pi}^2 = \frac{1}{2m}\Big(\textbf{p}-q\textbf{A}\Big)^2
 \end{align}
@@ -868,7 +868,7 @@ There is an addition analogous quantum gyromagnetic ratio given by twice this va
 
 
 \subsection{Landau Levels}
-A good resource is this.\footnote{\url{http://hitoshi.berkeley.edu/221a/landau.pdf}} It turns out that when a charged particle is placed in a magnetic field, it's energy becomes quantized in a way identical to the harmonic oscillator. Taking the magnetic field to be a constant in the $z$ direction
+A good resource is this\cite{hitoshi}. It turns out that when a charged particle is placed in a magnetic field, it's energy becomes quantized in a way identical to the harmonic oscillator. Taking the magnetic field to be a constant in the $z$ direction
 \begin{align}
 \textbf{B} = (0,0,B)
 \end{align}
@@ -1041,7 +1041,7 @@ Always first check if the zeroth order energies are degenerate first before foll
 \begin{align}
 H = H_0 + \lambda V
 \end{align}
-Where $\lambda$ is some small value, and you know all the eigenstates of $H_0$ already. With some clever math involving the projection operator and expansion in powers of $\lambda$ one gets the first order energy shift\footnote{Sakurai pg. 312}  as
+Where $\lambda$ is some small value, and you know all the eigenstates of $H_0$ already. With some clever math involving the projection operator and expansion in powers of $\lambda$ one gets the first order energy shift\cite{sakurai} as
 
 \begin{align}
 \Delta_n^{(1)} &= \langle n^{(0)}|V|n^{(0)}\rangle
@@ -1064,7 +1064,7 @@ If it happens that there are two (or more) kets in our Hilbert space have the sa
 |\beta^{(0)}\rangle = c_3|a^{(0)}\rangle + c_4|b^{(0)}\rangle
 \end{align}
 
-Where we want $\langle \alpha |V |\beta \rangle = \langle \beta |V|\alpha\rangle  = 0$. The way we do this is write the perturbation matrix out with the states we start with, then diagonalize it (Section \ref{diagolize}) thus making the off-diagonal terms writtern earlier zero. The eigenvalues tell us the first order shift $\Delta_n^{(1)}$, and the eigenvectors tell us the correct linear combinations for the degenerate subspace. From here we can just use non-degenerate perturbation theory to calculate stuff like $|n^{(1)}\rangle$ and $\Delta_n^{(2)}$ using $|\alpha^{(0)}\rangle$ and $|\beta^{(0)}\rangle$. 
+Where we want $\langle \alpha |V |\beta \rangle = \langle \beta |V|\alpha\rangle  = 0$. The way we do this is write the perturbation matrix out with the states we start with, then diagonalize it (Section \ref{diagolize}) thus making the off-diagonal terms writen earlier zero. The eigenvalues tell us the first order shift $\Delta_n^{(1)}$, and the eigenvectors tell us the correct linear combinations for the degenerate subspace. From here we can just use non-degenerate perturbation theory to calculate stuff like $|n^{(1)}\rangle$ and $\Delta_n^{(2)}$ using $|\alpha^{(0)}\rangle$ and $|\beta^{(0)}\rangle$. 
 Griffith's pg 229 outlines a nice way to find the states beforehand, look for an operator $A$ that obeys 
 \begin{align}
 [A,V] = 0
@@ -1076,7 +1076,7 @@ Now we take an almost entirely different approach and forget about the $\lambda$
 \begin{align}
 H = H_0 + V(t)
 \end{align}
-We always assume time seperability of our kets so any state can be represented as
+We always assume time separability of our kets so any state can be represented as
 \begin{align}
 |\alpha; t\rangle = \sum_n c_n(t)\exp\Big[-\frac{iE_n t}{\hbar}\Big]|n\rangle
 \end{align}
@@ -1119,8 +1119,9 @@ We consider all of the states $n$ that are within some small range of an energy 
 The Adiabatic theorem tells us that if you start with some Hamiltonian $H$, and you have a particle in the $n$th eigenstate of it, and you \emph{slowly} change the Hamiltonian to $H'$, it will again be in the $n$th eigenstate of $H'$, as long as there is no degeneracy and the change to the Hamiltonian is small.
 
 
-\section{Scattering}\footnote{Much of this section is thanks to Stephan Blugel and his nice writeup \url{http://juser.fz-juelich.de/record/20885/files/A2_Bluegel.pdf}}
-The solution to the Schrodinger equation for a particle in free space is simply a plane wave, with
+\section{Scattering}
+
+The solution to the Schrodinger equation for a particle in free space is simply a plane wave, with \cite{blugel}
 \begin{align}
 \psi_\textbf{k}(\textbf{r}) = \frac{1}{(2\pi)^{3/2}}e^{i\textbf{k}\cdot\textbf{r}}&& E_\textbf{k} = \frac{\hbar^2k^2}{2m}
 \end{align}
@@ -1150,7 +1151,7 @@ We can thus write the Schrodinger equation in integral form, with an integration
 \begin{align}\label{lippmann}
 \psi'(\textbf{r}) = \psi(\textbf{r}) + \int dr'^3~G(\textbf{r}, \textbf{r}') V(\textbf{r}')\psi'(\textbf{r}')
 \end{align}
-This equation is called the \textbf{Lippmann-Schwinger Equation}. To solve for the Green's function, we can use the method of eigenfunction expansion\footnote{\url{http://www.nhn.ou.edu/~milton/p5013/chap12.pdf} pg. 15}, using the fact that
+This equation is called the \textbf{Lippmann-Schwinger Equation}. To solve for the Green's function, we can use the method of eigenfunction expansion\cite{milton}, using the fact that
 \begin{align}
 \int dk^3 \psi_\textbf{k}^*(\textbf{r})\psi_\textbf{k}(\textbf{r}') = \delta(\textbf{r}-\textbf{r}')
 \end{align}
@@ -1158,7 +1159,7 @@ Since we have that
 \begin{align}
 \Big(\frac{\hbar^2}{2m}\nabla^2 + E\Big)\psi_\textbf{k}(\textbf{r}) = \frac{\hbar^2}{2m}(k'^2 - k^2)\psi_\textbf{k}(\textbf{r})
 \end{align}
-Where $E = \frac{\hbar^2k'^2}{2m}$. We thus have that the eigenvalue of the linear differential operator\footnote{Zangwill pg. 255}, needed for this expansion is given by
+Where $E = \frac{\hbar^2k'^2}{2m}$. We thus have that the eigenvalue of the linear differential operator\cite{zangwill}, needed for this expansion is given by
 
 \begin{align}
 \lambda_\textbf{k} = \frac{\hbar^2}{2m}(k'^2-k^2)
@@ -1179,7 +1180,7 @@ It is worth noting this is also the Green's function for the Helmholtz equation.
 \begin{align}\label{scat}
 \boxed{\psi'(\textbf{r}) = \psi(\textbf{r})  -\frac{m}{2\pi\hbar^2}\int dr'^3~ \frac{e^{ik|\textbf{r}-\textbf{r}'|}}{|\textbf{r}-\textbf{r}'|} V(\textbf{r}')\psi'(\textbf{r}')}
 \end{align}
-This is the scattering equation and is completely equivalent to the Schrodinger equation in integral form for a local potential\footnote{Griffiths pg. 366}, everything else approximates usually that observation point is far away. As a reminder $\textbf{r}$ is the position of the wave you are considering, and $\textbf{r}'$ will be everywhere that you have a non-zero potential, otherwise the integrand will be zero.
+This is the scattering equation and is completely equivalent to the Schrodinger equation in integral form for a local potential\cite{griffiths_qm}, everything else approximates usually that observation point is far away. As a reminder $\textbf{r}$ is the position of the wave you are considering, and $\textbf{r}'$ will be everywhere that you have a non-zero potential, otherwise the integrand will be zero.
 
 \subsection{Far-Field}
 If we are observing at a point very far away from where the potential is, we have that $|\textbf{r}| \gg |\textbf{r}'|$, which lets us approximate, through Taylor expansion

@@ -4,7 +4,7 @@ Classical Mechanics describes everything in the world as if they have an exact p
 
 
 \section{Lagrangian Formalism}
-When dealing with conservative forces, there turns out to be a nice way to figure out all of Newton's laws without having to draw out all of the free body diagrams. In fact, when this method was first proposed, Lagrange bragged that he had \emph{no pictures or diagrams} in his book\footnote{Analytical Mechanics - Lagrange}. The Lagrangian is defined as 
+When dealing with conservative forces, there turns out to be a nice way to figure out all of Newton's laws without having to draw out all of the free body diagrams. In fact, when this method was first proposed, Lagrange bragged that he had \emph{no pictures or diagrams} in his book\cite{lagrange}. The Lagrangian is defined as 
 \begin{align}
 L\equiv T-V
 \end{align}
@@ -26,8 +26,8 @@ These are called the \textbf{Euler-Lagrange equations}. Basically all Classical 
 
 
 
-\subsection{Action}\footnote{Following Professor Eric D'Hoker's derivation}
-The action is a scalar quantity defined by
+\subsection{Action}
+\cite{dhoker_cm}The action is a scalar quantity defined by
 \begin{align}
 S[q] = \int_{t_1}^{t_2} dt L (q_1,...q_N, \dot{q}_1, ..., \dot{q}_N, t)
 \end{align}
@@ -39,7 +39,7 @@ The importance of the action is that for \emph{any} real physical system, the "p
 \begin{align}
     \frac{\partial S}{\partial \textbf{q}(t)} = 0
 \end{align}
-This weird fact is called Hamilton's Principle. Apparently the extremization of the action is a direct consequence of the second law of thermodynamics, that entropy is always increasing.\footnote{todo - \url{https://physics.stackexchange.com/questions/47581/entropy-and-the-principle-of-least-action}} Knowing that the integral of the Lagrangian extremizes the Action, we can actually derive Lagrange's equations of motion using variational calculus.
+This weird fact is called Hamilton's Principle. Apparently the extremization of the action is a direct consequence of the second law of thermodynamics, that entropy is always increasing.\cite{stackexchange_action} Knowing that the integral of the Lagrangian extremizes the Action, we can actually derive Lagrange's equations of motion using variational calculus.
 
 To do so, we consider two possible Lagrangians, one is a function of all of the coordinates that truly minimize the action, $q_1, q_2, q_3, ... $ etc, and one is a set that is infinitesimally close to them $q_1', q_2', q_3', ...$ related by
 \begin{align}
@@ -159,7 +159,7 @@ Imagine we have some value called $G$ that is defined as
 \begin{align}
 G = \sum_{k=1}^N \textbf{p}_k\cdot\textbf{r}_k
 \end{align}
-Where $\textbf{p}_k$ is the momentum of the $k$th particle of $N$, and $\textbf{x}_k$ it's coordinate. It can be shown\footnote{\url{https://en.wikipedia.org/wiki/Virial_theorem}} that this quantity is identical to half the time derivative of the moment of inertia with
+Where $\textbf{p}_k$ is the momentum of the $k$th particle of $N$, and $\textbf{x}_k$ it's coordinate. It can be shown\cite{goldstein} that this quantity is identical to half the time derivative of the moment of inertia with
 \begin{align}
 G = \frac{1}{2}\frac{dI}{dt}
 \end{align}
@@ -209,7 +209,7 @@ If for instance the like was going towards the origin $O$ in frame $F$. This wou
 
 To illuminate, lets pretend we have a person on earth (frame $F$) and a person on a spaceship (frame $F'$) moving away from the earth in the positive $x$ direction with speed $v$. The earth measures everything with coordinates $(t,x,y,z)$ and the person on the ship measures everything with coordinates $(t',x',y',z')$. Both of these coordinate systems are \emph{completely normal} in their own frames. If they had a ball on earth and measured it's radius as $r$, the ruler with which they measure it on the ship would say it is the same $r$ when the entire ship, ball, ruler system is moving together. 
 
-Lets pretend that right when the spaceship passes the earth, they are able to align their coordinate system somehow so everything is zero. The usefulness of special relativity is know how everyone on the ship (in $F'$) sees things after doing some mathematics with all of the things you are capable of measuring in $F$. It turns out that the transformation is given by \footnote{do someday, classical HW 3}
+Lets pretend that right when the spaceship passes the earth, they are able to align their coordinate system somehow so everything is zero. The usefulness of special relativity is know how everyone on the ship (in $F'$) sees things after doing some mathematics with all of the things you are capable of measuring in $F$. It turns out that the transformation is given by %\footnote{do someday, classical HW 3}
 \begin{align}\label{lorentzcontract}
     t' &= \gamma\Big(t -\frac{vx}{c^2} \Big)\\
     x' &= \gamma(x - vt)\\
@@ -495,6 +495,7 @@ Conservation of momentum (also called Euler's equations) gives us
 \begin{equation}\label{momcon}
 \rho\left({\frac{\partial\textbf{v}}{\partial t} + (\textbf{v}\cdot\nabla)\textbf{v}}\right) = \textbf{f}
 \end{equation}
+
 %TODO Some more trivia
 %
 %\begin{itemize}
