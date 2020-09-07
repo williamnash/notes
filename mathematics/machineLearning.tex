@@ -1,0 +1,141 @@
+
+\chapter{Machine Learning}
+
+TODO: Labels vs features
+
+\section{Dimensionality Reduction}
+When fitting to a high dimensional space, the model can become overfit and/or the correlation within the feature vectors can be overlooked. In order to reduce the feature vectors into a space which has more discriminating power, it is helpful to reduce the total dimensions of the problem at hand.
+\subsection{Principal Component Analysis (PCA)}
+Principal Component Analysis (PCA) turns our feature space into "Principal Components", eigenvectors of our individual features. The analysis finds the dimension in the data that contains the most variance, thereby having the most discriminating power between events.
+
+We first begin with our feature vectors
+$$\mathbf{X} = \left.\left( 
+                  \vphantom{\begin{array}{c}1\\1\\1\\1\\1\end{array}}
+                  \smash{\underbrace{
+                      \begin{array}{ccccc}
+                             x_{00}&x_{10}&x_{20}&\cdots &x_{p0}\\
+                             x_{01}&x_{11}&x_{21}&\cdots &x_{p1}\\
+                             x_{02}&x_{12}&x_{22}&\cdots &x_{p2}\\
+                             \vdots&&&\ddots&\\
+                             x_{0n}&x_{1n}&x_{2n}&\cdots &x_{pn}
+                      \end{array}
+                      }_{p\text{ features}}}
+              \right)\right\}
+              \,n\text{ events}
+$$\\
+
+The idea is to shrink the dimensionality, so change $p\rightarrow l$ where $l$ is the desired dimensionality after PCA. 
+
+We first start by normalizing each feature $k=1,\dots,p$ to have $\mu=0$ (centers the data) and $\sigma=1$ (accounts for different units).
+
+\begin{align}
+\mu_k = \frac{1}{n}\sum_{j=1}^n x_{kj} && \sigma_k^2 = \frac{1}{n-1}\sum_{j=1}^n (x_{kj}-\mu_k)^2 \\
+\end{align}
+It is worth noting the definition used by $\texttt{scikitlearn}$ only normalizes the mean, but not the standard deviation of each feature. We then redefine each column $k$ in the matrix with
+\begin{align}
+	\rho_{kj} = (x_{kj} - \mu_k)/\sigma_k
+\end{align}
+This gives us a new matrix
+$$\mathbf{\tilde{X}} =  \left.\left( 
+                  \vphantom{\begin{array}{c}1\\1\\1\\1\\1\end{array}}
+                  \smash{\underbrace{
+                      \begin{array}{ccccc}
+                             \rho_{00}&\rho_{10}&\rho_{20}&\cdots &\rho_{p0}\\
+                             \rho_{01}&\rho_{11}&\rho_{21}&\cdots &\rho_{p1}\\
+                             \rho_{02}&\rho_{12}&\rho_{22}&\cdots &\rho_{p2}\\
+                             \vdots&&&\ddots&\\
+                             \rho_{0n}&\rho_{1n}&\rho_{2n}&\cdots &\rho_{pn}
+                      \end{array}
+                      }_{p\text{ features}}}
+              \right)\right\}
+              \,n\text{ events}
+$$\\
+
+Now we look at the Covariance matrix (Section \ref{covmat}) of each of our $p$ features, with
+\begin{align}
+\textbf{K}_{\rho_i,\rho_j} = \begin{pmatrix} 
+                             \Cov[\rho_0,\rho_0]&\Cov[\rho_1,\rho_0]&\cdots &\Cov[\rho_p,\rho_0]\\
+                             \Cov[\rho_0,\rho_1]&\Cov[\rho_1,\rho_1]&\cdots &\Cov[\rho_p,\rho_1]\\
+                             \vdots&\vdots&\ddots&\vdots\\
+                             \Cov[\rho_0,\rho_p]&\Cov[\rho_1,\rho_p]&\cdots &\Cov[\rho_p,\rho_p] \end{pmatrix}
+\end{align}
+This matrix will be symmetric, with $1$ along the diagonal (since we scale each feature to have a variance of 1). The next step is to diagonalize this matrix following Section \ref{diagonalize} and find it's eigenvalues $\lambda_i$ and eigenvectors $\textbf{a}_i = a_{ik}$. This puts the matrix into the form
+
+$$\bf{K}' = \left(
+{\begin{array}{cccc}
+\lambda_0 & 0 &...&0 \\
+0 & \lambda_1 & ...&0\\
+\vdots & \vdots &\ddots & \vdots \\
+0 & 0 & ... &\lambda_p
+\end{array}}
+\right)
+$$
+
+One can recognize now that in our new coordinate system, we have a new set of variables which each have a variance represented by the eigenvalue $\lambda_i$ itself. Because we want the most discriminating variable, we sort the eigenvectors and eigenvalues by the largest $\lambda_i$, which corresponds to the largest variance. Our new feature space is therefore
+\begin{align}
+	\rho_{ij} = a_{ik}\rho_{kj}
+\end{align}
+With $i=1,\dots,l$.
+
+\section{Optimization}
+
+\subsection{Gradient Descent}
+Effectively a least-squares minimization technique (Section \ref{least-squares}) used to fit parametrized models to data. The algorithm uses an $n$-dimensional gradient which it recomputes given a set of parameters, which guides it towards a minimum of some kind (typically an error). 
+
+In general, for large datasets, Gradient descent is slow.
+
+TODO add linear fit gradient descent model.
+
+\subsubsection{Minibatch Gradient Descent}
+Cuts the data into "batches" for which the gradient can be computed much more easily than if one were to do the entire dataset.
+
+\subsubsection{Stochastic Gradient Descent}
+Among our entire dataset, a random selection of events are selected, for which gradient descent has its machinery run on. It is particularly good when there is redundancy in the data.
+
+\subsection{$k$-Nearest Neighbors}
+asd
+
+\subsection{Sigmoid Function}
+Value between 0 and 1 so can be interpreted as a probability. TODO: Identical to something in stat mech?
+\subsection{Learning Rate}
+TODO
+
+\subsection{Step Size}
+When iterating through a machine learning algorithm, the "step-size" determines how quickly you change your state from where you start from. The way of doing this is somewhat of an art, with a multitude of options such as 
+\begin{itemize}
+	\item Constant step size
+	\item Step size which decreases as you make more iterations
+\end{itemize}
+\todo{ Add examples in \cite{sutton} with Reinforcement learning step sizes.}
+
+\subsection{Loss Functions}
+TODO
+\subsubsection{Sum of Squared Residuals}
+TODO
+
+
+\section{Supervised Learning}
+
+\section{Unsupervised Learning}
+
+\section{Reinforced Learning}
+Reinforced learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
+
+
+\subsection{$k$-armed Bandits}
+Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
+
+Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
+
+Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
+
+
+\subsubsection{Upper-Confidence-Bound Action Selection}
+
+One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
+\begin{align}
+	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
+\end{align}
+Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
+
+Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.

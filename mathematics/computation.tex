@@ -1,0 +1,75 @@
+\chapter{Computation}
+
+\subsection{Efficient Algorithms}
+
+\subsection{Averaging}
+When updating an average which contains many elements, the naive way of calculating the average is $O(n)$ efficient 
+\begin{align}
+	\langle x_{n-1}\rangle = \frac{1}{n-1}\sum_{i=0}^{n-1} x_i
+\end{align}
+When constantly updating the average, we can use the following equivalent formula
+\begin{align}
+	\langle x_{n}\rangle &= \frac{1}{n}\sum_{i=0}^{n} x_i\\
+	&= \frac{1}{n}\Big(x_n + (n-1)\langle x_{n-1}\rangle\Big)\\
+	&= \langle x_{n-1}\rangle + \frac{1}{n}\Big(x_n - \langle x_{n-1} \rangle\Big)
+\end{align}
+This modified algorithm is $O(1)$ efficient.
+\subsection{Bin Error}
+A histogram bin can be treated using Poisson statistics, which makes it's error $\sqrt{n}$ where $n$ is the number of entries in the bin.
+
+
+\subsection{Least Squares Fit}\label{least-squares}
+Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
+
+\begin{align}
+y_i = ax_i + b
+\end{align}
+
+Now the thing we want to do is minimize $\chi^2$ for the full combination of points. We do this of course, by taking a derivative to find the minimum. For simple illustrative purposes, lets take $\sigma_i$, the measurement error, to be the same for each point. For $a$ we have
+\begin{align}
+\frac{\partial \chi^2}{\partial a} = 0 &= \frac{\partial}{\partial a} \sum_i \frac{\Big(y_i - (ax_i + b)\Big)^2}{\sigma_i^2} \\
+&= - \frac{2}{\sigma^2}\sum_i \Big(y_i - (ax_i+b)\Big)x_i\\
+&= \sum_i y_i x_i - a\sum_ix_i^2 - b\sum_i x_i
+\end{align}
+Similarly, for $b$
+\begin{align}
+\frac{\partial \chi^2}{\partial b} = 0 &= -\frac{2}{\sigma^2}\sum_i \Big(y_i-(ax_i+b)\Big)\\
+&= \sum_i y_i - a \sum_i x_i - b
+\end{align}
+Now we have a set of linear equations. We can easily calculate all of the sums, since they are by definition the data we are fitting to, and after some algebra, we can solve for the $a$ and $b$ which minimize $\chi^2$.
+\begin{align}
+b &= \sum_i y_i - a \sum_i x_i\\
+\rightarrow 0 &= \sum_i y_i x_i - a\sum_ix_i^2 - \Big(\sum_i y_i - a \sum_i x_i\Big)\sum_i x_i\\
+\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big]\\
+a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big] 
+\end{align}
+In a computer program, it would look like
+\begin{verbatim}
+int main(){
+//random data
+    const unsigned int data_points = 3;
+    float x[data_points] = {1.1, 1.5, 3.2};
+    float y[data_points] = {3.3, 4.5, 9.0};
+    
+    //calculate the sums we need
+    float sum_x = 0;
+    float sum_y = 0;
+    float sum_x2 = 0;
+    float sum_xy = 0;
+    for(unsigned int i = 0; i < data_points; i++){
+        sum_x += x[i];
+        sum_y += y[i];
+        sum_x2 += x[i]*x[i];
+        sum_xy += x[i]*y[i];
+    }
+    
+    //now we just plug them into the equations we found
+    float a = (sum_xy - sum_y*sum_x)/(sum_x2 + sum_x*sum_x);
+    float b = sum_y - a*sum_x;
+    return 0;
+}
+\end{verbatim}
+
+TODO: Describe how procedure is done, and include simple code illustrating a linear / polynomial fit
+
+

@@ -1,10 +1,55 @@
 \chapter{Statistics}
 
+TODO: Mean, Covariance, Variance
+TODO: Population vs Sample
+\subsection{Mean}
+TODO: Harmonic, geometric mean
+\begin{align}
+\E[x] \equiv \mu_x = \frac{1}{n}\sum_{i=1}^n x_i
+\end{align}
+\subsection{Population vs Sample}
+The \textbf{population} is the full body of data points that exist for a given study. For instance if you wanted to measure the variation in height of humans, the population variance would necessarily require that you measure all humans for which this study pertains to. Obviously in real life, this is a tough thing to do, so most often a \textbf{sample} is used. A sample is a subset of the full population.
+
+TODO Derive how you get different variances
+
+\subsection{Variance}
+TODO
+\subsection{Covariance}
+The covariance between two variables tells us how closely they track with each other. The \textbf{population covariance} is defined as 
+\begin{align}
+\Cov[x,y] = \frac{1}{n}\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)
+\end{align}
+Whereas the \textbf{sample covariance} is defined as 
+\begin{align}
+	\Cov[x,y] = \frac{1}{n-1}\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)
+\end{align}
+TODO: Difference between sample and population.
+
+If the covariance is 0, both variables are independent. If the covariance is large and positive, a larger $x$ value suggests a larger $y$ value (and vice versa). If the coviarance is negative, a larger $x$ value suggests a smaller $y$ value (and vice versa).
+
+
+\subsubsection{Covariance Matrix}\label{covmat}
+With many variables (say $n$ of them), it is often helpful to define the sample Covariance matrix which calculates the covariance between each of the variables $x_i$ with $i = 1,\dots, n$
+
+\begin{align}
+\textbf{K}_{x_i,x_j} = \begin{pmatrix} 
+                             \Cov[x_0,x_0]&\Cov[x_1,x_0]&\Cov[x_2,x_0]&\cdots &\Cov[x_n,x_0]\\
+                             \Cov[x_0,x_1]&\Cov[x_1,x_1]&\Cov[x_2,x_1]&\cdots &\Cov[x_n,x_1]\\
+                             \Cov[x_0,x_2]&\Cov[x_1,x_2]&\Cov[x_2,x_2]&\cdots &\Cov[x_n,x_2]\\
+                             \vdots&\vdots&\vdots&\ddots&\vdots\\
+                             \Cov[x_0,x_n]&\Cov[x_1,x_n]&\Cov[x_2,x_n]&\cdots &\Cov[x_n,x_n] \end{pmatrix}
+\end{align}
+
 
 \label{ch:statistics}
 
 \section{Probability}
-The mathematics of probability translate chances into dice rolls.
+The mathematics of probability translate chances into dice rolls. For a given event, a value $P\in[0,1]$ is assigned to the fraction of times it is expected to happen. The theoretical underpinnings of probability have remained unresolved since it's birth, leaving two primary camps of practitioners; Bayesians and Frequentists.
+
+\subsubsection{Bayesian Probability}
+TODO
+\subsubsection{Frequentists Probability}
+TODO
 
 \subsection{Random Variables}
 "A random variable is one whose values have an associated probability distribution".\cite{grus}
@@ -18,6 +63,17 @@ The main idea is that you want to maximize your detection probability $P_D$ unde
 
 Given two simple hypotheses $\theta_0$ (the null hypothesis) and $\theta$, (simple hypotheses specify uniquely the probability distributions), we pick 
 
+\subsection{Hoeffding's Inequality}\label{hoeffding}
+Given $X_1, X_2, \ldots, X_n$ independent random variables each within $0 \leq X_i \leq 1$, Hoeffding's inequality states that 
+\begin{align}
+	P(\bar{X} - E[\bar{X}] \geq t) \leq e^{-2nt^2}
+\end{align}
+with 
+\begin{align}
+	\bar{X} = \frac{1}{n}\Big(X_1+X_2+\ldots+X_n\Big)
+\end{align}
+this gives us an easily computable way to find edge's of cumulative distributions.
+ 
 \subsection{Cross Entropy}
 TODO
 
@@ -40,44 +96,6 @@ the characteristic function has the property that
 States that if you have a bunch of random variables $x_1, x_2, ... x_n$, each coming from an arbitrary pdf with mean $\mu_1, \mu_2, ... \mu_n$, and variance $\sigma_1^2, \sigma_2^2, ...\sigma_n^2$, if you add them all up in the limit of large $n$, it should approach a Gaussian distribution with mean $\mu = \sum_i \mu_i$ and variance $\sigma^2 = \sum_i\sigma_i^2$
 
 TODO
-
-\subsection{Distributions}
-The Binomial distribution is given by
-\begin{align}
-P(k;n,p) = \begin{pmatrix}
-n\\
-k
-\end{pmatrix}p^k(1-p)^{n-k}
-\end{align}
-Where 
-\begin{align}
-\begin{pmatrix}
-n\\
-k
-\end{pmatrix} = \frac{n!}{k!(n-k)!}
-\end{align}
-Which tells us, if we try something $n$ times, each of which has a chance $p$ of succeeding, that we get $k$ successes. If we now consider the trying that same thing an infinite number of times ($n\rightarrow\infty$) while considering a finite amount of times $\mu$ we would have a success we have
-\begin{align}
-p = \frac{\mu}{n}
-\end{align}
-Therefore we find
-
-\begin{align}
-P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\mu}{n}\right)^k\left(1-\frac{\mu}{n}\right)^{n-k}\\
-&= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\mu^k}{n^k}\left(1-\frac{\mu}{n}\right)^{n-k}
-\end{align}
-Using the definition of the exponential function we find
-\begin{align}
-P(k; \mu) = \frac{\mu^ke^{-\mu}}{k!}
-\end{align}
-
-This is the Poisson distribution, a limiting case of the Binomial distribution.
-In summary:
-\begin{itemize}
-	\item Poisson is limit of binomial for $p$ small and $n\gg \mu$
-	\item Gaussian is limit of Poisson for large $\mu$
-	\item Gaussian is limit of binomial for large $\mu=np$
-\end{itemize}
 
 Jeffery's prior allows two people to come up with an equal parameter(?) model that looks different, but have the statistics for the two come out the same, when they otherwise wouldn't (Jacobian, etc.)
 
@@ -124,19 +142,12 @@ Therefore, the chance that we get a heads on the next flip, is given by
 \end{align}
 
 
-\subsection{Bin Error}
-A histogram bin can be treated using Poisson statistics, which makes it's error $\sqrt{n}$ where $n$ is the number of entries in the bin.
-
-
 
 \subsection{Limits}
 Typically in physics papers, we look in regions where we expect no events. Often we are looking for limits on crazy models people cook up that would expect some events there. The number of events should follow a Poisson distribution with $\mu\neq 0$ (forgetting about background). An important value is $\mu=3$, which tells us that there is only a $5\%$ chance that we find 0 events, any higher $\mu$ would have even less of a chance of seeing 0 events. This is obtained by integrating the Poisson distribution.
 
  In particle physics, $\mu=3$ is held as a the benchmark for if your theory is testable or not, if $\mu < 3$ you have a large chance that even if your theory is correct, you would still see nothing. 
 
-
-\subsection{P-Value}
-The $p$-value is defined as the probability under the null hypothesis of obtaining a result equal to or more extreme than what was actually observed. The smaller the $p$-value, the more it tells investigators that the null hypothesis may not adequately explain the observation.
 
 %\subsection{Uncertainties?}
 %Study email from Jay "CLCT output to Track Finder" to understand why it makes sense to add errors in quadrature, and write it up here.
@@ -182,63 +193,57 @@ This is because (TODO: Learn more about this) most things tend towards Gaussians
 (TODO, $i$'s are correct?). Now using Wilk's Theorem (TODO), one can look at the change in $\chi^2$ as you change the value of $\mu$. Once you increase $\mu$ in one direction from $\mu_{ML}$, the $\chi^2$ will grow. $\chi^2$ will of course also grow if you decrease it from $\mu_{ML}$. You can quantify how much you can change $\mu$ to some limit of $\chi^2$ given by (SOME THEORY). Depending on what kind of confidence interval you are looking for, or the amount of parameters you still have, this change in $\chi^2$ will be different. 
 
 This defines your confidence interval, which tells you, given whatever data you have, what the values of $\mu$,  [$\mu_1, \mu_2$] would be such that what you saw was on the tail end of its distribution (e.g. outside of 95\% of the entire distribution)
+\section{Classification}
+For classification tasks, the breakdown of how the test performs can be defined using the following quantities
+\begin{center}
+ \begin{tabular}{||c c||} 
+ \hline
+Name (Abbr.) & Description \\ [0.5ex] 
+ \hline\hline
+Positive (P) & Number of real positive cases in the data  \\ 
+ \hline
+ Negative (N)& Number of real negative cases in the data  \\
+ \hline
+ True Positive (TP) & Number of positive cases correctly identified  \\
+ \hline
+True Negative (TN) & Number of negative cases correctly identified \\
+ \hline
+False Positive (FP) & Number of positive cases incorrectly identified   \\ 
+ \hline
+ False Negative (FN) &   Number of negative cases incorrectly identified\\
+ \hline
+\end{tabular}\label{forcing}
+\end{center}
 
-\subsection{Least Squares Fit}
-Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
-
+\subsection{Accuracy}
+A tests accuracy tells you how often you get the right answer, i.e.
 \begin{align}
-y_i = ax_i + b
-\end{align}
+	\textrm{Accuracy} = \frac{TP+TN}{P+N}
+\end{align} Typically accuracy is not a particularly important measure if either the negative or positive rate is very large to begin with.
 
-Now the thing we want to do is minimize $\chi^2$ for the full combination of points. We do this of course, by taking a derivative to find the minimum. For simple illustrative purposes, lets take $\sigma_i$, the measurement error, to be the same for each point. For $a$ we have
-\begin{align}
-\frac{\partial \chi^2}{\partial a} = 0 &= \frac{\partial}{\partial a} \sum_i \frac{\Big(y_i - (ax_i + b)\Big)^2}{\sigma_i^2} \\
-&= - \frac{2}{\sigma^2}\sum_i \Big(y_i - (ax_i+b)\Big)x_i\\
-&= \sum_i y_i x_i - a\sum_ix_i^2 - b\sum_i x_i
-\end{align}
-Similarly, for $b$
-\begin{align}
-\frac{\partial \chi^2}{\partial b} = 0 &= -\frac{2}{\sigma^2}\sum_i \Big(y_i-(ax_i+b)\Big)\\
-&= \sum_i y_i - a \sum_i x_i - b
-\end{align}
-Now we have a set of linear equations. We can easily calculate all of the sums, since they are by definition the data we are fitting to, and after some algebra, we can solve for the $a$ and $b$ which minimize $\chi^2$.
-\begin{align}
-b &= \sum_i y_i - a \sum_i x_i\\
-\rightarrow 0 &= \sum_i y_i x_i - a\sum_ix_i^2 - \Big(\sum_i y_i - a \sum_i x_i\Big)\sum_i x_i\\
-\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big]\\
-a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big] 
-\end{align}
-In a computer program, it would look like
-\begin{verbatim}
-int main(){
-//random data
-	const unsigned int data_points = 3;
-	float x[data_points] = {1.1, 1.5, 3.2};
-	float y[data_points] = {3.3, 4.5, 9.0};
-	
-	//calculate the sums we need
-	float sum_x = 0;
-	float sum_y = 0;
-	float sum_x2 = 0;
-	float sum_xy = 0;
-	for(unsigned int i = 0; i < data_points; i++){
-		sum_x += x[i];
-		sum_y += y[i];
-		sum_x2 += x[i]*x[i];
-		sum_xy += x[i]*y[i];
-	}
-	
-	//now we just plug them into the equations we found
-	float a = (sum_xy - sum_y*sum_x)/(sum_x2 + sum_x*sum_x);
-	float b = sum_y - a*sum_x;
-	return 0;
-}
-\end{verbatim}
+\subsection{Confusion Matrix} 
+To determine how strong a classifier is, a confusion matrix can be used to store all of the results.\\
+\begin{tabular}{cc|c|c|}
+\cline{3-4}
+ && \multicolumn{2}{ c| }{Actual Value} \\ \cline{3-4}
+ && True & False  \\ \cline{1-4}
+\multicolumn{1}{ |c  }{\multirow{2}{*}{Predicted}} &
+\multicolumn{1}{ |c| }{True} & TP & FP       \\ \cline{2-4}
+\multicolumn{1}{ |c  }{}                        &
+\multicolumn{1}{ |c| }{False} & FN & TN     \\ \cline{1-4}
+\end{tabular}
+\\
 
-TODO: Describe how procedure is done, and include simple code illustrating a linear / polynomial fit
+From these values we can measure the \textbf{precision} and \textbf{recall} which are both standard ways of measuring a classifiers performance. Precision optimizes for TODO while recall optimizes for TODO
 
-\section{Machine Learning}
+\section{Hypothesis Testing}
 
-\subsection{Sigmoid Function}
-Value between 0 and 1 so can be interpreted as a probability. TODO: Identical to something in stat mech?
+\subsection{P-Value}
+The $p$-value is defined as the probability under the null hypothesis of obtaining a result equal to or more extreme than what was actually observed. The smaller the $p$-value, the more it tells investigators that the null hypothesis may not adequately explain the observation.
+
+
+\subsection{A/B Testing}
+See book \cite{grus}
+
+
 

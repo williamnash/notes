@@ -125,10 +125,67 @@ Which tells us how may ways we can pick $k$ objects out of a total of $n$ of the
 
 If you have two numbers that you don't know the prime factorization of, one can find their greatest common denominator (qcd) using this algorithm. 
 \begin{enumerate}
-\item Choose two numbers $N_1, N_2$ (e.g.`57, 27 `)
-\item Subtract the smaller of the two from the larger $$max(N_1,N_2) - min(N_1,N_2)$$
-    - 57 - 27 = 30
-\item Continue to subtract $min()$
+\item Choose two numbers $N_1, N_2$ 
+\begin{itemize}
+\item	e.g. $57, 27$
+\end{itemize}
+\item Subtract the smaller of the two from the larger $\max(N_1,N_2) -\min(N_1,N_2)$
+\begin{itemize}
+\item	$57 -27 = 30$
+\end{itemize}
+\item Continue to subtract $\min(N_1,N_2)$ until you're about to get negative numbers
+\begin{itemize}
+\item $30 -27 = 3$
+\end{itemize}
+\item This number is the greatest common denominator of the two
+\begin{itemize}
+\item $3\times 19 = 57$
+\item $3 \times 9 = 27$
+\end{itemize}
 \end{enumerate}
 
 \subsection{Modular Arthimetic}
+TODO
+
+\section{Distributions}
+The Binomial distribution is given by
+\begin{align}
+P(k;n,p) = \begin{pmatrix}
+n\\
+k
+\end{pmatrix}p^k(1-p)^{n-k}
+\end{align}
+Where 
+\begin{align}
+\begin{pmatrix}
+n\\
+k
+\end{pmatrix} = \frac{n!}{k!(n-k)!}
+\end{align}
+Which tells us, if we try something $n$ times, each of which has a chance $p$ of succeeding, that we get $k$ successes. If we now consider the trying that same thing an infinite number of times ($n\rightarrow\infty$) while considering a finite amount of times $\mu$ we would have a success we have
+\begin{align}
+p = \frac{\mu}{n}
+\end{align}
+Therefore we find
+
+\begin{align}
+P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\mu}{n}\right)^k\left(1-\frac{\mu}{n}\right)^{n-k}\\
+&= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\mu^k}{n^k}\left(1-\frac{\mu}{n}\right)^{n-k}
+\end{align}
+Using the definition of the exponential function we find
+\begin{align}
+P(k; \mu) = \frac{\mu^ke^{-\mu}}{k!}
+\end{align}
+
+This is the Poisson distribution, a limiting case of the Binomial distribution.
+In summary:
+\begin{itemize}
+	\item Poisson is limit of binomial for $p$ small and $n\gg \mu$
+	\item Gaussian is limit of Poisson for large $\mu$
+	\item Gaussian is limit of binomial for large $\mu=np$
+\end{itemize}
+
+\subsubsection{Softmax Distribution}
+Identical to the Boltzmann distribution of Physics.
+
+TODO
