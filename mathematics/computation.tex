@@ -14,11 +14,15 @@ When constantly updating the average, we can use the following equivalent formul
 	&= \langle x_{n-1}\rangle + \frac{1}{n}\Big(x_n - \langle x_{n-1} \rangle\Big)
 \end{align}
 This modified algorithm is $O(1)$ efficient.
+
+\subsection{Estimating Probabilities}
+When multiplying many different probabilities $p_i$ together, the floating point precision of many computing languages starts to become an issue. To avoid this problem, often $\log(p_i)$ is used which is monotonic with the probability but avoids the \textit{underflow} issue described.
+
 \subsection{Bin Error}
 A histogram bin can be treated using Poisson statistics, which makes it's error $\sqrt{n}$ where $n$ is the number of entries in the bin.
 
 
-\subsection{Least Squares Fit}\label{least-squares}
+\subsection{Linear Regression}\label{least-squares}
 Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
 
 \begin{align}
@@ -72,4 +76,12 @@ int main(){
 
 TODO: Describe how procedure is done, and include simple code illustrating a linear / polynomial fit
 
+\subsection{Multiple Regression}
+TODO
+
+
+\subsection{Ridge Regression}
+Ridge regression also works to minimize the total size of the fit parameters, adding an error term proportional to the square of the $\beta$ vector
+
+TODO
 

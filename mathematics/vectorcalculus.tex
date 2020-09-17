@@ -1074,7 +1074,7 @@ One that comes up often that can be found by completing the square on the normal
 \end{align}
 
 
-\subsection{Stirlings Approximation}
+\subsection{Stirlings Approximation}\label{stirling}
 \begin{align}
 \ln N! &= \ln \Big(1\times 2\times 3\times...\times N\Big)\\
 &= \sum_{x=1}^N \ln x\\
@@ -1089,7 +1089,10 @@ N! &\approx e^{N\ln N - N}\\
 &\approx e^{\ln N^N}e^{-N}\\
 &\approx N^Ne^{-N}
 \end{align}
-When $N$ is large enough to make the conversion to the integral valid.
+When $N$ is large enough to make the conversion to the integral valid. If one includes does this a bit more thoroughly, one arrives at
+\begin{align}
+	N! \approx \sqrt{2\pi N} N^Ne^{-N}
+\end{align}
 
 
 \subsection{Tabular Integration by Parts}

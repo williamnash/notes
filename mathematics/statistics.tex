@@ -1,12 +1,13 @@
 \chapter{Statistics}
+Data are collections of information made through observations. Statistics is the device through which data is cranked through to make interpretations of what the data actually says.
 
-TODO: Mean, Covariance, Variance
-TODO: Population vs Sample
 \subsection{Mean}
-TODO: Harmonic, geometric mean
+Given a set of data, one important feature one might wish to know is what this data looks like on average. This average is typically synonymous with the arithmetic mean defined as 
+
 \begin{align}
-\E[x] \equiv \mu_x = \frac{1}{n}\sum_{i=1}^n x_i
+\E[x] \equiv \bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
 \end{align}
+Where $n$ is the total amount of points in the data set.
 \subsection{Population vs Sample}
 The \textbf{population} is the full body of data points that exist for a given study. For instance if you wanted to measure the variation in height of humans, the population variance would necessarily require that you measure all humans for which this study pertains to. Obviously in real life, this is a tough thing to do, so most often a \textbf{sample} is used. A sample is a subset of the full population.
 
@@ -17,11 +18,11 @@ TODO
 \subsection{Covariance}
 The covariance between two variables tells us how closely they track with each other. The \textbf{population covariance} is defined as 
 \begin{align}
-\Cov[x,y] = \frac{1}{n}\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)
+\Cov[x,y] = \frac{1}{n}\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})
 \end{align}
 Whereas the \textbf{sample covariance} is defined as 
 \begin{align}
-	\Cov[x,y] = \frac{1}{n-1}\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)
+	\Cov[x,y] = \frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})
 \end{align}
 TODO: Difference between sample and population.
 
@@ -43,6 +44,9 @@ With many variables (say $n$ of them), it is often helpful to define the sample 
 
 \label{ch:statistics}
 
+\section{Markov Chains}
+TODO
+
 \section{Probability}
 The mathematics of probability translate chances into dice rolls. For a given event, a value $P\in[0,1]$ is assigned to the fraction of times it is expected to happen. The theoretical underpinnings of probability have remained unresolved since it's birth, leaving two primary camps of practitioners; Bayesians and Frequentists.
 
@@ -53,6 +57,9 @@ TODO
 
 \subsection{Random Variables}
 "A random variable is one whose values have an associated probability distribution".\cite{grus}
+
+\subsection{Marginalizing A Variable}
+TODO
 
 \subsection{Neyman Pearson Lemma}
 The main idea is that you want to maximize your detection probability $P_D$ under then constraint that your Type I error (false alarm) probability $P_{FA}$ is equal to a set value $\alpha$. This is done looking for a maximum with a Lagrange multiplier. TODO
@@ -245,5 +252,11 @@ The $p$-value is defined as the probability under the null hypothesis of obtaini
 \subsection{A/B Testing}
 See book \cite{grus}
 
+
+\subsection{F-Test}
+TODO
+
+\section{Bootstrapping}
+TODO
 
 

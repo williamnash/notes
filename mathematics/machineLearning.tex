@@ -3,7 +3,7 @@
 
 TODO: Labels vs features
 
-\section{Dimensionality Reduction}
+\section{Dimensionality Reduction}\label{dim_red}
 When fitting to a high dimensional space, the model can become overfit and/or the correlation within the feature vectors can be overlooked. In order to reduce the feature vectors into a space which has more discriminating power, it is helpful to reduce the total dimensions of the problem at hand.
 \subsection{Principal Component Analysis (PCA)}
 Principal Component Analysis (PCA) turns our feature space into "Principal Components", eigenvectors of our individual features. The analysis finds the dimension in the data that contains the most variance, thereby having the most discriminating power between events.
@@ -93,10 +93,27 @@ Cuts the data into "batches" for which the gradient can be computed much more ea
 Among our entire dataset, a random selection of events are selected, for which gradient descent has its machinery run on. It is particularly good when there is redundancy in the data.
 
 \subsection{$k$-Nearest Neighbors}
-asd
+One of the simpler machine learning algorithms, $k$-nearest neighbors (KNN) takes in a new event (with it's own set of features) and finds the  $k$ events in the training data which it is closest to. This distance definition is adjustable. Once all the neighbors have been found, each votes on how to classify the new event.
+
+This distance metric generally scales exponentially when new dimension are introduced, so it is advised to run dimensionality reduction (Section \ref{dim_red}) if using KNN for a high dimensional dataset.
+\subsection{Naive Bayes}
+When trying to deduce the probability of something dependent on many features $X_i$ conditional on something $S$, the naive way to do it is to assume they are all independent of each other
+\begin{align}\label{naive_bayes}
+	P(X_1,X_2,\dots,X_n|S) = P(X_1|S)P(X_2|S)\dots P(X_n|S)
+\end{align}
+This is the assumption made in Naive Bayes, for which computing the right side of Equation \ref{naive_bayes} is much easier than when one would need to look out for correlations.
+
+When estimating $P(X_i|S)$ it is typical to use a \textit{pseudocount} for it's estimate so we don't assign 0 or 1 to the probability and bias our results. According to \cite{sutton} this is
+\begin{align}
+	P(X_i|S) = (k+\textrm{number~of~} S's\textrm{~with~} X_i's) / (2k+\textrm{number~of~} S \textrm{~total})
+\end{align}
+
 
 \subsection{Sigmoid Function}
 Value between 0 and 1 so can be interpreted as a probability. TODO: Identical to something in stat mech?
+
+\subsection{Support Vector Machines}
+TODO
 \subsection{Learning Rate}
 TODO
 
@@ -113,8 +130,21 @@ TODO
 \subsubsection{Sum of Squared Residuals}
 TODO
 
+\subsection{Ant Colony Optimization}
+TODO
+
 
 \section{Supervised Learning}
+
+\section{Decision Trees}
+TODO
+\subsection{Entropy}
+TODO Entropy partitioning
+
+Entropy can be defined as ...
+
+
+When constructing a decision tree, it's partitioning should be done such that the next branch has the minimum entropy one can find. The intuition being that the members in each branch are most alike to one another, and therefore the tree is the most 'sorted'.
 
 \section{Unsupervised Learning}
 
@@ -139,3 +169,13 @@ One can also use confidence bounds on the unknown probabilities to determine whi
 Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
 
 Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
+
+
+\subsection{Markov Decision Processes}
+Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
+\begin{enumerate}
+	\item Actions $A$
+	\item States $S$
+	\item Rewards $R$
+\end{enumerate}
+At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.

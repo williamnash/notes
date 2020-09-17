@@ -148,6 +148,7 @@ If you have two numbers that you don't know the prime factorization of, one can 
 TODO
 
 \section{Distributions}
+\subsection{Binomial Distribution}
 The Binomial distribution is given by
 \begin{align}
 P(k;n,p) = \begin{pmatrix}
@@ -162,22 +163,46 @@ n\\
 k
 \end{pmatrix} = \frac{n!}{k!(n-k)!}
 \end{align}
-Which tells us, if we try something $n$ times, each of which has a chance $p$ of succeeding, that we get $k$ successes. If we now consider the trying that same thing an infinite number of times ($n\rightarrow\infty$) while considering a finite amount of times $\mu$ we would have a success we have
+Which tells us, if we try something $n$ times, each of which has a chance $p$ of succeeding, that we get $k$ successes. 
+
+\subsection{Poisson Distribution}
+The Poisson distribution is used to describe the distribution of discrete events over a given time or space interval. Consider a radioactive decay process which has $\lambda$ decays per minute. 
+
+For a process which obey's Binomial statistics, we have a set amount of times the event could happen $n$ and a proportion of successes $k$. For a Poisson process the time or space interval could in principle be broken up infinitely, making it such that we don't just count over a set number of dice rolls, effectively infinitely many of them. Thus we take the limit $n\rightarrow \infty$ of the Binomial distribution with
 \begin{align}
-p = \frac{\mu}{n}
+p = \frac{\lambda}{n}
 \end{align}
-Therefore we find
+Which tells us that the probability of the event happening at any given time is $0$, but as we will see, will give us a property such that a finite amount of events are seen when we are done counting. Mathematically we find
 
 \begin{align}
-P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\mu}{n}\right)^k\left(1-\frac{\mu}{n}\right)^{n-k}\\
-&= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\mu^k}{n^k}\left(1-\frac{\mu}{n}\right)^{n-k}
+P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}\\
+&= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\lambda^k}{n^k}\left(1-\frac{\lambda}{n}\right)^{n-k}
 \end{align}
-Using the definition of the exponential function we find
+Using the definition of the exponential function we arrive at the Poisson distribution with
 \begin{align}
-P(k; \mu) = \frac{\mu^ke^{-\mu}}{k!}
+P(k; \lambda) = \frac{\lambda^ke^{-\lambda}}{k!}
 \end{align}
 
-This is the Poisson distribution, a limiting case of the Binomial distribution.
+Thus the Poisson distribution is a limiting case of the Binomial distribution when the number of dice rolls is infinite, but the amount of events we observe remain finite.
+
+
+\subsection{Gaussian Distribution}
+Another distribution shows up in the case where $\lambda$ becomes so large that Stirling's approximation (Section \ref{stirling}) becomes valid. If we take a Poisson distribution with  $k = \lambda(1+\delta) \equiv x$ with $\lambda \gg 1, \delta \ll 1$ we can write
+\begin{align}
+	P(x; \lambda) &= \frac{\lambda^xe^{-\lambda}}{x!}\\
+	&= \frac{\lambda^{\lambda(1+\delta)}e^{-\lambda}}{\lambda(1+\delta)!}
+\end{align}
+Using Stirling's approximation, one has
+\begin{align}
+		P(x; \lambda) &\approx \frac{\lambda^{\lambda(1+\delta)}e^{-\lambda}}{\sqrt{2\pi}e^{-\lambda(1+\delta)}(\lambda(1+\delta))^{\lambda(1+\delta)+1/2}}\\
+		&\approx \frac{e^{-\lambda\delta}}{\sqrt{2\pi\lambda}} (1+\delta)^{-\lambda(1+\delta)-1/2}
+\end{align}
+Expanding the last term around $\delta=0$, we have
+\begin{align}
+	(1+\delta)^{-\lambda(1+\delta)-1/2} &\approx 1 + \delta*(\lambda+1/2) + \dots
+\end{align} 
+TODO
+
 In summary:
 \begin{itemize}
 	\item Poisson is limit of binomial for $p$ small and $n\gg \mu$
@@ -188,4 +213,7 @@ In summary:
 \subsubsection{Softmax Distribution}
 Identical to the Boltzmann distribution of Physics.
 
+TODO
+
+\subsubsection{Logistic Function}
 TODO
