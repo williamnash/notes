@@ -1,5 +1,25 @@
 \chapter{Computation}
 
+\subsection{Complexity}
+
+Big-O notation is typically used to approximate the time dependence on the number of elements you feed into an algorithm. In Big-O notation, we ignore all lower order terms, and also forget about any leading constants.
+
+Listed are some standard algorithms and their dependence.
+
+\begin{center}
+\begin{tabular}{ | c | c|} 
+\hline
+ $N$-Dependence & Algorithm\\ \hline
+$O(1)$ & Accessing an element in an array  \\ 
+$O(\log N)$ & Binary Search  \\
+$O(N)$ & Single \texttt{for} loop \\ 
+$O(N^2)$ & Simple sorting algorithm (bubble, selection, ...)\\
+$O(c^N)$ & Solving the travelling salesman problem with dynamic programming \\
+$O(N!)$ & Iterations over all combinatorics \\
+\hline
+\end{tabular}
+\end{center}
+
 \subsection{Efficient Algorithms}
 
 \subsection{Averaging}
@@ -17,6 +37,9 @@ This modified algorithm is $O(1)$ efficient.
 
 \subsection{Estimating Probabilities}
 When multiplying many different probabilities $p_i$ together, the floating point precision of many computing languages starts to become an issue. To avoid this problem, often $\log(p_i)$ is used which is monotonic with the probability but avoids the \textit{underflow} issue described.
+
+\subsection{Graph Theory}
+Brute force algorithms that search all combinations of $N$ items scale as $N!$. The Seven Bridges of Konigsberg is a famous example solved by Euler, for which he laid our all combinations of sequences you could possibly cross the seven bridges (e.g. $1234567, 1234576,...$ and was able to show each combination did not work.
 
 \subsection{Bin Error}
 A histogram bin can be treated using Poisson statistics, which makes it's error $\sqrt{n}$ where $n$ is the number of entries in the bin.

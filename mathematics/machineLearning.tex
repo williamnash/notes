@@ -79,6 +79,7 @@ With $i=1,\dots,l$.
 
 \section{Optimization}
 
+
 \subsection{Gradient Descent}
 Effectively a least-squares minimization technique (Section \ref{least-squares}) used to fit parametrized models to data. The algorithm uses an $n$-dimensional gradient which it recomputes given a set of parameters, which guides it towards a minimum of some kind (typically an error). 
 
@@ -91,6 +92,21 @@ Cuts the data into "batches" for which the gradient can be computed much more ea
 
 \subsubsection{Stochastic Gradient Descent}
 Among our entire dataset, a random selection of events are selected, for which gradient descent has its machinery run on. It is particularly good when there is redundancy in the data.
+
+\subsection{Newton's Method}
+Newton's method uses the second order Taylor expansion of the function to estimate the extremum in an optimization problem. This is contrasted with gradient descent which uses only the first order. Given a point $x_k$ where the optimizer is currently while looking for the extremum of $f(x)$, we have that
+\begin{align}
+	f(x_k+t)\approx f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2
+\end{align}
+If the second derivative $f''(x_k)$ is positive, the extremum of $f(x_k+t)$ will be when $f'(x_k+t) = d/dt f(x_k+t) = 0$ since $x=x_k+t$. This can be written as 
+\begin{align}
+	\frac{d}{dt}\Big( f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2\Big) = f'(x_k)+f''(x_k)t = 0 
+\end{align}
+Therefore under these conditions, $t = -f'(x_k)/f''(x_k)$ and the we assign the best estimate for the extremum of the function as
+\begin{align}
+	f(x_{k+1}) = f(x_k)-\frac{f'(x_k)}{f''(x_k)}
+\end{align} 
+
 
 \subsection{$k$-Nearest Neighbors}
 One of the simpler machine learning algorithms, $k$-nearest neighbors (KNN) takes in a new event (with it's own set of features) and finds the  $k$ events in the training data which it is closest to. This distance definition is adjustable. Once all the neighbors have been found, each votes on how to classify the new event.
@@ -111,6 +127,13 @@ When estimating $P(X_i|S)$ it is typical to use a \textit{pseudocount} for it's 
 
 \subsection{Sigmoid Function}
 Value between 0 and 1 so can be interpreted as a probability. TODO: Identical to something in stat mech?
+
+The sigmoid function has fallen out of favor for a couple of reasons \cite{grus}:
+\begin{enumerate}
+	\item $\texttt{sigmoid(0)} = 1/2$, which means a neuron with input sum 0 would have a positive output
+	\item The gradient for very large and very small values is close to zero, which leads to weights to getting stuck
+\end{enumerate}
+Now using $\texttt{tanh}$ is a popular alternative.
 
 \subsection{Support Vector Machines}
 TODO
@@ -133,11 +156,106 @@ TODO
 \subsection{Ant Colony Optimization}
 TODO
 
+\section{Neural Networks}
+Neural networks are composed of perceptrons which approximates a single neuron. The network itself is composed of layers of these perceptrons which each take a set number of inputs, do a calculation based off of the inputs they are given, then ship out the output which is then used by other perceptrons.
+
+\subsubsection{Feed Forward Networks}
+A feed forward network only has neurons which take inputs from the previous layer and pass them to the next layer. Consider $m$ total layers and the following definitions \cite{brilliant_backpropagation}
+\\
+\begin{tabular}{ l c }
+  $r_k$ & number of neurons on layer $k\in[1,m]$\\
+  $w_{ij}^k$ & weight given to output of neuron $j$ used in neuron $i$ on layer $k$  \\
+  $b_i^k$ & bias used in neuron $j$ on layer $k$   \\
+  $a_i^k$ & the product sum plus bias (activation) for node $i$ on layer $k$  \\
+  $o_i^k$ & the output of neuron $i$ on layer $k$ \\
+  $g$ & activation function for the hidden layer neurons \\
+  $g_o$ & activation function for the output layer neurons \\
+\end{tabular}\\
+\\
+Explicitly, the activation is written as
+\begin{align}
+	a_i^k =b_i^k + w_{ij}^ko_j^{k-1}
+\end{align}
+With summation implied following Einstein notation (Section \ref{einstein_notation}) and $j\in [1,r_{k-1}]$. If we defined 
+\begin{align}
+	w^k_{0i}=b_i^k && o_0^{k-1}=1
+\end{align}
+We can simplify the sum with
+\begin{align}\label{nn_activation}
+	a_i^k = w_{ij}^ko_j^{k-1}
+\end{align}
+with $j\in [0,r_{k-1}]$.
+
+\subsection{Backpropagation}
+To calculate the correct weights to assign to each neuron in the network, we find how the error function $\mathcal{E}$ changes as we change each weight $w_{ij}^k$ and bias $b_i^k$. Using gradient descent, we look for
+
+\begin{align}
+	\frac{\partial \mathcal{E}}{\partial w_{ij}^k} 
+\end{align}
+Typically the error function $\mathcal{E}$ is the sum of squared errors, but not always. In this example that is what we will use
+\begin{align}
+	\mathcal{E} = \frac{1}{2}\sum_{d=1}^N (\hat{y}_d-y_d)^2 = \sum_{d=1}^N E_d
+\end{align}
+Where $N$ is the total amount of data points we are training on and $E_{d}$ is the error on a given data point. The subscript $d$ is omitted for conciseness for the remaining description. Here we also assume that the neural network only outputs one final number, although this could be changed if we add another summation to the error equation. We can evaluate the gradient using the chain rule with
+\begin{align}\label{neural_net_error}
+	\frac{\partial E}{\partial w_{ij}^k} = \frac{\partial E}{\partial a_{i}^k}\frac{\partial a_{i}^k}{\partial w_{ij}^k}
+\end{align}
+The second term is easily computed using Equation \ref{nn_activation} with
+\begin{align}
+	\frac{\partial a_{i}^k}{\partial w_{ij}^k} = o_j^{k-1}
+\end{align}
+The first term is usually called the \textbf{error}, defined as 
+\begin{align}
+	\delta_{i}^k \equiv \frac{\partial E}{\partial a_{i}^k}
+\end{align}
+Looking first at the output layer $m$ and it's activation function $g_o$, we see
+\begin{align}
+	\delta_{i}^m \equiv \frac{\partial E}{\partial a_{i}^m} &= \frac{\partial}{\partial{a_{i}^m}}~\frac{1}{2} \Big(g_o(a_{i}^m)-y\Big)^2\\
+	&= \Big(g_o(a_{i}^m)-y\Big)g_o'(a_{i}^m)
+\end{align}
+Therefore for the output layer we have
+\begin{align}
+	\frac{\partial E}{\partial w_{ij}^m} = \delta_{i}^m o_j^{m-1}
+\end{align}
+
+
+The reason why this method is called \textbf{backpropagation} is because the $\delta_i^m$ term from the last layer is then propagated backwards through the network to adjust weights in the other neurons. Let us next look for the change in layer $m-1$
+\begin{align}
+	\delta_j^{m-1} \equiv \frac{\partial E}{\partial a_{j}^{m-1}} &= \frac{\partial}{\partial{a_i^{m-1}}}\frac{1}{2}\Big(g_o(a_{i}^m)-y\Big)^2 \\
+	&=\Big(g_o(a_{i}^m)-y\Big)g_o'(a_{i}^m)\frac{\partial a_{i}^m}{\partial a_{j}^{m-1}}\\
+	&= \delta_i^m \frac{\partial a_{i}^m}{\partial a_{j}^{m-1}}
+\end{align}
+We can then recognize that
+\begin{align}
+	o_j^{k-1} &= g(a_j^{k-1})
+\end{align}
+which implies
+\begin{align}
+	a_i^m = w_{ij}^m g(a_j^{m-1})
+\end{align}
+Therefore we have
+\begin{align}
+	\frac{\partial a_{i}^m}{\partial a_{j}^{m-1}} = w_{ij}^m g'(a_j^{m-1})
+\end{align}
+And thus we have a recursive relation with
+\begin{align}
+	\delta_j^{k-1} = \delta_i^k w_{ij}^k g'(a_j^{k-1})
+\end{align}
+Which gives us the gradient for an arbitrary hidden layer with
+\begin{align}
+	\frac{\partial E}{\partial w_{ij}^k} = \delta_j^{k}o_i^{k-1} = \delta_l^{k+1} w_{lj}^{k+1} g'(a_j^{k})o_j^{k-1}
+\end{align}
+The weights are then adjusted using gradient descent with
+\begin{align}
+	\Delta w_{ij}^k = -\alpha~  \frac{\partial E}{\partial w_{ij}^k}
+\end{align}
 
 \section{Supervised Learning}
+TODO
 
 \section{Decision Trees}
-TODO
+A balanced decision tree is one for which the questions split the groups into equal parts.
+
 \subsection{Entropy}
 TODO Entropy partitioning
 
@@ -145,6 +263,11 @@ Entropy can be defined as ...
 
 
 When constructing a decision tree, it's partitioning should be done such that the next branch has the minimum entropy one can find. The intuition being that the members in each branch are most alike to one another, and therefore the tree is the most 'sorted'.
+
+\subsection{Random Forests}
+TODO
+\subsection{Bootstrap Aggregation}
+TODO
 
 \section{Unsupervised Learning}
 

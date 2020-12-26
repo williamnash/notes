@@ -47,9 +47,14 @@ With many variables (say $n$ of them), it is often helpful to define the sample 
 \section{Markov Chains}
 TODO
 
+\subsection{Gibbs Sampling}
+Gibbs sampling is used to approximate a multivariate probability distribution when directly sampling it is difficult. 
+TODO
+
 \section{Probability}
 The mathematics of probability translate chances into dice rolls. For a given event, a value $P\in[0,1]$ is assigned to the fraction of times it is expected to happen. The theoretical underpinnings of probability have remained unresolved since it's birth, leaving two primary camps of practitioners; Bayesians and Frequentists.
-
+TODO Bayesian vs Frequentist
+"In particle physics, with its strong tradition of frequentist coverage, prior pdfs are often chosen to provide intervals (in particular upper limits for Poisson means) with good frequentist coverage [4]. In such cases, our use of Bayesian computational machinery for interval estimation is not so much a change in paradigm as it is a technical device for frequentist inference." - Bob Cousins \url{https://ep-news.web.cern.ch/node/3213}
 \subsubsection{Bayesian Probability}
 TODO
 \subsubsection{Frequentists Probability}
@@ -83,6 +88,7 @@ this gives us an easily computable way to find edge's of cumulative distribution
  
 \subsection{Cross Entropy}
 TODO
+If we are maximizing for probabilities, using cross-entropy as a loss function represents the negative log-likelihood of the observed data\cite{grus}.
 
 \subsection{Characteristic Function}
 The characteristic function is the Fourier transform of a distributions PDF $p(x)$. Defined as 
