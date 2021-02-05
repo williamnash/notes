@@ -62,6 +62,12 @@ TODO
 
 \subsection{Random Variables}
 "A random variable is one whose values have an associated probability distribution".\cite{grus}
+\subsubsection{Asimov Dataset}
+An Asimov dataset is an artificial dataset such that when it is used to evaluate the estimators for all parameters in the context of maximum likelihood estimation, one obtains the (assumed) true parameter values. This is typically done to derive $\sigma$ of the parameter of interest $\mu$, which is then used in asymptotic formulae. Some notes on notation
+\begin{itemize}
+	\item $\hat{\mu}$: Best estimate on the parameter of interest $\mu$
+	\item $\mu'$: Assumed true mean of the Gaussian used in Asymptotic formula approximations
+\end{itemize}
 
 \subsection{Marginalizing A Variable}
 TODO
@@ -250,6 +256,10 @@ To determine how strong a classifier is, a confusion matrix can be used to store
 From these values we can measure the \textbf{precision} and \textbf{recall} which are both standard ways of measuring a classifiers performance. Precision optimizes for TODO while recall optimizes for TODO
 
 \section{Hypothesis Testing}
+
+\subsection{Confidence Intervals}
+TODO
+Also add calculation of confidence intervals of fit parameters.
 
 \subsection{P-Value}
 The $p$-value is defined as the probability under the null hypothesis of obtaining a result equal to or more extreme than what was actually observed. The smaller the $p$-value, the more it tells investigators that the null hypothesis may not adequately explain the observation.

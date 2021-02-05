@@ -1,0 +1,58 @@
+\chapter{Group Theory}
+
+A group is a set of elements that can move between themselves. That movement is denoted by the multiplication of elements. We call the entire group itself $G$, which contains $g_1, g_2, ... g_N$ elements ($N$ is the order of $G$). The group is defined in the following way
+\begin{enumerate}
+	\item $g_1g_2~\exists ~G$ for all $g_1, g_2~\exists~ G$. Which says when we multiply two elements, we get another element that is still within the group back
+	\item $(g_1g_2)g_3 = g_1(g_2g_3)$ for $g_1, g_2, g_3~\exists~ G$. Which says when given a specific order to multiply the elements, the sequencing of multiplication doesn't matter
+	\item There is an identity element $e$ which gives $eg = ge = g$ for all $g\exists G$. This says there is one element that does not change any of the other elements.
+	\item For every element $g$, there is an inverse $g^{-1}$ such that $gg^{-1} = e$. Which allows us, from any element, to return to the identity
+\end{enumerate}
+The order of any of these elements $g$ are given by the smallest integer $k$ such that $g^k = e$.
+An isomorphism between two groups technically is a bijective map that preserves the group operations. This means that any of the operations from one group can be mapped exactly on to those of another.
+
+\subsection{Quaternion Group}
+The Quaternion Group $Q_8$ is defined such that
+\begin{align}
+	i^2 = j^2 = k^2 = ijk = -1
+\end{align}
+
+%
+%TODO:
+%\begin{itemize}
+%	\item SO(3) can have matrices that represent it of arbitrary size?
+%	\item Put example of what a matrix tensor product looks like (from comp notes)
+%	\item Irreducible representation
+%\end{itemize}
+%
+%
+\subsection{Lie Groups}
+Of particular importance in physics are \textbf{Lie groups}, groups in which you can change infinitesimally between their elements. This allows you to Taylor expand ... TODO
+
+\subsection{SO(3)}
+Consider the addition of angular momentum of two spin $1/2$ particles, $a$ and $b$ the Hilbert space in which they live both have dimension
+\begin{align}
+d_i = (2j_i + 1)
+\end{align}
+where $i ~\exists~(a,b)$. So $d_i = 2$ in the case of spin 1/2 particles ($\uparrow$ and $\downarrow$). The dimension of their combination is the product of both dimensions
+\begin{align}
+d_{ab} = (2j_a+1)(2j_b+1)
+\end{align}
+giving us 4. Considering each particle individually, we have a set of operators that "represent" the legal group operations that are allowed to make on the ket that would match with another potential bra. Following the same notation we look for the tensor product of the two representations
+\begin{align}
+D^{(j_a)}\otimes D^{(j_b)}
+\end{align}
+
+It can be shown \cite{sakurai} that when you combine any two particles with angular momentum $j, j'$ you can describe any transformation on the system as a whole in terms of a sum of irreducible representations.
+
+\begin{align}
+D^{(j)}\otimes D^{(j')} = \bigoplus^{j+j'}_{l=|j-j'|} D^{(l)}
+\end{align}
+
+Groups themselves are abstract entities defined by just the rules to get between elements. In physics, we use a \textbf{representation} of a group, which is the group put into matrix form such that it obeys the same rules as its definition.
+\begin{gather}
+\begin{align}
+\textrm{Group} && \textrm{Representation}\\
+g_1g_2 = g_3 && D(g_1)D(g_2) = D(g_3)
+\end{align}
+\end{gather}
+Where $D(g_1)$ is a matrix representation of the group element $g_1$ etc. 

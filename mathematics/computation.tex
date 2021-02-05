@@ -44,7 +44,7 @@ Brute force algorithms that search all combinations of $N$ items scale as $N!$. 
 \subsection{Bin Error}
 A histogram bin can be treated using Poisson statistics, which makes it's error $\sqrt{n}$ where $n$ is the number of entries in the bin.
 
-
+\section{Regression}
 \subsection{Linear Regression}\label{least-squares}
 Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
 
@@ -67,44 +67,38 @@ Now we have a set of linear equations. We can easily calculate all of the sums, 
 \begin{align}
 b &= \sum_i y_i - a \sum_i x_i\\
 \rightarrow 0 &= \sum_i y_i x_i - a\sum_ix_i^2 - \Big(\sum_i y_i - a \sum_i x_i\Big)\sum_i x_i\\
-\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big]\\
-a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 +\Big(\sum_i x_i\Big)^2\Big] 
+\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2\Big]\\
+a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2\Big] 
 \end{align}
 In a computer program, it would look like
-\begin{verbatim}
-int main(){
-//random data
-    const unsigned int data_points = 3;
-    float x[data_points] = {1.1, 1.5, 3.2};
-    float y[data_points] = {3.3, 4.5, 9.0};
-    
-    //calculate the sums we need
-    float sum_x = 0;
-    float sum_y = 0;
-    float sum_x2 = 0;
-    float sum_xy = 0;
-    for(unsigned int i = 0; i < data_points; i++){
-        sum_x += x[i];
-        sum_y += y[i];
-        sum_x2 += x[i]*x[i];
-        sum_xy += x[i]*y[i];
-    }
-    
-    //now we just plug them into the equations we found
-    float a = (sum_xy - sum_y*sum_x)/(sum_x2 + sum_x*sum_x);
-    float b = sum_y - a*sum_x;
-    return 0;
-}
-\end{verbatim}
 
-TODO: Describe how procedure is done, and include simple code illustrating a linear / polynomial fit
+
+\lstinputlisting[language=Python]{mathematics/code/linearRegression.py}
+
+
+\centering{\includegraphics[width=0.5\textwidth]{mathematics/fig/linearRegression.png}}
+
 
 \subsection{Multiple Regression}
-TODO
-
+Multiple regression is just linear regression done for more than one feature dimension. In general the problem it solves is of the form
+\begin{align}
+	\min_w||Xw-y||^2_2
+\end{align}
+Where $w$ is the weight vector, $x$ is the feature vector (including a term for the intercept) and $y$ is the label.
 
 \subsection{Ridge Regression}
-Ridge regression also works to minimize the total size of the fit parameters, adding an error term proportional to the square of the $\beta$ vector
+Ridge regression is a linear regression with an added penalty term proportional to the sum of the squared weights. This effectively prevents the model from becoming heavily dependent on a single weight and therefore is helpful in situations where the feature vectors are correlated (multicollinearity). The function to minimize is 
+\begin{align}
+	\min_w||Xw-y||^2_2 + \alpha||w||^2_2
+\end{align}
 
-TODO
+\subsection{Lasso}
+The LASSO (Least Absolute Shrinkage and Selection Operator) is designed to minimize the number of features the model is dependent on. The function it minimizes is 
+
+\begin{align}
+	\min_w\frac{1}{2n_{\textrm{samples}}}||Xw-y||^2_2 + \alpha||w||_1
+\end{align}
+
+Lasso can set weights to 0, while Ridge regression cannot.
+
 

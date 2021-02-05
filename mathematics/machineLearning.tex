@@ -1,7 +1,79 @@
 
 \chapter{Machine Learning}
 
-TODO: Labels vs features
+The general idea behind machine learning is this: Given a set of data, a machine creates a model that can be used to predict relationships between the various datum. The reasons for using a machine is generally because the size of the dataset, as well as the necessary computational requirements needed to make these models, is well beyond what is reasonable for a human to do alone.
+
+Most of machine learning can be broken up into three general subdisciplines:
+\begin{itemize}
+	\item Supervised Learning:
+	\item Unsupervised Learning:
+	\item Reinforcement Learning:
+\end{itemize}
+
+Data fed to the machine is broken up into a set of features and (sometimes) labels. The features describe the data points while the labels tell us exactly what it is.
+
+
+
+\section{Supervised Learning}
+Supervised learning takes a set of labelled feature vectors and builds a model to predict unlabelled data.
+
+
+
+\subsection{Support Vector Machines}
+Support Vector Machines (SVM) classify data-points by drawing boundaries between them. These boundaries are called "Hyperplanes" and slice the points in their feature vectors. The data points “support" the planes. i.e those closest to each plane are optimized around.
+
+\section{Decision Trees}
+A balanced decision tree is one for which the questions split the groups into equal parts.
+
+\subsection{Entropy}
+TODO Entropy partitioning
+
+Entropy can be defined as ...
+
+
+When constructing a decision tree, it's partitioning should be done such that the next branch has the minimum entropy one can find. The intuition being that the members in each branch are most alike to one another, and therefore the tree is the most 'sorted'.
+
+\subsection{Random Forests}
+TODO
+\subsection{Bootstrap Aggregation}
+TODO
+
+
+\section{Unsupervised Learning}
+TODO
+\section{Reinforced Learning}
+Reinforced learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
+
+
+\subsection{$k$-armed Bandits}
+Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
+
+Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
+
+Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
+
+
+\subsubsection{Upper-Confidence-Bound Action Selection}
+
+One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
+\begin{align}
+	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
+\end{align}
+Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
+
+Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
+
+
+\subsection{Markov Decision Processes}
+Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
+\begin{enumerate}
+	\item Actions $A$
+	\item States $S$
+	\item Rewards $R$
+\end{enumerate}
+At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.
+
+
 
 \section{Dimensionality Reduction}\label{dim_red}
 When fitting to a high dimensional space, the model can become overfit and/or the correlation within the feature vectors can be overlooked. In order to reduce the feature vectors into a space which has more discriminating power, it is helpful to reduce the total dimensions of the problem at hand.
@@ -135,8 +207,7 @@ The sigmoid function has fallen out of favor for a couple of reasons \cite{grus}
 \end{enumerate}
 Now using $\texttt{tanh}$ is a popular alternative.
 
-\subsection{Support Vector Machines}
-TODO
+
 \subsection{Learning Rate}
 TODO
 
@@ -250,55 +321,8 @@ The weights are then adjusted using gradient descent with
 	\Delta w_{ij}^k = -\alpha~  \frac{\partial E}{\partial w_{ij}^k}
 \end{align}
 
-\section{Supervised Learning}
-TODO
+\section{Maximum Likelihood Estimation}
+\subsection{Asimov Dataset}
+An Asimov dataset is an artificial dataset such that the  best estimates of the parameters which maximum likelihood optimization gets for it are identical to those obtained with the real dataset being studied. 
 
-\section{Decision Trees}
-A balanced decision tree is one for which the questions split the groups into equal parts.
-
-\subsection{Entropy}
-TODO Entropy partitioning
-
-Entropy can be defined as ...
-
-
-When constructing a decision tree, it's partitioning should be done such that the next branch has the minimum entropy one can find. The intuition being that the members in each branch are most alike to one another, and therefore the tree is the most 'sorted'.
-
-\subsection{Random Forests}
-TODO
-\subsection{Bootstrap Aggregation}
-TODO
-
-\section{Unsupervised Learning}
-
-\section{Reinforced Learning}
-Reinforced learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
-
-
-\subsection{$k$-armed Bandits}
-Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
-
-Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
-
-Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
-
-
-\subsubsection{Upper-Confidence-Bound Action Selection}
-
-One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
-\begin{align}
-	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
-\end{align}
-Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
-
-Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
-
-
-\subsection{Markov Decision Processes}
-Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
-\begin{enumerate}
-	\item Actions $A$
-	\item States $S$
-	\item Rewards $R$
-\end{enumerate}
-At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.
+This method is used to derive the approximate Gaussian width when calculating Asymptotic formulas for limits in particle physics \cite{cowan}.
