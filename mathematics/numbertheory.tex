@@ -1,4 +1,5 @@
 \chapter{Number Theory}
+
 \section{Misc}
 
 \subsection{Geometric Series}
@@ -185,6 +186,13 @@ P(k; \lambda) = \frac{\lambda^ke^{-\lambda}}{k!}
 
 Thus the Poisson distribution is a limiting case of the Binomial distribution when the number of dice rolls is infinite, but the amount of events we observe remain finite.
 
+In counting experiments, it is often useful to know that if 0 events are observed coming from a Poisson distribution, the one-sided 95\% upper limit on the number of events is $\approx 3$, which is consistent with
+\begin{align}
+	\frac{3^0e^{-3}}{0!} \approx 0.05
+\end{align}
+Since the confidence interval tells us a model with true parameter $\lambda=3$ has a 5\% chance to see 0 events. In particle physics, $\lambda=3$ is held as a the benchmark for if your theory is testable or not, if $\lambda < 3$ you have a large chance that even if your theory is correct, you would still see nothing. 
+
+
 
 \subsection{Gaussian Distribution}
 Another distribution shows up in the case where $\lambda$ becomes so large that Stirling's approximation (Section \ref{stirling}) becomes valid. If we take a Poisson distribution with  $k = \lambda(1+\delta) \equiv x$ with $\lambda \gg 1, \delta \ll 1$ we can write
@@ -216,4 +224,18 @@ Identical to the Boltzmann distribution of Physics.
 TODO
 
 \subsection{Logistic Function}\label{logistic_function}
-TODO
+The standard logisitic function, or \B{sigmoid function} spans $(0,1)$ increasing monotonically with its argument.
+\begin{align}
+	f(x) = \frac{1}{1+e^{-x}}
+\end{align}
+This distribution is identical to the Fermi-Dirac distribution from Physics which describes the average number of fermions that occupy a given energy state. In machine learning, this function is typically used in classification algorithms and is interpreted as a probability. One uses
+\begin{align}
+	f_{\mathbf{w},b}(\mathbf{x}) = \frac{1}{1+e^{-(\mathbf{wx} +b)}}
+\end{align}
+Where $\mathbf{w}$ the weight vector and $b$ the offset are fit to. Recently, the sigmoid function has fallen out of favor for a couple of reasons\cite{grus}:
+\begin{enumerate}
+	\item $\texttt{sigmoid(0)} = 1/2$, which means a neuron with input sum 0 would have a positive output
+	\item The gradient for very large and very small values is close to zero, which leads to weights to getting stuck
+\end{enumerate}
+Now using $\texttt{tanh}$ is a popular alternative.
+

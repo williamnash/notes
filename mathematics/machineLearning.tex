@@ -10,29 +10,40 @@ Most of machine learning can be broken up into three general subdisciplines:
 	\item Reinforcement Learning:
 \end{itemize}
 
-Data fed to the machine is broken up into a set of features and (sometimes) labels. The features describe the data points while the labels tell us exactly what it is.
+Machine learning breaks down each element of a dataset into a set of \textbf{features} which describe it and differentiate it from the other elements. The resultant model is a collection of \textbf{parameters} that describe the relationship between elements of the dataset. \textbf{Hyperparameters} are parameters used in running the algorithm which arrives at the aforementioned parameters, and are not considered parameters of the model themselves.
 
+\subsection{Model-Based vs Instance-Based Learning}
+Model-based learning involves finding optimal parameters and uses a training dataset for its construction. An example is Support Vector Machines (Section \ref{sub:svm}).
 
+Instance-based learning involves using the whole dataset as the model. An example is $k$-Nearest Neighbors (Section \ref{sub:knn}).
+
+\subsection{Shallow vs Deep Learning}
+Shallow learning involves building a model that trains on the features and measures the changes in the model by how well it matched the corresponding label. Deep learning is used in neural network architectures, and involves models that can learn features of features. Each layer in a neural network is in some sense a "shallow learning" layer.
 
 \section{Supervised Learning}
-Supervised learning takes a set of labelled feature vectors and builds a model to predict unlabelled data.
+Supervised learning takes a set of labelled feature vectors and builds a model to predict unlabelled data. 
 
 
 
-\subsection{Support Vector Machines}
+\subsection{Support Vector Machines}\label{sub:svm}
 Support Vector Machines (SVM) classify data-points by drawing boundaries between them. These boundaries are called "Hyperplanes" and slice the points in their feature vectors. The data points “support" the planes. i.e those closest to each plane are optimized around.
 
 \section{Decision Trees}
-A balanced decision tree is one for which the questions split the groups into equal parts.
+A decision tree is an acyclic graph that can be used to make decisions. Each ``leaf" of the tree assigns a label to the given feature vector. A balanced decision tree is one for which the questions split the groups into equal parts.
 
 \subsection{Entropy}
-TODO Entropy partitioning
+Given $N$ different possible labels a feature vector could be associated to, we define $p_i$ with $i\in (1,N)$ as the proportion of any given label $i$. Using our full training dataset $D$, we can then define the entropy $S$ of the model as 
 
-Entropy can be defined as ...
+\begin{align}
+	S^{(D)} = -\sum_{i=1}^N p^{(D)}_i\ln p^{(D)}_i
+\end{align}
 
+This tells us roughly how mixed up our dataset is. If the training data has two labels which are equally populated in the dataset, we have correspondingly larger energy than if we had only one of the labels show up. In the ideal case, each leaf of a decision tree will have just one label. A metric by which we can gauge how close we are to this ideal is by \emph{minimizing the entropy} of our model. 
 
-When constructing a decision tree, it's partitioning should be done such that the next branch has the minimum entropy one can find. The intuition being that the members in each branch are most alike to one another, and therefore the tree is the most 'sorted'.
+There are a number of algorithms that that recursively split the dataset into those with smaller entropy i.e. $D\rightarrow D_1, D_2$. After doing this the effective entropy among the two independent datasets can be remeasured and compared with that before the split. This can then continue until a number of conditions are met such as you have only one kind of label, or there are no more splits that could further reduce the entropy.
 
+\subsection{Boosted Decision Trees}
+TODO
 \subsection{Random Forests}
 TODO
 \subsection{Bootstrap Aggregation}
@@ -40,45 +51,13 @@ TODO
 
 
 \section{Unsupervised Learning}
-TODO
-\section{Reinforced Learning}
-Reinforced learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
+In unsupervised learning, the elements of the dataset are unlabelled, containing only feature vectors. This type of learning is useful for things like \textbf{clustering}, where the model looks to pair like-with-like, or \textbf{dimensionality reduction}, where the model translates a large set of features into a smaller set.
 
 
-\subsection{$k$-armed Bandits}
-Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
-
-Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
-
-Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
-
-
-\subsubsection{Upper-Confidence-Bound Action Selection}
-
-One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
-\begin{align}
-	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
-\end{align}
-Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
-
-Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
-
-
-\subsection{Markov Decision Processes}
-Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
-\begin{enumerate}
-	\item Actions $A$
-	\item States $S$
-	\item Rewards $R$
-\end{enumerate}
-At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.
-
-
-
-\section{Dimensionality Reduction}\label{dim_red}
+\subsection{Dimensionality Reduction}\label{dim_red}
 When fitting to a high dimensional space, the model can become overfit and/or the correlation within the feature vectors can be overlooked. In order to reduce the feature vectors into a space which has more discriminating power, it is helpful to reduce the total dimensions of the problem at hand.
-\subsection{Principal Component Analysis (PCA)}
-Principal Component Analysis (PCA) turns our feature space into "Principal Components", eigenvectors of our individual features. The analysis finds the dimension in the data that contains the most variance, thereby having the most discriminating power between events.
+\subsubsection{Principal Component Analysis (PCA)}
+Principal Component Analysis (PCA) turns our feature space into ``Principal Components", eigenvectors of our individual features. The analysis finds the dimension in the data that contains the most variance, thereby having the most discriminating power between events.
 
 We first begin with our feature vectors
 $$\mathbf{X} = \left.\left( 
@@ -149,6 +128,41 @@ One can recognize now that in our new coordinate system, we have a new set of va
 \end{align}
 With $i=1,\dots,l$.
 
+
+\section{Reinforced Learning}
+Reinforced learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
+
+
+\subsection{$k$-armed Bandits}
+Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
+
+Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
+
+Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
+
+
+\subsubsection{Upper-Confidence-Bound Action Selection}
+
+One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
+\begin{align}
+	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
+\end{align}
+Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
+
+Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
+
+
+\subsection{Markov Decision Processes}
+Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
+\begin{enumerate}
+	\item Actions $A$
+	\item States $S$
+	\item Rewards $R$
+\end{enumerate}
+At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.
+
+
+
 \section{Optimization}
 
 
@@ -180,7 +194,7 @@ Therefore under these conditions, $t = -f'(x_k)/f''(x_k)$ and the we assign the 
 \end{align} 
 
 
-\subsection{$k$-Nearest Neighbors}
+\subsection{$k$-Nearest Neighbors}\label{sub:knn}
 One of the simpler machine learning algorithms, $k$-nearest neighbors (KNN) takes in a new event (with it's own set of features) and finds the  $k$ events in the training data which it is closest to. This distance definition is adjustable. Once all the neighbors have been found, each votes on how to classify the new event.
 
 This distance metric generally scales exponentially when new dimension are introduced, so it is advised to run dimensionality reduction (Section \ref{dim_red}) if using KNN for a high dimensional dataset.
@@ -195,17 +209,6 @@ When estimating $P(X_i|S)$ it is typical to use a \textit{pseudocount} for it's 
 \begin{align}
 	P(X_i|S) = (k+\textrm{number~of~} S's\textrm{~with~} X_i's) / (2k+\textrm{number~of~} S \textrm{~total})
 \end{align}
-
-
-\subsection{Sigmoid Function}
-Value between 0 and 1 so can be interpreted as a probability. TODO: Identical to something in stat mech?
-
-The sigmoid function has fallen out of favor for a couple of reasons \cite{grus}:
-\begin{enumerate}
-	\item $\texttt{sigmoid(0)} = 1/2$, which means a neuron with input sum 0 would have a positive output
-	\item The gradient for very large and very small values is close to zero, which leads to weights to getting stuck
-\end{enumerate}
-Now using $\texttt{tanh}$ is a popular alternative.
 
 
 \subsection{Learning Rate}
@@ -320,9 +323,3 @@ The weights are then adjusted using gradient descent with
 \begin{align}
 	\Delta w_{ij}^k = -\alpha~  \frac{\partial E}{\partial w_{ij}^k}
 \end{align}
-
-\section{Maximum Likelihood Estimation}
-\subsection{Asimov Dataset}
-An Asimov dataset is an artificial dataset such that the  best estimates of the parameters which maximum likelihood optimization gets for it are identical to those obtained with the real dataset being studied. 
-
-This method is used to derive the approximate Gaussian width when calculating Asymptotic formulas for limits in particle physics \cite{cowan}.

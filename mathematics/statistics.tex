@@ -1,6 +1,13 @@
 \chapter{Statistics}
 Data are collections of information made through observations. Statistics is the device through which data is cranked through to make interpretations of what the data actually says.
 
+\section{OUTSTANDING ITEMS}
+\begin{itemize}
+	\item Uniformize notation, use $w$ as a vector, etc
+	\item Sort sections
+	\item Fill out TODOs
+\end{itemize}
+
 \subsection{Mean}
 Given a set of data, one important feature one might wish to know is what this data looks like on average. This average is typically synonymous with the arithmetic mean defined as 
 
@@ -60,14 +67,14 @@ TODO
 \subsubsection{Frequentists Probability}
 TODO
 
+
+
 \subsection{Random Variables}
-"A random variable is one whose values have an associated probability distribution".\cite{grus}
-\subsubsection{Asimov Dataset}
-An Asimov dataset is an artificial dataset such that when it is used to evaluate the estimators for all parameters in the context of maximum likelihood estimation, one obtains the (assumed) true parameter values. This is typically done to derive $\sigma$ of the parameter of interest $\mu$, which is then used in asymptotic formulae. Some notes on notation
-\begin{itemize}
-	\item $\hat{\mu}$: Best estimate on the parameter of interest $\mu$
-	\item $\mu'$: Assumed true mean of the Gaussian used in Asymptotic formula approximations
-\end{itemize}
+A random variable is one whose values have an associated probability distribution \cite{grus}. Random variables can come in two different flavors: \B{discrete} and \B{continuous}. 
+
+Discrete random variables can only take a countable number of distinct values e.g. ($1,~2, ~5,\ldots$) or (red, blue, green). These values get pulled from something called a \B{probability mass function}.
+
+Conversely, continuous random variables represent a continuous spectrum of values e.g. all the real numbers. These values get pulled from something called a \B{probability density function}.
 
 \subsection{Marginalizing A Variable}
 TODO
@@ -135,7 +142,7 @@ Since ${N\choose A}$ is constant and common in both numerator and denominator, w
 \begin{align}
 	p(\rho) =\ffrac{ \rho^A(1-\rho)^{N-A}}{\int_0^1\rho^A(1-\rho)^{N-A} d\rho}
 \end{align}
-It so happens the integral is Euler's beta function\footnote{todo}, which evaluates to 
+It so happens the integral is Euler's beta function, which evaluates to 
 \begin{align}
 	\int_0^1\rho^A(1-\rho)^{N-A} d\rho = \frac{A!(N-A)!}{(N+1)!}
 \end{align}
@@ -160,14 +167,6 @@ Therefore, the chance that we get a heads on the next flip, is given by
 	\langle\rho\rangle = \frac{A+1}{N+2}
 \end{align}
 
-
-
-\subsection{Limits}
-Typically in physics papers, we look in regions where we expect no events. Often we are looking for limits on crazy models people cook up that would expect some events there. The number of events should follow a Poisson distribution with $\mu\neq 0$ (forgetting about background). An important value is $\mu=3$, which tells us that there is only a $5\%$ chance that we find 0 events, any higher $\mu$ would have even less of a chance of seeing 0 events. This is obtained by integrating the Poisson distribution.
-
- In particle physics, $\mu=3$ is held as a the benchmark for if your theory is testable or not, if $\mu < 3$ you have a large chance that even if your theory is correct, you would still see nothing. 
-
-
 %\subsection{Uncertainties?}
 %Study email from Jay "CLCT output to Track Finder" to understand why it makes sense to add errors in quadrature, and write it up here.
 
@@ -186,20 +185,30 @@ Therefore
 P(A|B) = \frac{P(B|A)P(A)}{P(B)}
 \end{align}
 
-\subsection{Likelihood Function}
+\section{Likelihood Function}
 
-Start with a probability distribution of some vector of observables $\textbf{x}$, and model parameters $\boldsymbol{\mu}$. Turn the probability distribution into a likelihood function by considering the observables as the objects held constant (since we observed them) and allow our model parameters to vary.
+The likelihood function is an interpretation of the probability distribution which takes the observed values $\textbf{x}$ as \textit{fixed} and allows the parameters $\boldsymbol{\mu}$ to vary.
 
 \begin{align}
 	P(\textbf{x}|\boldsymbol{\mu}) = \mathcal{L}(\boldsymbol{\mu}|\textbf{x})
 \end{align}
 
-
-Now eliminate all the nuisance parameters to make the Likelihood function only dependent on the quantities you care about ($\boldsymbol{\mu}\rightarrow \mu$) (TODO, see profile likelihood talk). Find the maximum Likelihood estimator with
-
+\subsection{Maximum Likelihood Estimation}
+The most foolproof means of solving an optimization problem is writing down the corresponding likelihood function, then solving for the parameters $\boldsymbol{\mu}$. If doing so analytically, this corresponds to solving the series of equations given by
 \begin{align}
-\frac{\partial \mathcal{L}}{\partial \mu} = 0 \rightarrow \mu_{ML}
+\frac{\partial \mathcal{L}}{\partial \boldsymbol{\mu}} = 0
 \end{align}
+In general this usually isn't possible, so one resorts to other means such as gradient descent. When doing this optimization on a computer, typically one optimizes for
+\begin{align}
+	\ln\mathcal{L}
+\end{align}
+instead of $\mathcal{L}$. This is kosher since $\ln$ is a strictly increasing function, so maximizing it means maximizing its arguments \cite{burkov}. There are also some nice properties since 
+\begin{align}
+-2\ln\mathcal{L} \simeq \chi^2
+\end{align}
+
+\todo{clean this}
+
 This tells us that if the model had the parameter $\mu_{ML}$ the observation we made would be the most likely, out of the space of all possible $\mu$'s it could have been. To find the \textbf{confidence interval}, we use
 
 \begin{align}
@@ -212,7 +221,20 @@ This is because (TODO: Learn more about this) most things tend towards Gaussians
 (TODO, $i$'s are correct?). Now using Wilk's Theorem (TODO), one can look at the change in $\chi^2$ as you change the value of $\mu$. Once you increase $\mu$ in one direction from $\mu_{ML}$, the $\chi^2$ will grow. $\chi^2$ will of course also grow if you decrease it from $\mu_{ML}$. You can quantify how much you can change $\mu$ to some limit of $\chi^2$ given by (SOME THEORY). Depending on what kind of confidence interval you are looking for, or the amount of parameters you still have, this change in $\chi^2$ will be different. 
 
 This defines your confidence interval, which tells you, given whatever data you have, what the values of $\mu$,  [$\mu_1, \mu_2$] would be such that what you saw was on the tail end of its distribution (e.g. outside of 95\% of the entire distribution)
+
+\subsection{Asimov Dataset}
+An Asimov dataset is an artificial dataset such that when it is used to evaluate the estimators for all parameters in the context of maximum likelihood estimation, one obtains the (assumed) true parameter values. This is typically done to derive $\sigma$ of the parameter of interest $\mu$, which is then used in asymptotic formulae. Some notes on notation
+\begin{itemize}
+	\item $\hat{\mu}$: Best estimate on the parameter of interest $\mu$
+	\item $\mu'$: Assumed true mean of the Gaussian used in Asymptotic formula approximations
+\end{itemize}
+This method is used to derive the approximate Gaussian width when calculating Asymptotic formulas for limits in particle physics \cite{cowan}.
+
+
 \section{Classification}
+Classification attempts to group like items together. In machine learning, a classification model attempts to ascribe a label given a set of features (e.g. ``spam", or ``not spam").
+
+
 For classification tasks, the breakdown of how the test performs can be defined using the following quantities
 \begin{center}
  \begin{tabular}{||c c||} 
@@ -255,11 +277,73 @@ To determine how strong a classifier is, a confusion matrix can be used to store
 
 From these values we can measure the \textbf{precision} and \textbf{recall} which are both standard ways of measuring a classifiers performance. Precision optimizes for TODO while recall optimizes for TODO
 
+\subsection{Logisitic Regression}
+Logistic regression is not in fact a regressions but a classification algorithm.
+
+\section{Regression}
+Regression addresses the problem of estimating relationships between dependent variables. One or more independent variables (or ``features") is used to predict a dependent variable (or ``label").
+
+\subsection{Linear Regression}\label{least-squares}
+Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
+
+\begin{align}
+y_i = ax_i + b
+\end{align}
+
+Now the thing we want to do is minimize $\chi^2$ for the full combination of points. We do this of course, by taking a derivative to find the minimum. For simple illustrative purposes, lets take $\sigma_i$, the measurement error, to be the same for each point. For $a$ we have
+\begin{align}
+\frac{\partial \chi^2}{\partial a} = 0 &= \frac{\partial}{\partial a} \sum_i \frac{\Big(y_i - (ax_i + b)\Big)^2}{\sigma_i^2} \\
+&= - \frac{2}{\sigma^2}\sum_i \Big(y_i - (ax_i+b)\Big)x_i\\
+&= \sum_i y_i x_i - a\sum_ix_i^2 - b\sum_i x_i
+\end{align}
+Similarly, for $b$
+\begin{align}
+\frac{\partial \chi^2}{\partial b} = 0 &= -\frac{2}{\sigma^2}\sum_i \Big(y_i-(ax_i+b)\Big)\\
+&= \sum_i y_i - a \sum_i x_i - b
+\end{align}
+Now we have a set of linear equations. We can easily calculate all of the sums, since they are by definition the data we are fitting to, and after some algebra, we can solve for the $a$ and $b$ which minimize $\chi^2$.
+\begin{align}
+b &= \sum_i y_i - a \sum_i x_i\\
+\rightarrow 0 &= \sum_i y_i x_i - a\sum_ix_i^2 - \Big(\sum_i y_i - a \sum_i x_i\Big)\sum_i x_i\\
+\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2\Big]\\
+a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2\Big] 
+\end{align}
+In a computer program, it would look like
+
+
+\lstinputlisting[language=Python]{mathematics/code/linearRegression.py}
+
+\centerline{\includegraphics[width=0.5\textwidth]{mathematics/fig/linearRegression.png}}
+
+
+\subsection{Multiple Regression}
+Multiple regression is just linear regression done for more than one feature dimension. In general the problem it solves is of the form
+\begin{align}
+	\min_w||Xw-y||^2_2
+\end{align}
+Where $w$ is the weight vector, $x$ is the feature vector (including a term for the intercept) and $y$ is the label.
+
+\subsection{Ridge Regression}
+Ridge regression is a linear regression with an added penalty term proportional to the sum of the squared weights. This effectively prevents the model from becoming heavily dependent on a single weight and therefore is helpful in situations where the feature vectors are correlated (multicollinearity). The function to minimize is 
+\begin{align}
+	\min_w||Xw-y||^2_2 + \alpha||w||^2_2
+\end{align}
+
+\subsection{Lasso}
+The LASSO (Least Absolute Shrinkage and Selection Operator) is designed to minimize the number of features the model is dependent on. The function it minimizes is 
+
+\begin{align}
+	\min_w\frac{1}{2n_{\textrm{samples}}}||Xw-y||^2_2 + \alpha||w||_1
+\end{align}
+
+Lasso can set weights to 0, while Ridge regression cannot.
+
 \section{Hypothesis Testing}
 
 \subsection{Confidence Intervals}
 TODO
 Also add calculation of confidence intervals of fit parameters.
+Add confidence interval of a Gaussian
 
 \subsection{P-Value}
 The $p$-value is defined as the probability under the null hypothesis of obtaining a result equal to or more extreme than what was actually observed. The smaller the $p$-value, the more it tells investigators that the null hypothesis may not adequately explain the observation.
