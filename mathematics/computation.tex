@@ -42,3 +42,52 @@ When multiplying many different probabilities $p_i$ together, the floating point
 Brute force algorithms that search all combinations of $N$ items scale as $N!$. The Seven Bridges of Konigsberg is a famous example solved by Euler, for which he laid our all combinations of sequences you could possibly cross the seven bridges (e.g. $1234567, 1234576,...$ and was able to show each combination did not work.
 
 
+\subsection{Kernels}
+Kernels are useful when one wants to represent a set of data points in a higher dimensional space (e.g. when making a classifier using Support Vector Machines). One represents the transformation of a set of data points $\B{x}$ as $\B{x}\rightarrow \phi(\B{x})$. Mathematically a Kernel function is defined as
+\begin{align}
+	K(\B{x},\B{x}') = \phi(\B{x})\cdot \phi(\B{x}')
+\end{align}
+
+ Kernels themselves are a measure of similarity between two different points of data $\B{x}$ and $\B{x}'$ (e.g. cosine similarity). Their main utility lies in the fact that cleverly defined kernels can significantly reduce the amount of computation necessary when one wants to expand the dimensionality of the dataset. It happens that many algorithms in machine learning can be written in terms of dot products, which allows kernel methods to be used if one wants change dimensionality.
+
+\subsubsection{Polynomial Kernel}
+The polynomial kernel is defined as
+\begin{align}\label{pol_kern}
+	K_d(\B{x},\B{x}') = (1+ \B{x}\cdot \B{x}')^d
+\end{align}
+Where $d$ is the dimension you wish to expand the data to. To illustrate the utility of the kernel, let us take
+\begin{align}\label{pol_kern_example}
+	\B{x} = (x_1,x_2) && \B{x}' = (x_1',x_2')
+\end{align}
+If we want to increase the dimensionality of our data to consider all second order terms and below, one can define the transformation function as
+\begin{align}
+	\phi(\B{x}) = (1, \sqrt{2}x_1, \sqrt{2}x_2, x_1^2, x_2^2, \sqrt{2}x_1x_2)
+\end{align}
+If it happens that each time the data shows up, a dot product is used, then the condition for using a kernel condition is satisfied.
+\begin{align}
+	\B{x}\cdot \B{x}' \rightarrow \phi(\B{x})\cdot \phi(\B{x}')
+\end{align}
+Let us then compute this dot product for Equation \ref{pol_kern_example}
+\begin{align}
+	\phi(\B{x})\cdot \phi(\B{x}') &= (1, \sqrt{2}x_1, \sqrt{2}x_2, x_1^2, x_2^2, \sqrt{2}x_1x_2) \\
+	&\cdot (1, \sqrt{2}x_1', \sqrt{2}x_2', x_1^{'2}, x_2^{'2}, \sqrt{2}x_1'x_2')\\
+	&= 1 + 2x_1x_1' + 2x_2x_2' + x_1^2x_1^{'2}+x_2^2x_2^{'2} + 2x_1x_2x_1'x_2' \label{pol_kern_expand}
+\end{align}
+Now let's think about what the computer actually has to do to compute all of these terms. We would first have to calculate each term for $\phi(\B{x})$ and $\phi(\B{x}')$, which requires \emph{six} multiplications. Next we would have to compute the dot product of $\phi(\B{x}')\cdot\phi(\B{x}')$, which requires another \emph{six} multiplications followed by \emph{five} additions. In total, for just increasing the dimensionality of the data by one degree, we have 12 multiplication and 5 addition operations involved for each set of points.
+
+However, one can identify that using the polynomial kernel definition of Equation \ref{pol_kern} for $d=2$ gives the same result
+\begin{align}
+	(1+ \B{x}\cdot \B{x}')^2 &= \Big(1+(x_1,x_2)\cdot(x_1',x_2')\Big)^2\\
+	&= \Big(1+x_1x_1'+x_2x_2'\Big)^2\\
+	&= 1 + 2x_1x_1' + 2x_2x_2' + x_1^2x_1^{'2}+x_2^2x_2^{'2} + 2x_1x_2x_1'x_2'
+\end{align}
+This final expression is \emph{exactly equivalent} to that of Equation \ref{pol_kern_expand}, however, let us think about how many operations were necessary to actually compute the numerical value. We begin with \emph{two} multiplications followed by \emph{two} additions, followed by \emph{one} multiplication. In total, by expression function this way, we get away with only \emph{three} multiplication and \emph{two} addition operations. This reduction in overhead can pay off big time, especially when expanding to even higher dimensions.
+
+\subsubsection{Radial Basis Kernel}
+The radial basis kernel is defined as 
+\begin{align}
+		K(\B{x},\B{x}') = \exp\Big(-\frac{||\B{x}-\B{x}'||^2}{2\sigma^2}\Big)
+\end{align}
+This metric is a measure of similarity, when the two vectors are identical, the kernel evaluates to 1, while if they are infinitely far apart, it evaluates to 0.
+
+
