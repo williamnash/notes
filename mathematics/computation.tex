@@ -73,7 +73,7 @@ Let us then compute this dot product for Equation \ref{pol_kern_example}
 	&\cdot (1, \sqrt{2}x_1', \sqrt{2}x_2', x_1^{'2}, x_2^{'2}, \sqrt{2}x_1'x_2')\\
 	&= 1 + 2x_1x_1' + 2x_2x_2' + x_1^2x_1^{'2}+x_2^2x_2^{'2} + 2x_1x_2x_1'x_2' \label{pol_kern_expand}
 \end{align}
-Now let's think about what the computer actually has to do to compute all of these terms. We would first have to calculate each term for $\phi(\B{x})$ and $\phi(\B{x}')$, which requires \emph{six} multiplications. Next we would have to compute the dot product of $\phi(\B{x}')\cdot\phi(\B{x}')$, which requires another \emph{six} multiplications followed by \emph{five} additions. In total, for just increasing the dimensionality of the data by one degree, we have 12 multiplication and 5 addition operations involved for each set of points.
+Now let's think about what the computer actually has to do to compute all of these terms. We would first have to calculate each term for $\phi(\B{x})$ and $\phi(\B{x}')$, which requires \emph{twelve} multiplications. Next we would have to compute the dot product of $\phi(\B{x}')\cdot\phi(\B{x}')$, which requires another \emph{six} multiplications followed by \emph{five} additions. In total, for just increasing the dimensionality of the data by one degree, we have 18 multiplication and 5 addition operations involved for each set of points.
 
 However, one can identify that using the polynomial kernel definition of Equation \ref{pol_kern} for $d=2$ gives the same result
 \begin{align}

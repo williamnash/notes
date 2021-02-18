@@ -207,7 +207,7 @@ instead of $\mathcal{L}$. This is kosher since $\ln$ is a strictly increasing fu
 -2\ln\mathcal{L} \simeq \chi^2
 \end{align}
 
-\todo{clean this}
+% TODO Maximum Likelihood Estimation
 
 This tells us that if the model had the parameter $\mu_{ML}$ the observation we made would be the most likely, out of the space of all possible $\mu$'s it could have been. To find the \textbf{confidence interval}, we use
 
@@ -231,112 +231,6 @@ An Asimov dataset is an artificial dataset such that when it is used to evaluate
 This method is used to derive the approximate Gaussian width when calculating Asymptotic formulas for limits in particle physics \cite{cowan}.
 
 
-\section{Classification}
-Classification attempts to group like items together. In machine learning, a classification model attempts to ascribe a label given a set of features (e.g. ``spam", or ``not spam").
-
-
-For classification tasks, the breakdown of how the test performs can be defined using the following quantities
-\begin{center}
- \begin{tabular}{||c c||} 
- \hline
-Name (Abbr.) & Description \\ [0.5ex] 
- \hline\hline
-Positive (P) & Number of real positive cases in the data  \\ 
- \hline
- Negative (N)& Number of real negative cases in the data  \\
- \hline
- True Positive (TP) & Number of positive cases correctly identified  \\
- \hline
-True Negative (TN) & Number of negative cases correctly identified \\
- \hline
-False Positive (FP) & Number of positive cases incorrectly identified   \\ 
- \hline
- False Negative (FN) &   Number of negative cases incorrectly identified\\
- \hline
-\end{tabular}\label{forcing}
-\end{center}
-
-\subsection{Accuracy}
-A tests accuracy tells you how often you get the right answer, i.e.
-\begin{align}
-	\textrm{Accuracy} = \frac{TP+TN}{P+N}
-\end{align} Typically accuracy is not a particularly important measure if either the negative or positive rate is very large to begin with.
-
-\subsection{Confusion Matrix} 
-To determine how strong a classifier is, a confusion matrix can be used to store all of the results.\\
-\begin{tabular}{cc|c|c|}
-\cline{3-4}
- && \multicolumn{2}{ c| }{Actual Value} \\ \cline{3-4}
- && True & False  \\ \cline{1-4}
-\multicolumn{1}{ |c  }{\multirow{2}{*}{Predicted}} &
-\multicolumn{1}{ |c| }{True} & TP & FP       \\ \cline{2-4}
-\multicolumn{1}{ |c  }{}                        &
-\multicolumn{1}{ |c| }{False} & FN & TN     \\ \cline{1-4}
-\end{tabular}
-\\
-
-From these values we can measure the \textbf{precision} and \textbf{recall} which are both standard ways of measuring a classifiers performance. Precision optimizes for TODO while recall optimizes for TODO
-
-\subsection{Logisitic Regression}
-Logistic regression is not in fact a regressions but a classification algorithm.
-
-\section{Regression}
-Regression addresses the problem of estimating relationships between dependent variables. One or more independent variables (or ``features") is used to predict a dependent variable (or ``label").
-
-\subsection{Linear Regression}\label{least-squares}
-Let's pretend we are fitting a straight line, so we have a bunch of independent variables $x_i$ and their corresponding measured values $y_i$. We pick for our model
-
-\begin{align}
-y_i = ax_i + b
-\end{align}
-
-Now the thing we want to do is minimize $\chi^2$ for the full combination of points. We do this of course, by taking a derivative to find the minimum. For simple illustrative purposes, lets take $\sigma_i$, the measurement error, to be the same for each point. For $a$ we have
-\begin{align}
-\frac{\partial \chi^2}{\partial a} = 0 &= \frac{\partial}{\partial a} \sum_i \frac{\Big(y_i - (ax_i + b)\Big)^2}{\sigma_i^2} \\
-&= - \frac{2}{\sigma^2}\sum_i \Big(y_i - (ax_i+b)\Big)x_i\\
-&= \sum_i y_i x_i - a\sum_ix_i^2 - b\sum_i x_i
-\end{align}
-Similarly, for $b$
-\begin{align}
-\frac{\partial \chi^2}{\partial b} = 0 &= -\frac{2}{\sigma^2}\sum_i \Big(y_i-(ax_i+b)\Big)\\
-&= \sum_i y_i - a \sum_i x_i - b
-\end{align}
-Now we have a set of linear equations. We can easily calculate all of the sums, since they are by definition the data we are fitting to, and after some algebra, we can solve for the $a$ and $b$ which minimize $\chi^2$.
-\begin{align}
-b &= \sum_i y_i - a \sum_i x_i\\
-\rightarrow 0 &= \sum_i y_i x_i - a\sum_ix_i^2 - \Big(\sum_i y_i - a \sum_i x_i\Big)\sum_i x_i\\
-\sum_i y_i x_i  - \sum_j y_j \sum_i x_i &= a\Big[\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2\Big]\\
-a &= \Big[\sum_i y_i x_i  - \sum_j y_j \sum_i x_i\Big] /\Big[\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2\Big] 
-\end{align}
-In a computer program, it would look like
-
-
-\lstinputlisting[language=Python]{mathematics/code/linearRegression.py}
-
-\centerline{\includegraphics[width=0.5\textwidth]{mathematics/fig/linearRegression.png}}
-
-
-\subsection{Multiple Regression}
-Multiple regression is just linear regression done for more than one feature dimension. In general the problem it solves is of the form
-\begin{align}
-	\min_w||Xw-y||^2_2
-\end{align}
-Where $w$ is the weight vector, $x$ is the feature vector (including a term for the intercept) and $y$ is the label.
-
-\subsection{Ridge Regression}
-Ridge regression is a linear regression with an added penalty term proportional to the sum of the squared weights. This effectively prevents the model from becoming heavily dependent on a single weight and therefore is helpful in situations where the feature vectors are correlated (multicollinearity). The function to minimize is 
-\begin{align}
-	\min_w||Xw-y||^2_2 + \alpha||w||^2_2
-\end{align}
-
-\subsection{Lasso}
-The LASSO (Least Absolute Shrinkage and Selection Operator) is designed to minimize the number of features the model is dependent on. The function it minimizes is 
-
-\begin{align}
-	\min_w\frac{1}{2n_{\textrm{samples}}}||Xw-y||^2_2 + \alpha||w||_1
-\end{align}
-
-Lasso can set weights to 0, while Ridge regression cannot.
 
 \section{Hypothesis Testing}
 

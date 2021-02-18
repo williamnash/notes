@@ -3,14 +3,23 @@
 
 The general idea behind machine learning is this: Given a set of data, a machine creates a model that can be used to predict relationships between the various datum. The reasons for using a machine is generally because the size of the dataset, as well as the necessary computational requirements needed to make these models, is well beyond what is reasonable for a human to do alone.
 
-Most of machine learning can be broken up into three general subdisciplines:
+Machine learning breaks down each element of a dataset into a set of \textbf{features} which describe it and differentiate it from the other elements. The resultant model is a collection of \textbf{parameters} that describe the relationship between elements of the dataset. \textbf{Hyperparameters} are parameters used in running the algorithm which arrives at the aforementioned parameters, and are not considered parameters of the model themselves.
+
+Most of machine learning can be broken up into three general sub-disciplines:
 \begin{itemize}
-	\item Supervised Learning:
-	\item Unsupervised Learning:
-	\item Reinforcement Learning:
+	\item \B{Supervised Learning}: takes a set of labelled feature vectors and builds a model to predict unlabelled data. Simple linear regression is an example of supervised learning.
+	\item \B{Unsupervised Learning}: takes a set of unlabelled feature vectors. This type of learning is useful for things like clustering, here the model looks to pair like-with-like, or dimensionality reduction, where the model translates a large set of features into a smaller set.
+	\item \B{Reinforcement Learning}: uses a set of feature vectors to approximate a state which it can interact with through a set of actions, each of which are chosen to try to maximize some numerical reward signal. 
 \end{itemize}
 
-Machine learning breaks down each element of a dataset into a set of \textbf{features} which describe it and differentiate it from the other elements. The resultant model is a collection of \textbf{parameters} that describe the relationship between elements of the dataset. \textbf{Hyperparameters} are parameters used in running the algorithm which arrives at the aforementioned parameters, and are not considered parameters of the model themselves.
+
+
+In general, any machine learning algorithm can be broken down into three components \cite{burkov}
+\begin{itemize}
+    \item A loss function (e.g. least squares)
+    \item An optimization criterion based on the loss function (e.g. the loss landscape is convex); and
+    \item An optimization routine leveraging training data to find a solution to the optimization criterion (e.g. gradient descent)
+\end{itemize}
 
 \subsection{Model-Based vs Instance-Based Learning}
 Model-based learning involves finding optimal parameters and uses a training dataset for its construction. An example is Support Vector Machines (Section \ref{sub:svm}).
@@ -20,12 +29,8 @@ Instance-based learning involves using the whole dataset as the model. An exampl
 \subsection{Shallow vs Deep Learning}
 Shallow learning involves building a model that trains on the features and measures the changes in the model by how well it matched the corresponding label. Deep learning is used in neural network architectures, and involves models that can learn features of features. Each layer in a neural network is in some sense a "shallow learning" layer.
 
-\section{Supervised Learning}
-Supervised learning takes a set of labelled feature vectors and builds a model to predict unlabelled data. 
 
-
-
-\subsection{Support Vector Machines}\label{sub:svm}
+\section{Support Vector Machines}\label{sub:svm}
 Support Vector Machines (SVM) classify data-points by drawing boundaries between them. These boundaries are called ``Hyperplanes" and slice the points in their feature vectors. The technical definition of a hyperplane is any flat affine subspace. The data points “support" the each of these planes. i.e those closest to each plane are optimized around. In the case of two classes $y_i \in {-1,1}$. The ideal plane is defined as
 \begin{align}
 		\B{wx}_i-b =0
@@ -56,7 +61,7 @@ SVMs that minimize this function are said to have \emph{hard-margin}s, since poi
 \label{fig:svm}
 \end{figure}
 
-\subsubsection{Hinge Loss}
+\subsection{Hinge Loss}
 
 If the classes are not cleanly distinguishable, which can happen if there is noise in the data, or the classes aren't entirely separable, one can look to minimize the \textbf{hinge loss function}, defined as
 \begin{align}\label{hinge}
@@ -94,13 +99,235 @@ TODO
 TODO
 
 
-\section{Unsupervised Learning}
-In unsupervised learning, the elements of the dataset are unlabelled, containing only feature vectors. This type of learning is useful for things like \textbf{clustering}, where the model looks to pair like-with-like, or \textbf{dimensionality reduction}, where the model translates a large set of features into a smaller set.
+\section{Training Models}
 
 
-\subsection{Dimensionality Reduction}\label{dim_red}
+\subsection{Linear Regression}
+Linear regression is a model which presumes a linear relationship between the feature vectors $\B{x}$ and their corresponding label $y$. The linear model is defined as
+
+\begin{align}
+    y_i = \B{wx}_i +b
+\end{align}
+Where the index $i\in(1,N)$ denotes the specific data point of the $N$ you are considering. The typical loss function that is used is \B{sum of squared error} (SSE) which is written as
+\begin{align}
+    	\min_\B{w}\sum_{i=1}^N\Big(\B{wx}_i +b - y_i\Big)^2
+\end{align}
+
+Which is read as a minimization of the expression with respect to the weights $\B{w}$. 
+
+
+\subsubsection{Exact Solution}\label{lin-reg-exact}
+The sum of squared error (SSE) loss function is preferred in part because it is differentiable, which allows for an exact solution. We can take as an example a dataset with $i\in(1,N)$ which includes one feature $x_i$ and its corresponding label $y_i$. This linear model is defined as
+
+\begin{align}
+y_i = wx_i + b
+\end{align}
+
+Now we wish to minimize our loss function. We can then recall that a function is at its extremum (here minimum) when the derivative is zero. Therefore we take the derivative with respect to both of the weights. For $w$ we have
+\begin{align}
+\frac{\partial \textrm{SSE}}{\partial w} = 0 &= \frac{\partial}{\partial w} \sum_i \Big(wx_i + b - y_i \Big)^2 \\
+&= 2\sum_i \Big(wx_i + b - y_i\Big)x_i\\
+&= w\sum_ix_i^2 + b\sum_i x_i -\sum_i y_i x_i 
+\end{align}
+Similarly, for $b$
+\begin{align}
+\frac{\partial \textrm{SSE}}{\partial b} = 0 &= 2\sum_i \Big(wx_i + b - y_i\Big)\\
+&= bN + w \sum_i x_i - \sum_i y_i 
+\end{align}
+Now we have a set of linear equations. We can easily calculate all of the sums, since they are by definition the data we are fitting to, and after some algebra, we can solve for the $w$ and $b$ which minimize the sum of squares.
+\begin{align}
+w = \frac{N\sum_i y_i x_i  - \sum_j y_j \sum_i x_i }{N\sum_i x_i^2 -\Big(\sum_i x_i\Big)^2}
+&&b = \frac{\sum_i y_i - w \sum_i x_i}{N}\\
+\end{align}
+In actual code, we can implement it as follows
+
+
+\lstinputlisting[language=Python]{mathematics/code/linearRegressionExact.py}
+
+\centerline{\includegraphics[width=0.7\textwidth]{mathematics/fig/linearRegressionExact.png}}
+
+\subsubsection{$\boldsymbol{\chi}^2$ Minimization}
+If each measurement is not made equally well for all points in the data set, the loss function can be adjusted to accommodate each individual measurements uncertainty. The $\chi^2$ of the fit is then used as the loss function, defined as
+ \begin{align}
+    	\chi^2 = \sum_{i=1}^N\Big(\frac{\B{wx}_i +b - y_i}{\sigma_i}\Big)^2
+\end{align}
+Where $\sigma_i$ is the uncertainty on the measured value $y_i$. An optimizer then looks to minimize this quantity
+\begin{align}
+    \min_\B{w}  \sum_{i=1}^N\Big(\frac{\B{wx}_i +b - y_i}{\sigma_i}\Big)^2
+\end{align}
+
+
+\subsubsection{Ridge Regression}
+Ridge regression is a linear regression with an added penalty term proportional to the sum of the squared weights. If we have $M$ total features, then we can express each break up our weight vector $\B{w}$ into individual components as  $w_j$ for $j\in (1,M)$. For simplicity we will also take $w_0 = b$. Ridge regression therefore use the loss function defined below
+\begin{align}
+    	\min_\B{w} \Big[\alpha\sum_{j=0}^Mw_j^2 + \sum_{i=1}^N\Big(\B{wx}_i +b - y_i\Big)^2 \Big]
+\end{align}
+Ridge regression looks to prevent any one weight $w_j$ from becoming significantly larger than the rest due to the squaring. This effectively prevents the model from becoming heavily dependent on any single weight which is helpful in situations where the feature vectors are correlated (multicollinearity). 
+
+\subsubsection{Lasso}
+The LASSO (Least Absolute Shrinkage and Selection Operator) is defined as 
+
+\begin{align}
+    	\min_\B{w} \Big[\alpha\sum_{j=0}^M|w_j| + \sum_{i=1}^N\Big(\B{wx}_i +b - y_i\Big)^2 \Big]
+    	\end{align}
+    	
+With $w_j$ in our $\B{w}$ vector for $j\in (1,M)$ and $w_0 = b$. It is similar in appearance to Ridge regression, although each weight is no longer squared. This  allows for the individual weights to go to zero (unlike Ridge Regression) and effectively selects for the smallest number of applicable weights. This is helpful if we want to reduce the number of parameters our model is dependent on.
+
+
+\subsection{Gradient Descent}\label{grad-descent}
+
+The gradient is the localized slope of a function. Gradient descent is a means of finding a minimum (typically of a loss function) by following this slope towards a minimum. The crux of gradient descent goes like this
+\begin{enumerate}
+    \item Initialize each of our weights $w_j$
+    \item Begin a new \B{epoch} for which we use the entire dataset to calculate our loss function $l$ using our current weights $w_j$
+    \begin{itemize}
+    \item If this loss is below a threshold, we're done, otherwise we continue    
+    \end{itemize}
+    \item Calculate the gradient of our loss function 
+    \begin{align}
+        \frac{\partial l}{\partial w_j}
+    \end{align}
+    \item Move the weights in a direction such that the loss function should shrink by an amount proportional to the \B{learning rate} $\alpha$
+    \begin{align}
+        w_j \leftarrow w_j - \alpha\frac{\partial l}{\partial w_j}
+    \end{align}
+    \item Loop back to Step 2.
+\end{enumerate}
+
+\subsubsection{Linear Regression with Gradient Descent}
+
+ As an example, we have already calculated the gradient of our linear regression model in Section \ref{lin-reg-exact}. The gradient of the sum of squared errors is given by
+\begin{align}
+    \frac{\partial \textrm{SSE}}{\partial w} &= 2\Big(w\sum_ix_i^2 + b\sum_i x_i -\sum_i y_i x_i\Big)\label{grad_sse_w}\\
+    \frac{\partial \textrm{SSE}}{\partial b} &= 2\Big(bN + w \sum_i x_i - \sum_i y_i \Big)\label{grad_sse_b}
+\end{align}
+Although we were able to solve this method exactly with some algebra before, it is instructive to show how gradient descent can be used on the same model, since in general it can be used in cases were we \emph{do not} have an exact solution.
+
+Below shows the implementation of the algorithm described in Section \ref{grad-descent} for the same set of data as was used in the exact case.
+
+\lstinputlisting[language=Python]{mathematics/code/linearRegressionGradient.py}
+
+\centerline{\includegraphics[width=0.7\textwidth]{mathematics/fig/linearRegressionGradient.png}}
+
+
+
+\subsubsection{Minibatch and Stochastic Gradient Descent}
+
+Gradient descent is powerful in its generality but can be rather slow since it requires looping over the entire dataset once for each epoch. This issue can be mitigated using one (or both) of the methods below
+\begin{itemize}
+    \item \B{Minibatch Gradient Descent}: Chops up the dataset into shuffled ``minibatches" for which gradients are calculated and the weights are adjusted within each epoch
+    \item \B{Stochastic Gradient Descent}: Adjusts the weights based off of \emph{every data point} within each epoch. It is particularly useful when there is redundancy in the data and the gradient is stable.
+\end{itemize}
+
+
+\subsection{Newton's Method}
+Newton's method uses the second order Taylor expansion of the function to estimate the extremum in an optimization problem. This is contrasted with gradient descent which uses only the first order. Given a point $x_k$ where the optimizer is currently while looking for the extremum of $f(x)$, we have that
+\begin{align}
+	f(x_k+t)\approx f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2
+\end{align}
+If the second derivative $f''(x_k)$ is positive, the extremum of $f(x_k+t)$ will be when $f'(x_k+t) = d/dt f(x_k+t) = 0$ since $x=x_k+t$. This can be written as 
+\begin{align}
+	\frac{d}{dt}\Big( f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2\Big) = f'(x_k)+f''(x_k)t = 0 
+\end{align}
+Therefore under these conditions, $t = -f'(x_k)/f''(x_k)$ and the we assign the best estimate for the extremum of the function as
+\begin{align}
+	f(x_{k+1}) = f(x_k)-\frac{f'(x_k)}{f''(x_k)}
+\end{align} 
+
+
+\subsection{$k$-Nearest Neighbors}\label{sub:knn}
+One of the simpler machine learning algorithms, $k$-nearest neighbors (KNN) takes in a new event (with it's own set of features) and finds the  $k$ events in the training data which it is closest to. This distance definition is adjustable. Once all the neighbors have been found, each votes on how to classify the new event.
+
+This distance metric generally scales exponentially when new dimension are introduced, so it is advised to run dimensionality reduction (Section \ref{dim_red}) if using KNN for a high dimensional dataset.
+\subsection{Naive Bayes}
+When trying to deduce the probability of something dependent on many features $X_i$ conditional on something $S$, the naive way to do it is to assume they are all independent of each other
+\begin{align}\label{naive_bayes}
+	P(X_1,X_2,\dots,X_n|S) = P(X_1|S)P(X_2|S)\dots P(X_n|S)
+\end{align}
+This is the assumption made in Naive Bayes, for which computing the right side of Equation \ref{naive_bayes} is much easier than when one would need to look out for correlations.
+
+When estimating $P(X_i|S)$ it is typical to use a \textit{pseudocount} for it's estimate so we don't assign 0 or 1 to the probability and bias our results. According to \cite{sutton} this is
+\begin{align}
+	P(X_i|S) = (k+\textrm{number~of~} S's\textrm{~with~} X_i's) / (2k+\textrm{number~of~} S \textrm{~total})
+\end{align}
+
+\subsection{Cross-Validation}
+TODO
+
+%\subsection{Learning Rate}
+%TODO
+%
+%\subsection{Step Size}
+%When iterating through a machine learning algorithm, the "step-size" determines how quickly you change your state from where you start from. The way of doing this is somewhat of an art, with a multitude of options such as 
+%\begin{itemize}
+%	\item Constant step size
+%	\item Step size which decreases as you make more iterations
+%\end{itemize}
+%\todo{ Add examples in \cite{sutton} with Reinforcement learning step sizes.}
+
+%\subsection{Loss Functions}
+%TODO
+%\subsubsection{Sum of Squared Residuals}
+%TODO
+
+\subsection{Ant Colony Optimization}
+TODO
+
+\section{Classification}
+Classification attempts to group like items together. In machine learning, a classification model attempts to ascribe a label given a set of features (e.g. ``spam", or ``not spam").
+
+
+For classification tasks, the breakdown of how the test performs can be defined using the following quantities
+\begin{center}
+ \begin{tabular}{||c c||} 
+ \hline
+Name (Abbr.) & Description \\ [0.5ex] 
+ \hline\hline
+Positive (P) & Number of real positive cases in the data  \\ 
+ \hline
+ Negative (N)& Number of real negative cases in the data  \\
+ \hline
+ True Positive (TP) & Number of positive cases correctly identified  \\
+ \hline
+True Negative (TN) & Number of negative cases correctly identified \\
+ \hline
+False Positive (FP) & Number of positive cases incorrectly identified   \\ 
+ \hline
+ False Negative (FN) &   Number of negative cases incorrectly identified\\
+ \hline
+\end{tabular}\label{forcing}
+\end{center}
+
+\subsection{Accuracy}
+A tests accuracy tells you how often you get the right answer, i.e.
+\begin{align}
+	\textrm{Accuracy} = \frac{TP+TN}{P+N}
+\end{align} Typically accuracy is not a particularly important measure if either the negative or positive rate is very large to begin with.
+
+\subsection{Confusion Matrix} 
+To determine how strong a classifier is, a confusion matrix can be used to store all of the results.\\
+\begin{tabular}{cc|c|c|}
+\cline{3-4}
+ && \multicolumn{2}{ c| }{Actual Value} \\ \cline{3-4}
+ && True & False  \\ \cline{1-4}
+\multicolumn{1}{ |c  }{\multirow{2}{*}{Predicted}} &
+\multicolumn{1}{ |c| }{True} & TP & FP       \\ \cline{2-4}
+\multicolumn{1}{ |c  }{}                        &
+\multicolumn{1}{ |c| }{False} & FN & TN     \\ \cline{1-4}
+\end{tabular}
+\\
+
+From these values we can measure the \textbf{precision} and \textbf{recall} which are both standard ways of measuring a classifiers performance. Precision optimizes for TODO while recall optimizes for TODO
+
+\subsection{Logisitic Regression}
+Logistic regression is not in fact a regressions but a classification algorithm.
+
+\subsection{ROC Curve}
+
+
+\section{Dimensionality Reduction}\label{dim_red}
 When fitting to a high dimensional space, the model can become overfit and/or the correlation within the feature vectors can be overlooked. In order to reduce the feature vectors into a space which has more discriminating power, it is helpful to reduce the total dimensions of the problem at hand.
-\subsubsection{Principal Component Analysis (PCA)}
+\subsection{Principal Component Analysis (PCA)}
 Principal Component Analysis (PCA) turns our feature space into ``Principal Components", eigenvectors of our individual features. The analysis finds the dimension in the data that contains the most variance, thereby having the most discriminating power between events.
 
 We first begin with our feature vectors
@@ -172,114 +399,6 @@ One can recognize now that in our new coordinate system, we have a new set of va
 \end{align}
 With $i=1,\dots,l$.
 
-
-\section{Reinforced Learning}
-Reinforced learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
-
-
-\subsection{$k$-armed Bandits}
-Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
-
-Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
-
-Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
-
-
-\subsubsection{Upper-Confidence-Bound Action Selection}
-
-One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
-\begin{align}
-	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
-\end{align}
-Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
-
-Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
-
-
-\subsection{Markov Decision Processes}
-Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
-\begin{enumerate}
-	\item Actions $A$
-	\item States $S$
-	\item Rewards $R$
-\end{enumerate}
-At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.
-
-
-
-\section{Optimization}
-
-\subsection{Metrics}
-Different metrics are used to gauge the performance of a machine learning model
-
-BLEU: bilingual evaluation understudy (used for evaluating language translation tasks).
-
-\subsection{Cross-Validation}
-TODO
-
-\subsection{Gradient Descent}
-Effectively a least-squares minimization technique (Section \ref{least-squares}) used to fit parametrized models to data. The algorithm uses an $n$-dimensional gradient which it recomputes given a set of parameters, which guides it towards a minimum of some kind (typically an error). 
-
-In general, for large datasets, Gradient descent is slow.
-
-TODO add linear fit gradient descent model.
-
-\subsubsection{Minibatch Gradient Descent}
-Cuts the data into "batches" for which the gradient can be computed much more easily than if one were to do the entire dataset.
-
-\subsubsection{Stochastic Gradient Descent}
-Among our entire dataset, a random selection of events are selected, for which gradient descent has its machinery run on. It is particularly good when there is redundancy in the data.
-
-\subsection{Newton's Method}
-Newton's method uses the second order Taylor expansion of the function to estimate the extremum in an optimization problem. This is contrasted with gradient descent which uses only the first order. Given a point $x_k$ where the optimizer is currently while looking for the extremum of $f(x)$, we have that
-\begin{align}
-	f(x_k+t)\approx f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2
-\end{align}
-If the second derivative $f''(x_k)$ is positive, the extremum of $f(x_k+t)$ will be when $f'(x_k+t) = d/dt f(x_k+t) = 0$ since $x=x_k+t$. This can be written as 
-\begin{align}
-	\frac{d}{dt}\Big( f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2\Big) = f'(x_k)+f''(x_k)t = 0 
-\end{align}
-Therefore under these conditions, $t = -f'(x_k)/f''(x_k)$ and the we assign the best estimate for the extremum of the function as
-\begin{align}
-	f(x_{k+1}) = f(x_k)-\frac{f'(x_k)}{f''(x_k)}
-\end{align} 
-
-
-\subsection{$k$-Nearest Neighbors}\label{sub:knn}
-One of the simpler machine learning algorithms, $k$-nearest neighbors (KNN) takes in a new event (with it's own set of features) and finds the  $k$ events in the training data which it is closest to. This distance definition is adjustable. Once all the neighbors have been found, each votes on how to classify the new event.
-
-This distance metric generally scales exponentially when new dimension are introduced, so it is advised to run dimensionality reduction (Section \ref{dim_red}) if using KNN for a high dimensional dataset.
-\subsection{Naive Bayes}
-When trying to deduce the probability of something dependent on many features $X_i$ conditional on something $S$, the naive way to do it is to assume they are all independent of each other
-\begin{align}\label{naive_bayes}
-	P(X_1,X_2,\dots,X_n|S) = P(X_1|S)P(X_2|S)\dots P(X_n|S)
-\end{align}
-This is the assumption made in Naive Bayes, for which computing the right side of Equation \ref{naive_bayes} is much easier than when one would need to look out for correlations.
-
-When estimating $P(X_i|S)$ it is typical to use a \textit{pseudocount} for it's estimate so we don't assign 0 or 1 to the probability and bias our results. According to \cite{sutton} this is
-\begin{align}
-	P(X_i|S) = (k+\textrm{number~of~} S's\textrm{~with~} X_i's) / (2k+\textrm{number~of~} S \textrm{~total})
-\end{align}
-
-
-\subsection{Learning Rate}
-TODO
-
-\subsection{Step Size}
-When iterating through a machine learning algorithm, the "step-size" determines how quickly you change your state from where you start from. The way of doing this is somewhat of an art, with a multitude of options such as 
-\begin{itemize}
-	\item Constant step size
-	\item Step size which decreases as you make more iterations
-\end{itemize}
-\todo{ Add examples in \cite{sutton} with Reinforcement learning step sizes.}
-
-\subsection{Loss Functions}
-TODO
-\subsubsection{Sum of Squared Residuals}
-TODO
-
-\subsection{Ant Colony Optimization}
-TODO
 
 \section{Neural Networks}
 Neural networks are composed of perceptrons which approximates a single neuron. The network itself is composed of layers of these perceptrons which each take a set number of inputs, do a calculation based off of the inputs they are given, then ship out the output which is then used by other perceptrons.
@@ -384,7 +503,7 @@ TODO
 TODO
 
 \subsection{Long-Short Term Memory (LSTM) Networks}
-TODO
+% TODO Long-Short Term Memory
 
 \subsection{Encoders and Decoders}
 Take two different sequences of data, for instance an English sentence composed of words $x_i$ with $i\in (1,N)$ and it's corresponding translation into French words $y_j$ with $j\in(1,M)$.
@@ -404,4 +523,47 @@ From Wikipedia: ``In the context of neural networks, attention is a technique th
 TODO
 
 \url{https://jalammar.github.io/illustrated-transformer/}
+
+
+\section{Reinforcement Learning}
+Reinforcement learning aims to try to maximize some numerical reward signal. The most important distinguishing feature is that it uses training information to evaluate actions taken rather than instruct which action to take \cite{sutton}.
+
+
+\subsection{$k$-armed Bandits}
+Slot machines are sometimes called "one-armed bandits" for the single lever they have together with their ability to steal money from peoples pockets. The idea behind $k$-armed bandits is to imagine instead of a single slot machine, you have $k$ of them. Each machine has a probability distribution of for hitting the "jackpot", and your job is to find out which one gives you the highest payoff.
+
+Searching for the highest value machine involves a trade-off between $exploiting$ the information you have now and $exploring$ the space to look for something better you haven't found yet.
+
+Greedy algorithms, in this case, use the lever which currently has the highest estimated chance of success. $\epsilon$-greedy algorithms do the same thing, but one in $\epsilon$ times, will select one of the levers at random instead to explore.
+
+
+\subsubsection{Upper-Confidence-Bound Action Selection}
+
+One can also use confidence bounds on the unknown probabilities to determine which lever to pull next. Because we don't want to miss out on a lever which could potentially be higher than the one we currently see is highest, we use the upper-confidence-bound when picking our current highest value estimate. To find the relevant confidence interval, we start with Hoeffding's Inequality (Section \ref{hoeffding}), which eventually tells us
+\begin{align}
+	A_t = \textrm{argmax}\Big[Q_t(a) + c\sqrt{\frac{\ln t}{N_t(a)}}\Big]
+\end{align}
+Where $A_t$ is the next action taken at time $t$ (i.e. iterations through the algorithm). $Q_t(a)$ is the expected value of action $a$ at time $t$. $c$ is the confidence level. $N_t(a)$ is the amount of times $a$ has been tried.
+
+Overall, this tells us if an action $a$ is tried many times, $N_t(a)$ gets larger and the bound shrinks. Meanwhile, as time goes on, the bound itself grows to represent uncertainty in the system itself as to if it changes with time.
+
+
+\subsection{Markov Decision Processes}
+Markov Decision Processes (MDP) concerns using probability to optimize movement between "states". The framework proposes that the learning problem can be broken down into three signals that are passed back and forth: 
+\begin{enumerate}
+	\item Actions $A$
+	\item States $S$
+	\item Rewards $R$
+\end{enumerate}
+At present, how to represent states and actions is more of an art than a science \cite{sutton}. Rewards however are simple single numbers.
+
+
+\section{Modern Developments}
+The machine learning field is quickly evolving with lots of terminology that is easy to forget. Here is a collection of terms and ideas on the forefront of the field.
+
+
+\subsection{Metrics}
+Different metrics are used to gauge the performance of a machine learning model
+
+BLEU: bilingual evaluation understudy (used for evaluating language translation tasks).
 
