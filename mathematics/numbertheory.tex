@@ -218,24 +218,5 @@ In summary:
 	\item Gaussian is limit of binomial for large $\mu=np$
 \end{itemize}
 
-\subsection{Softmax Distribution}
-Identical to the Boltzmann distribution of Physics.
 
-TODO
-
-\subsection{Logistic Function}\label{logistic_function}
-The standard logisitic function, or \B{sigmoid function} spans $(0,1)$ increasing monotonically with its argument.
-\begin{align}
-	f(x) = \frac{1}{1+e^{-x}}
-\end{align}
-This distribution is identical to the Fermi-Dirac distribution from Physics which describes the average number of fermions that occupy a given energy state. In machine learning, this function is typically used in classification algorithms and is interpreted as a probability. One uses
-\begin{align}
-	f_{\mathbf{w},b}(\mathbf{x}) = \frac{1}{1+e^{-(\mathbf{wx} +b)}}
-\end{align}
-Where $\mathbf{w}$ the weight vector and $b$ the offset are fit to. Recently, the sigmoid function has fallen out of favor for a couple of reasons\cite{grus}:
-\begin{enumerate}
-	\item $\texttt{sigmoid(0)} = 1/2$, which means a neuron with input sum 0 would have a positive output
-	\item The gradient for very large and very small values is close to zero, which leads to weights to getting stuck
-\end{enumerate}
-Now using $\texttt{tanh}$ is a popular alternative.
 
