@@ -228,7 +228,7 @@ An Asimov dataset is an artificial dataset such that when it is used to evaluate
 	\item $\hat{\mu}$: Best estimate on the parameter of interest $\mu$
 	\item $\mu'$: Assumed true mean of the Gaussian used in Asymptotic formula approximations
 \end{itemize}
-This method is used to derive the approximate Gaussian width when calculating Asymptotic formulas for limits in particle physics \cite{cowan}.
+This method is used to derive the approximate Gaussian width when calculating Asymptotic formulas for limits in particle physics \cite{cowan}. It was named after author, Isaac Asimov, whose 1955 short story, Franchise, envisaged the 2008 US Presidential Election decided by one voter representative of the entire electorate.
 
 
 
@@ -250,6 +250,33 @@ See book \cite{grus}
 
 \subsection{F-Test}
 TODO
+
+\section{Kalman Filter}
+The Kalman filter\cite{fruwirth} uses a series of measurements taken in a time series to make an estimate of the underlying parameters. It works as an iterative $\chi^2$ method, and is useful when there is noise introduced between measurements.
+
+Let us assume the state vector of interest is $\textbf{x}$. If we assume the evolution of the state vector is linear, we have
+\begin{align}
+    \textbf{x}_k = \textbf{F}_{k-1}\textbf{x}_{k-1} + w_{k-1}
+\end{align}
+Where $k$ is the current state, $w$ is random noise that is introduced, and $\textbf{F}$ is how the state vector propagates itself (here it is assumed to be linear). Measurements $\textbf{m}$ in each detector $k$ can be written as
+\begin{align}
+    \textbf{m}_k = \textbf{H}_k\textbf{x}_k + \epsilon_k
+\end{align}
+We assume both $w_k$ and $\epsilon_k$ are independent and have a mean of zero. The Kalman algorithm performs three different analyses:
+\begin{enumerate}
+    \item \textbf{Filtering}: estimation of present state vector based off of all previous measurements.
+    \item \textbf{Prediction}: estimation of future state vector.
+    \item \textbf{Smoothing}: estimation of the state vector at some time in the past using all information known in the present.
+\end{enumerate}
+The Kalman filter minimizes the mean squared error and is in that sense the optimum solution to these problems. We can denote our estimate $\hat{\textbf{x}}_k^i$ for each of these three cases:
+\begin{itemize}
+    \item $i < k$: prediction, since we are using fewer points than the state we are looking at $k$
+    \item $i=k$: filtering, since we are using all previous states and the measurement at $k$ itself
+    \item $i > k$: smoothing, since we already had a measurement at this point, but used additional later values to get a better estimate
+\end{itemize}
+One can then define the covariance matrix as the difference between the ...
+
+
 
 \section{Bootstrapping}
 TODO

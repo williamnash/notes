@@ -21,6 +21,8 @@ In general, any machine learning algorithm can be broken down into three compone
     \item An optimization routine leveraging training data to find a solution to the optimization criterion (e.g. gradient descent)
 \end{itemize}
 
+A \textbf{metric} is a function that measures the quality of the model's prediction (e.g. accuracy), whereas a \textbf{loss function} is what is used by the training system to update its weights automatically (e.g. SSE). Metrics are primarily for human consumption, at the end of training cycles.
+
 \subsection{Hyperparameters}
 
 Hyperparameters are not optimized via the machine learning algorithm itself and instead are configured by the data analyst. One method to find a good set is \B{grid search} which combinatorically scans over each parameter (typically in log scale). This of course doesn't work too well when the number of hyperparameters in your model grows. 
@@ -94,12 +96,17 @@ This tells us roughly how mixed up our dataset is. If the training data has two 
 
 There are a number of algorithms that that recursively split the dataset into those with smaller entropy i.e. $D\rightarrow D_1, D_2$. After doing this the effective entropy among the two independent datasets can be remeasured and compared with that before the split. This can then continue until a number of conditions are met such as you have only one kind of label, or there are no more splits that could further reduce the entropy.
 
-\subsection{Boosted Decision Trees}
-TODO
-\subsection{Random Forests}
-TODO
-\subsection{Bootstrap Aggregation}
-TODO
+
+\subsection{Ensemble Learning}
+
+One method of training a machine learning model is to train many low-accuracy models at once and combining their predictions. This paradigm is known as \textbf{ensemble learning}. Overall this collective of models should then give a high-accuracy \textbf{meta-model}. This methodology is preferred because each of the individual models are simple \textbf{weak learner} models which have their votes combined using a weighted average method.
+
+\textbf{Boosting} is the general procedure of iteratively adding together weak learners to create a strong one. Essentially one weak-learner is trained and the next one begins, although the weights assigned to previously misclassified data are increased while those assigned to well-classified data are decreased.
+
+Bootstrap aggregating or \textbf{bagging} creates multiple datasets on which a weak learner can be trained. Generally this is done \emph{with} replacement. 
+
+In the case of decision trees \textbf{random forests} use this technique. For a tree used in a random forest, when a split would happen, instead of splitting on the the best feature, instead a random subset of all the features is chosen and the best feature among them is chosen to split on. This results in a collection of trees that each look \emph{different} from each other and reduces the correlation that the trees would have if each were just to train the same way. This prevents the model from overfitting the data.
+
 
 
 \section{Training Models}
@@ -167,7 +174,7 @@ Ridge regression is a linear regression with an added penalty term proportional 
 \end{align}
 Ridge regression looks to prevent any one weight $w_j$ from becoming significantly larger than the rest due to the squaring. This effectively prevents the model from becoming heavily dependent on any single weight which is helpful in situations where the feature vectors are correlated (multicollinearity). 
 
-Ridge regression is also preferred in some cases due to its differentiability, which allows it to be optimized using gradient descent.
+Ridge regression is also preferred in some cases due to its differentiability, which allows it to be optimized using gradient descent. Ridge regression is sometimes called L2 regularization, since it is regularization associated with the square.
 
 \subsubsection{Lasso}
 The LASSO (Least Absolute Shrinkage and Selection Operator) is defined as 
@@ -176,7 +183,7 @@ The LASSO (Least Absolute Shrinkage and Selection Operator) is defined as
     	\min_\B{w} \Big[\alpha\sum_{j=0}^M|w_j| + \sum_{i=1}^N\Big(\B{wx}_i +b - y_i\Big)^2 \Big]
     	\end{align}
     	
-With $w_j$ in our $\B{w}$ vector for $j\in (1,M)$ and $w_0 = b$. It is similar in appearance to Ridge regression, although each weight is no longer squared. This  allows for the individual weights to go to zero (unlike Ridge Regression) and effectively selects for the smallest number of applicable weights. This is helpful if we want to reduce the number of parameters our model is dependent on.
+With $w_j$ in our $\B{w}$ vector for $j\in (1,M)$ and $w_0 = b$. It is similar in appearance to Ridge regression, although each weight is no longer squared. This  allows for the individual weights to go to zero (unlike Ridge Regression) and effectively selects for the smallest number of applicable weights. This is helpful if we want to reduce the number of parameters our model is dependent on. Lasso regression is sometimes called L1 regularization, since it is regularization associated with the linear term.
 
 
 \subsection{Gradient Descent}\label{grad-descent}
@@ -225,6 +232,17 @@ Gradient descent is powerful in its generality but can be rather slow since it r
 \end{itemize}
 
 
+\subsubsection{Gradient Boosting}
+Boosting involves using many simple, weak-learner, models together to obtain a strong-learner when they are combined. Gradient boosting involves refitting the residual of the last weak-learner trained. For instance lets start with a simple regression model
+\begin{align}
+    f = f_0(\textbf{x}) \equiv \frac{1}{N}\sum_{i=1}^N y_i
+\end{align}
+The first weak learner would output this value. Then the residuals of this model are calculated
+\begin{align}
+    \hat{y}_i \leftarrow y_i - f(\textbf{x}_i)
+\end{align}
+The subsequent weak-learner $f_1$ is then trained on these values and the overall model is updated to $f \equiv f_0 + \alpha f_1$ where $\alpha$ is a hyperparameter. This effectively calculates a Taylor series expansion when all the weak-learners are put together.
+
 \subsection{Newton's Method}
 Newton's method uses the second order Taylor expansion of the function to estimate the extremum in an optimization problem. This is contrasted with gradient descent which uses only the first order. Given a point $x_k$ where the optimizer is currently while looking for the extremum of $f(x)$, we have that
 \begin{align}
@@ -268,28 +286,11 @@ Cross-validation is helpful in cases where you do not have enough data to split 
 \end{enumerate}
 Grid search and cross-validation are sometimes used together to find the best values of hyperparameters for a given model.
 
-%\subsection{Learning Rate}
-%TODO
-%
-%\subsection{Step Size}
-%When iterating through a machine learning algorithm, the "step-size" determines how quickly you change your state from where you start from. The way of doing this is somewhat of an art, with a multitude of options such as 
-%\begin{itemize}
-%	\item Constant step size
-%	\item Step size which decreases as you make more iterations
-%\end{itemize}
-%\todo{ Add examples in \cite{sutton} with Reinforcement learning step sizes.}
-
-%\subsection{Loss Functions}
-%TODO
-%\subsubsection{Sum of Squared Residuals}
-%TODO
-
 \subsection{Ant Colony Optimization}
 TODO
 
 \subsection{Dealing with Missing Features}
 If the dataset you have contains entries for which some of the features are missing, the easiest thing to do is remove them from the dataset and proceed with the learning algorithm. If not, one option is to use \B{data imputation} which replaces the missing value be an average value over the dataset.
-
 
 \section{Fitting Models}
 
@@ -300,9 +301,11 @@ On the other hand, a model is said to \B{overfit} the data if the model fits the
 \subsection{Regularization}
 Regularization is an umbrella term that encompasses a collection of methods that are used to decrease the complexity of models that machine learning algorithms produce.
 
+\subsubsection{Dropout}
+Dropout involves randomly selecting some units in your network to ignore in your computation when running a training example through the network. This has the benefit of making the model less dependent on any one unit.
 
-Dropout: TODO
-Batch-Normalization: TODO
+\subsubsection{Batch-Normalization}
+Normalizing the data involves scaling it to have a mean of 0 and standard deviation of 1. Batch-normalization is the process of standardizing the data between each neural network layer such that the following layer sees normalized data. This results in faster and more stable training. 
 
 \subsection{Model-Based vs Instance-Based Learning}
 Model-based learning involves finding optimal parameters and uses a training dataset for its construction. An example is Support Vector Machines (Section \ref{sub:svm}). Model-based architectures typically construct three different datasets
@@ -313,8 +316,6 @@ Model-based learning involves finding optimal parameters and uses a training dat
 \end{itemize}
 
 Instance-based learning involves using the whole dataset as the model. An example is $k$-Nearest Neighbors (Section \ref{sub:knn}).
-
-
 
 
 \section{Classification}
@@ -400,7 +401,7 @@ Different curves are compared using the area under the curve (AUC), with a highe
 \caption{ROC curve}
 \end{figure}
 
-\subsection{Logisitic Regression}
+\subsection{Logistic Regression}
 Logistic regression is not in fact a regression but a classification algorithm. The idea is to parameterize how certain you are some set of features $\B{x}$ is, or is not within a certain class (i.e. $y\in \{0,1\}$). We do this via a function which outputs a value which corresponds to which class we think it is in. In essence we need a function with the properties
 \begin{align}
     f(x)=1 &&\textrm{when}&~ x\rightarrow\infty\\
@@ -660,34 +661,6 @@ The weights are then adjusted using gradient descent with
 	\Delta w_{ij}^l = -\alpha~  \frac{\partial \mathcal{E}}{\partial w_{ij}^l}
 \end{align}
 The issue with the chain rule being applied so many times is that one can run into a \B{vanishing gradient}. Using ReLU activation functions is one method of fixing this. The problem of an  \B{exploding gradient} can be solved by regularizing the loss function (e.g. hinge or LASSO).
-%
-%\subsection{Feed Forward Networks}
-%A feed forward neural network (FFNN) only has neurons which take inputs from the previous layer and pass them to the next layer. Consider $m$ total layers and the following definitions \cite{brilliant_backpropagation}
-%\\
-%\begin{tabular}{ l c }
-%  $r_k$ & number of neurons on layer $k\in[1,m]$\\
-%  $w_{ij}^k$ & weight given to output of neuron $j$ used in neuron $i$ on layer $k$  \\
-%  $b_i^k$ & bias used in neuron $i$ on layer $k$   \\
-%  $a_i^k$ & the product sum plus bias (activation) for node $i$ on layer $k$  \\
-%  $o_i^k$ & the output of neuron $i$ on layer $k$ \\
-%  $g$ & activation function for the hidden layer neurons \\
-%  $g_o$ & activation function for the output layer neurons \\
-%\end{tabular}\\
-%\\
-%Explicitly, the activation is written as
-%\begin{align}
-%	a_i^k =b_i^k + w_{ij}^ko_j^{k-1}
-%\end{align}
-%With summation implied following Einstein notation (Section \ref{einstein_notation}) and $j\in [1,r_{k-1}]$. If we defined 
-%\begin{align}
-%	w^k_{0i}=b_i^k && o_0^{k-1}=1
-%\end{align}
-%We can simplify the sum with
-%\begin{align}\label{nn_activation}
-%	a_i^k = w_{ij}^ko_j^{k-1}
-%\end{align}
-%with $j\in [0,r_{k-1}]$.
-%
 
 \subsection{Convolutional Neural Networks}
 
@@ -742,29 +715,41 @@ To decrease the training time and the number of parameters needed in the model, 
 
 
 \subsection{Recurrent Neural Networks}
-Recurrent neural networks are used to label, classify, or generate sequences.
+Recurrent neural networks (RNNs) are used to label, classify, or generate sequences. They are typically used in text and speech processing. The distinguishing feature of a RNN is that they contain \emph{loops}. Each perceptron has its own internal state it keeps track of which persists while data passes through it. Each perceptron itself has as input:
+\begin{enumerate}
+    \item A vector of states from the previous layer $l-1$
+    \item A vector of states from the same layer $l$ at the previous time step
+\end{enumerate}
+When looking at a sentence for example, this allows for the neural network to build context as to the words around it. In practice this typically leads to a vanishing gradient problem when using either $\tanh$ or the softmax function, because the added time dependence further complicates the optimization, known as \textbf{backpropagation through time}. Typical RNNs in practice are \textbf{gated RNNs} including both  networks based on the \textbf{gated recurrent unit} (GRU) and \textbf{long short-term memory} (LSTM) networks.
 
+\subsubsection{Gated Recurrent Units (GRU)}
+The memory of a gated recurrent unit (GRU) is used to remember specific information about feature vectors seen early in the sequence. They were designed to remember which type of word goes with \emph{their} when \emph{she} was seen earlier in the sentence. 
+
+This is done using a \textbf{gate} which takes the same inputs as the perceptron itself and outputs a number close to either $0$ or $1$, typically determined by the sigmoid function. If the gate outputs a value close to $0$, the state of the perceptron remains similar to what it was during the last time step, while if it is close to $1$, it is overwritten with a new state. In our example, a relevant gate could activate as $1$ upon reading the word \emph{she} which would inform the network of the relevant gender for the rest of the sentence.
+
+This architecture works well for neural networks because the derivative of the perceptrons state generally doesn't move very much over time; typically it is a constant since the gate doesn't often allow it to change. This solves the vanishing gradient problem and is the reason for the popularity of GRUs.
+
+\subsubsection{Long-Short Term Memory (LSTM) Networks}
 TODO
-
-
-
- A convolutional neural network (CNN) is a special kind of FFNN network that significantly reduces the number of parameters in a neural network without losing quality of the model. CNNs were initially developed with image and text processing in mind.
-
 
 \subsection{Activation Functions}
 % TODO Tanh, ReLU, Sigmoid, ...
 ReLU fixes the problem of vanishing gradient
 
 
-
-
-\subsection{Long-Short Term Memory (LSTM) Networks}
-% TODO Long-Short Term Memory
-
 \subsection{Encoders and Decoders}
-Take two different sequences of data, for instance an English sentence composed of words $x_i$ with $i\in (1,N)$ and it's corresponding translation into French words $y_j$ with $j\in(1,M)$.
+Take two different sequences of data, for instance an English sentence composed of words $x_i$ with $i\in (1,N)$ and its corresponding translation into French words $y_j$ with $j\in(1,M)$.
 
-The encoder transforms the input sequence of words $x_i$ into something called a context vector (e.g. One-Hot encoding). Context vector is then feed to the decoder, which uses the context vector together with the previously generated symbol of the output sequence. 
+The encoder transforms the input sequence of words $x_i$ into something called an \textbf{embedding}, or context vector (e.g. One-Hot encoding).The context vector is then feed to the decoder, which uses it together with the previously generated symbol of the output sequence. This is shown in the diagram in Figure \ref{fig:encoder-decoder}.
+
+Typically both the encoder and decoder are built using RNNs which can keep track of states. The full encoder-decoder machinery is typically trained at once using backpropagation.
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{mathematics/fig/seq2seq1.pdf}}
+\label{fig:encoder-decoder}
+\caption{Simple encoder-decoder architecture. Input sequence ``hello world." creates an embedded hidden state. This hidden state is fed into the decoder which constructs its output iteratively starting with the initial embedding and iteratively building itself off of the previous eleent of the sequence. \cite{zhang}}
+\end{figure}
+
 
 \subsubsection{One-Hot Encoding}
 One way to convert categorical data into learnable features is by using one-hot encoding. This method converts each category into an index in an array. For instance if we have three categories (red, green, blue), we can represent these as
@@ -774,16 +759,19 @@ One way to convert categorical data into learnable features is by using one-hot 
     \textrm{blue} &= [0,0,1]
 \end{align}
 
-
 The location of each category can then be used as a feature which can be learned.
+
+\subsubsection{Autoencoders}
+
+Autoencoders is a feed-forward neural network with an encoder-decoder architecture built to give an output identical to its input. This may seem trivial, but the idea is that the embedding layer has smaller dimensionality than the feature vector itself. This layer is called the \textbf{bottleneck layer}.
 
 \subsection{Attention}
 
-The general idea here is the colloquial usage of attention, where you have to choose what things to pay attention to. Deep nets generally react more strongly to parts of the data than others which is effectively the network selecting what it should pay attention to (e.g. the network may look at spots to look for a leopard over a jaguar).
+The attention mechanism provides a state which the tells the decoder what specifically to pay attention to. This allows for better retention of long-term dependencies (i.e. keeping track of where pronouns go when translating between languages).
 
+From Wikipedia: ``In the context of neural networks, attention is a technique that mimics cognitive attention. The effect enhances the important parts of the input data and fades out the rest -- the thought being that the network should devote more computing power on that small but important part of the data. Which part of the data is more important than others depends on the context and is learned through training data by gradient descent."
 
-
-From Wikipedia: ``In the context of neural networks, attention is a technique that mimics cognitive attention. The effect enhances the important parts of the input data and fades out the rest -- the thought being that the network should devote more computing power on that small but important part of the data. Which part of the data is more important than others depends on the context and is learned through training data by gradient descent. "
+This is currently an area of active research with much ongoing development in the field of computer science.
 
 
 \subsection{Transformers}
@@ -791,6 +779,8 @@ TODO
 
 \url{https://jalammar.github.io/illustrated-transformer/}\\
 \url{https://wiki.pathmind.com/attention-mechanism-memory-network}
+Transformers are Graph Neural Networks (fully connected graphs)
+\url{https://www.youtube.com/watch?v=uF53xsT7mjc&t=10s}
 
 \section{Dimensionality Reduction}\label{dim_red}
 When fitting to a high dimensional space, the model can become overfit and/or the correlation within the feature vectors can be overlooked. In order to reduce the feature vectors into a space which has more discriminating power, it is helpful to reduce the total dimensions of the problem at hand.
@@ -805,7 +795,7 @@ $$\mathbf{X} = \left.\left(
                              x_{00}&x_{10}&x_{20}&\cdots &x_{p0}\\
                              x_{01}&x_{11}&x_{21}&\cdots &x_{p1}\\
                              x_{02}&x_{12}&x_{22}&\cdots &x_{p2}\\
-                             \vdots&&&\ddots&\\
+                             \vdots&&&\ddots&\vdots\\
                              x_{0n}&x_{1n}&x_{2n}&\cdots &x_{pn}
                       \end{array}
                       }_{p\text{ features}}}

@@ -14,11 +14,31 @@ $O(1)$ & Accessing an element in an array  \\
 $O(\log N)$ & Binary Search  \\
 $O(N)$ & Single \texttt{for} loop \\ 
 $O(N^2)$ & Simple sorting algorithm (bubble, selection, ...)\\
-$O(c^N)$ & Solving the travelling salesman problem with dynamic programming \\
+$O(c^N)$ & Solving the traveling salesman problem with dynamic programming \\
 $O(N!)$ & Iterations over all combinatorics \\
 \hline
 \end{tabular}
 \end{center}
+
+\subsection{Binary Representations}
+
+Computers typically represent information in binary. Knowing roughly how large objects are in memory is useful when solving problems. A sequence of bits represents powers of 2, which can be arranged to represent all integer values from 0 to $2^N-1$ where $N$ is the amount of bits you have. 
+\begin{center}
+\begin{tabular}{ | c | c| c|} 
+\hline
+ bits & unique values & label \\ \hline
+7 & $128$ &  \\ 
+8 & $256$ &  \\ 
+10 & $1,024$ & KB \\ 
+20 & $1,048,576$ & MB \\ 
+30 & $1,073,741,824$ & GB \\ 
+\hline
+\end{tabular}
+\end{center}
+
+Adding $10$ to a power of two increases the amount of memory used by roughly a factor of $1000$.
+
+There are slight subtleties involving whether we are counting using binary prefixes (e.g. kibibyte = KB) or decimal prefixes (e.g. kilobyte = kB). Binary prefixes count in units of 1024 (a power of two, near 1000), whereas decimal prefixes count in powers of 10. 
 
 \subsection{Efficient Algorithms}
 
