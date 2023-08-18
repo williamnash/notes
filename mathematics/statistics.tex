@@ -17,7 +17,18 @@ Given a set of data, one important feature one might wish to know is what this d
 \end{align}
 Where $n$ is the total amount of points in the data set.
 \subsection{Population vs Sample}
-The \textbf{population} is the full body of data points that exist for a given study. For instance if you wanted to measure the variation in height of humans, the population variance would necessarily require that you measure all humans for which this study pertains to. Obviously in real life, this is a tough thing to do, so most often a \textbf{sample} is used. A sample is a subset of the full population.
+The \textbf{population} is the full body of data points that exist for a given study. For instance if you wanted to measure the variation in height of humans, 
+the population variance would necessarily require that you measure all humans for which this study pertains to. Obviously in real life, this is a tough thing to do, 
+so most often a \textbf{sample} is used. A sample is a subset of the full population. For the full population $N$, the mean is a \emph{parameter}, often defined as $\mu$.
+For a sample $n$, the mean is a \emph{statistic}, often defined as $\bar{x}$.
+
+\begin{align}
+\mu = \E[x] \qquad \bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\end{align}
+
+
+
+
 
 TODO Derive how you get different variances
 
@@ -51,6 +62,78 @@ With many variables (say $n$ of them), it is often helpful to define the sample 
 
 
 \label{ch:statistics}
+
+\section{Distributions}
+\subsection{Binomial Distribution}
+The Binomial distribution is given by
+\begin{align}
+P(k;n,p) = \begin{pmatrix}
+n\\
+k
+\end{pmatrix}p^k(1-p)^{n-k}
+\end{align}
+Where 
+\begin{align}
+\begin{pmatrix}
+n\\
+k
+\end{pmatrix} = \frac{n!}{k!(n-k)!}
+\end{align}
+Which tells us, if we try something $n$ times, each of which has a chance $p$ of succeeding, that we get $k$ successes. 
+
+\subsection{Poisson Distribution}
+The Poisson distribution is used to describe the distribution of discrete events over a given time or space interval. Consider a radioactive decay process which has $\lambda$ decays per minute. 
+
+For a process which obey's Binomial statistics, we have a set amount of times the event could happen $n$ and a proportion of successes $k$. For a Poisson process the time or space interval could in principle be broken up infinitely, making it such that we don't just count over a set number of dice rolls, effectively infinitely many of them. Thus we take the limit $n\rightarrow \infty$ of the Binomial distribution with
+\begin{align}
+p = \frac{\lambda}{n}
+\end{align}
+Which tells us that the probability of the event happening at any given time is $0$, but as we will see, will give us a property such that a finite amount of events are seen when we are done counting. Mathematically we find
+
+\begin{align}
+P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}\\
+&= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\lambda^k}{n^k}\left(1-\frac{\lambda}{n}\right)^{n-k}
+\end{align}
+Using the definition of the exponential function we arrive at the Poisson distribution with
+\begin{align}
+P(k; \lambda) = \frac{\lambda^ke^{-\lambda}}{k!}
+\end{align}
+
+Thus the Poisson distribution is a limiting case of the Binomial distribution when the number of dice rolls is infinite, but the amount of events we observe remain finite.
+
+In counting experiments, it is often useful to know that if 0 events are observed coming from a Poisson distribution, the one-sided 95\% upper limit on the number of events is $\approx 3$, which is consistent with
+\begin{align}
+	\frac{3^0e^{-3}}{0!} \approx 0.05
+\end{align}
+Since the confidence interval tells us a model with true parameter $\lambda=3$ has a 5\% chance to see 0 events. In particle physics, $\lambda=3$ is held as a the benchmark for if your theory is testable or not, if $\lambda < 3$ you have a large chance that even if your theory is correct, you would still see nothing. 
+
+
+
+\subsection{Gaussian Distribution}
+Another distribution shows up in the case where $\lambda$ becomes so large that Stirling's approximation (Section \ref{stirling}) becomes valid. If we take a Poisson distribution with  $k = \lambda(1+\delta) \equiv x$ with $\lambda \gg 1, \delta \ll 1$ we can write
+\begin{align}
+	P(x; \lambda) &= \frac{\lambda^xe^{-\lambda}}{x!}\\
+	&= \frac{\lambda^{\lambda(1+\delta)}e^{-\lambda}}{\lambda(1+\delta)!}
+\end{align}
+Using Stirling's approximation, one has
+\begin{align}
+		P(x; \lambda) &\approx \frac{\lambda^{\lambda(1+\delta)}e^{-\lambda}}{\sqrt{2\pi}e^{-\lambda(1+\delta)}(\lambda(1+\delta))^{\lambda(1+\delta)+1/2}}\\
+		&\approx \frac{e^{-\lambda\delta}}{\sqrt{2\pi\lambda}} (1+\delta)^{-\lambda(1+\delta)-1/2}
+\end{align}
+Expanding the last term around $\delta=0$, we have
+\begin{align}
+	(1+\delta)^{-\lambda(1+\delta)-1/2} &\approx 1 + \delta*(\lambda+1/2) + \dots
+\end{align} 
+TODO
+
+In summary:
+\begin{itemize}
+	\item Poisson is limit of binomial for $p$ small and $n\gg \mu$
+	\item Gaussian is limit of Poisson for large $\mu$
+	\item Gaussian is limit of binomial for large $\mu=np$
+\end{itemize}
+
+
 
 \section{Markov Chains}
 TODO

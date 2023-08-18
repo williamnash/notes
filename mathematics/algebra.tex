@@ -1,0 +1,365 @@
+\chapter{Algebra}
+
+\section{Fundamentals}
+
+\subsection{Geometric Series}
+The geometric series is defined as 
+\begin{align}
+	\sum_{n=0}^{N-1} ar^n =a\Big( \frac{1-r^{N}}{1-r}\Big)
+\end{align}
+Which is only convergent for $r < 1$. To prove it, let's call whatever the value of the total series is equal to $s$, so we have
+\begin{align}
+	s = a + ar + ar^2 + ar^3 + ... + ar^{N-1}
+\end{align}
+Let's multiply it by $r$
+\begin{align}
+	rs =  ar + ar^2 + ar^3 + ... + ar^{N}
+\end{align}
+We recognize that the portion on the right is basically the same as the earlier expression for $s$, so let's plug in exactly what that is
+\begin{align}
+	rs = (s - a) + ar^N
+\end{align}
+Rearranging this, we find
+\begin{align}
+	(r-1)s = a(r^N - 1)
+\end{align}
+Dividing through, we see that
+\begin{align}
+	\sum_{n=0}^{N-1} ar^n = s = a\Big( \frac{1-r^{N}}{1-r}\Big)
+\end{align}
+
+
+\subsection{Completing the Square}
+If we have some function that looks like
+\begin{align}
+ax^2 + bx + c
+\end{align}
+and we want it to look like
+\begin{align}
+d(x+e)^2 + f
+\end{align}
+We have that 
+\begin{align}
+ax^2 + bx + c = dx^2 + 2ed x + de^2 + f
+\end{align}
+Matching powers of $x$, we get that
+\begin{align}
+a &= d\\
+b &= 2ed\\
+c &= de^2+f
+\end{align}
+Solving these gives us
+\begin{align}
+d = a && e =\frac{b}{2a}  && f = c-\frac{b^2}{4a}
+\end{align}
+
+
+\subsection{Polynomial Algebra}
+
+Can find roots of polynomial equations with
+$$
+\begin{array}{rc@{}c@{}c@{}c@{}}
+& -x^2 +& x + &2 & \\ \cline{2-4}
+\multicolumn{1}{r|}{x+1} &-x^3+ & 0 + & 3x +&2\\
+-&-x^2 -&x  &\\ \cline{2-3}
+& 0 +& x^2 &\\ 
+-&  & x^2 +&x\\ \cline{3-4}
+& & 0 +&2x &\\ 
+-& &  &2x +&2\\ \cline{4-5}
+& & & &0\\
+\end{array}
+$$
+
+\subsection{Modular Arthimetic}
+TODO
+
+\subsection{Trigonometric Identities}
+
+\begin{align}
+\sin(\alpha\pm\beta) = \sin\alpha\cos\beta\pm\cos\alpha\sin\beta\\
+\cos(\alpha\pm\beta) = \cos\alpha\cos\beta\mp\sin\alpha\sin\beta
+\end{align}
+
+With these identities we can derive the double angle formula, setting $\alpha = \beta$ so
+\begin{align}
+\cos2\alpha &= \cos^2\alpha -\sin^2\alpha\\
+&= 2\cos^2\alpha-1
+\end{align}
+The Law of Cosines is 
+\begin{align}
+c^2 = a^2 + b^2 -2ab\cos\theta
+\end{align}
+Where $\theta$ is the angle between $a$ and $b$. Can remember this because reduces to the Pythagorean Theorem for $\theta = \pi/2$ and when $\theta = \pi$ we have
+\begin{align}
+c^2 = a^2 + b^2 +2ab = (a+b)^2
+\end{align}
+A much simpler way to recover this same identity is to draw out the vectors themselves
+\begin{align}
+	\textbf{a} + \textbf{c} = \textbf{b} \rightarrow \textbf{c} = \textbf{a} - \textbf{b}
+\end{align}
+Looking at the square of this, we have
+\begin{align}
+	c^2 &= a^2 + b^2 - 2\textbf{a}\cdot\textbf{b}\\
+	&= a^2 + b^2 -2ab\cos\theta 
+\end{align}
+
+You can always remember the derivatives of a trigonometric function by looking at it's Taylor expansion, and taking the derivative of that
+\begin{align}
+	\sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} + ...\\
+	\cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{41} + ...
+\end{align}
+Taking the derivative of sin for instances gives us
+\begin{align}
+	\frac{d}{dx}\sin x &= \frac{d}{dx}\Big( x - \frac{x^3}{3!} + \frac{x^5}{5!} + ...\Big)\\
+	&= 1 - \frac{x^2}{2!} + \frac{x^4}{41} + ...\\
+	&= \cos x
+\end{align}
+
+\section{Linear Algebra}
+A unimodular matrix has determinant $\pm 1$
+
+
+$$\rm{det}(\bf{AB}) = \rm{det}(\bf{A})\rm{det}(\bf{B})$$
+The trace is invariant under cyclic permutations
+\begin{align}
+	\textrm{tr}(ABC) = \textrm{tr}(CAB) = \textrm{tr}(BCA)
+\end{align}
+
+$$a_i b_{ij} c_j = \textbf{a}\cdot\textbf{B}\cdot\textbf{b} = \sum_{i} a_i \sum_{j} b_{ij} c_j$$
+
+\subsection{Tensors}
+The rank of a tensor is simply the number of indices needed to describe it. A vector is a tensor of the first rank, and a general $n \times m$ matrix is a tensor of the second rank. The tensor product of two 2x2 matrices is given by
+\begin{align}
+\begin{bmatrix}
+a_{11} & a_{21} \\
+a_{21} & a_{22}
+\end{bmatrix}
+\otimes
+\begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix} &=
+\begin{bmatrix}
+a_{11} \begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}& a_{21} \begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}\\
+a_{21} \begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}& a_{22}\begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix}
+\end{bmatrix}
+\end{align}
+We can do this for any vector space by generalizing the form above. For instance
+
+\begin{align}
+\begin{bmatrix}
+a_{1}  \\
+a_{2} 
+\end{bmatrix}
+\otimes
+\begin{bmatrix}
+b_{1}\\
+b_{2}
+\end{bmatrix} = 
+\begin{bmatrix}
+a_{1}  \begin{bmatrix}
+b_{1}\\
+b_{2}
+\end{bmatrix} \\
+a_{2} \begin{bmatrix}
+b_{1}\\
+b_{2}
+\end{bmatrix} 
+\end{bmatrix}
+\end{align}
+
+Another important tensor operator is the direct sum, which is written as
+\begin{align}
+	\begin{bmatrix}
+a_{11} & a_{21} \\
+a_{21} & a_{22}
+\end{bmatrix}
+\oplus
+\begin{bmatrix}
+b_{11} & b_{21} \\
+b_{21} & b_{22}
+\end{bmatrix} &=
+\begin{bmatrix}
+a_{11} & a_{21} & 0 & 0\\
+a_{21} & a_{22} & 0 & 0\\
+0 & 0& b_{11} & b_{12}\\
+0 & 0 & b_{21} & b_{22}
+\end{bmatrix}
+\end{align}
+
+\subsection{Determinant}
+For an arbitrarily sized matrix, can iterate this procedure.
+\begin{enumerate}
+\item Write out each value in the top row, alternating sign ($+,-,+,-,...$)
+\item Multiply each respective value by the determinant of the square matrix created by the rows and columns that the value does not belong to
+\end{enumerate}
+As an example a 4 x 4
+\begin{align}
+\begin{vmatrix} a & b & c & d\\e & f & g & h\\i & j & k & l\\m & n & o & p \end{vmatrix}=a\,\begin{vmatrix} f & g & h\\j & k & l\\n & o & p \end{vmatrix}-b\,\begin{vmatrix} e & g & h\\i & k & l\\m & o & p \end{vmatrix}+c\,\begin{vmatrix} e & f & h\\i & j & l\\m & n & p \end{vmatrix}-d\,\begin{vmatrix} e & f & g\\i & j & k\\m & n & o \end{vmatrix}
+\end{align}
+The matrix of a 3 x 3 is 
+\begin{align}
+ \begin{vmatrix} a & b & c\\d & e & f\\g & h & i \end{vmatrix} &= a\,\begin{vmatrix} e & f\\h & i \end{vmatrix} - b\,\begin{vmatrix} d & f\\g & i \end{vmatrix} + c\,\begin{vmatrix} d & e\\g & h \end{vmatrix}\end{align}
+ And 2 x 2
+ \begin{align}\begin{vmatrix} a & b\\c & d \end{vmatrix}=ad - bc .\end{align}
+
+
+
+\subsection{Matrix Diagonalization}\label{diagonalize}
+One can follow the procedure outlined below to diagonalize a matrix\cite{griffiths_qm}
+
+\begin{enumerate}
+\item Find eigenvalues ($\lambda_1, \lambda_2, ... , \lambda_N$) of matrix $\bf{M}$ with det($\bf{M}-\lambda\bf{I}$) = 0
+\item Using the eigenvalues, find the corresponding eigenvectors by plugging in each to $(\bf{M}-\lambda_i\bf{I})\bf{a_i} = 0$
+\item The diagonalized matrix $\bf{T}$ is now 
+
+$$\bf{T} = \left(
+{\begin{array}{cccc}
+\lambda_1 & 0 &...&0 \\
+0 & \lambda_2 & ...&0\\
+\vdots & \vdots &\ddots & \vdots \\
+0 & 0 & ... &\lambda_N
+\end{array}}
+\right)
+$$
+
+\item We need to find$$ \bf{M} = \bf{STS^{-1}}$$
+\item $\bf{S^{-1}}$ is equal to each eigenvector laid out as a column of the matrix, placed according to where you place it with $\bf{T}$
+
+$$\bf{S^{-1}} = \left(
+{\begin{array}{cccc}
+a(\lambda_1)_1 & a(\lambda_2)_1 &...&a(\lambda_N)_1 \\
+a(\lambda_1)_2 & a(\lambda_2)_2 & ...&a(\lambda_N)_2\\
+\vdots & \vdots &\ddots & \vdots \\
+a(\lambda_1)_N & a(\lambda_2)_N & ... &a(\lambda_N)_N
+\end{array}}
+\right)
+$$
+
+\item $\bf{S}$ can be calculated by simply inverting the matrix $\bf{S^{-1}}$
+\end{enumerate}
+
+\subsection{Simultaneous Eigenstates}
+To find a simultaneous set of eigenvectors for two operators, follow this:
+\begin{itemize}
+\item Given two 3x3 matrices
+
+$$\bf{M} = 
+\left(
+{\begin{array}{ccc}
+1&0&1\\
+0&0&0\\
+1&0&1\\
+\end{array}}
+\right)
+~~~~\bf{D} = 
+\left(
+{\begin{array}{ccc}
+2&1&1\\
+1&0&-1\\
+1&-1&2\\
+\end{array}}
+\right)$$
+
+\item First solve for their eigenvalues ($\lambda_M = 0,0,2$, $\lambda_D = -1,2,3$)
+\item Next find both sets of unnormalized eigenvectors
+$$
+\lambda_M\rightarrow  
+\left(
+{\begin{array}{c}
+a\\
+b\\
+-a
+\end{array}}
+\right),
+\left(
+{\begin{array}{c}
+a\\
+b\\
+-a
+\end{array}}
+\right),
+\left(
+{\begin{array}{c}
+a\\
+0\\
+-a
+\end{array}}
+\right)~~~~
+\lambda_D\rightarrow
+\left(
+{\begin{array}{c}
+0\\
+0\\
+0
+\end{array}}
+\right),\left(
+{\begin{array}{c}
+a\\
+a\\
+-a
+\end{array}}
+\right),
+\left(
+{\begin{array}{c}
+a\\
+0\\
+-a
+\end{array}}
+\right)$$
+\item Because $\textbf{D}$ is not degenerate, correspond each vector to another vector for degenerate $\textbf{M}$. 
+\item Then just normalize the vectors as usual, and you have a set of eigenvectors for both matrices
+\end{itemize}
+
+
+
+\section{Combinatorics}
+A critical combinatorics formula is 
+\begin{align}
+{{n}\choose{k}} = \frac{n!}{k!(n-k)!}
+\end{align}
+Which tells us how may ways we can pick $k$ objects out of a total of $n$ of them. Obviously we should have $n>k$, so the number is positive, which means we should have $n$ on the top.
+
+
+\subsection{Euclidean Algorithm}
+
+If you have two numbers that you don't know the prime factorization of, one can find their greatest common denominator (qcd) using this algorithm. 
+\begin{enumerate}
+\item Choose two numbers $N_1, N_2$ 
+\begin{itemize}
+\item	e.g. $57, 27$
+\end{itemize}
+\item Subtract the smaller of the two from the larger $\max(N_1,N_2) -\min(N_1,N_2)$
+\begin{itemize}
+\item	$57 -27 = 30$
+\end{itemize}
+\item Continue to subtract $\min(N_1,N_2)$ until you're about to get negative numbers
+\begin{itemize}
+\item $30 -27 = 3$
+\end{itemize}
+\item This number is the greatest common denominator of the two
+\begin{itemize}
+\item $3\times 19 = 57$
+\item $3 \times 9 = 27$
+\end{itemize}
+\end{enumerate}
+
+
+
+
+
+
+
+
