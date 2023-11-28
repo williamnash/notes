@@ -286,6 +286,49 @@ Cross-validation is helpful in cases where you do not have enough data to split 
 \end{enumerate}
 Grid search and cross-validation are sometimes used together to find the best values of hyperparameters for a given model.
 
+\subsection{Gaussian Process Regression}
+
+A random process is simply a collection of random variables $\textbf{x} = [x_1, ..., x_n]$ where $n$ is the number of random variables. A Gaussian process is a random process where any finite subset of the random variables is distributed as a multivariate Gaussian distribution.
+The Gaussian distribution is a very useful distribution in statistics and machine learning. Properties which make it particularly useful are:
+\begin{itemize}
+    \item Adding two Gaussian distributions together results in another Gaussian distribution
+    \item The product of two Gaussian distributions results in another Gaussian distribution
+    \item The marginalization of a Gaussian distribution results in another Gaussian distribution
+    \item The conditional of a Gaussian distribution results in another Gaussian distribution
+\end{itemize}
+
+The key idea behind Gaussian Process Regression (GPR) is to assume the probability of the function of interest $f(\textbf{x})$, given a set of data points $\textbf{x}$, is distributed as a multivariate Gaussian distribution.
+\begin{align}
+    P(f(\textbf{x})|\textbf{x}) = \mathcal{N}(f(\textbf{x})|\boldsymbol{\mu},\boldsymbol{\Sigma})
+\end{align}
+Where $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$ represent the mean and covariance of the distribution, respectively. This is a very powerful idea since it allows us to use the very nice properties of the Gaussian distribution to our advantage. Importantly, this does not mean that we are assuming the function $f(\textbf{x})$ is unconditionally Gaussian distributed, but rather that the probability of the function given the data is Gaussian distributed. This is a very important distinction, since
+predictions made by GPR are not limited to Gaussian functions. 
+
+Specifically the multivariate distribution has the same dimensionality of our data, so for each of our observed data points $\textbf{x} = [x_1, ..., x_n]$, we have a corresponding mean value 
+$\boldsymbol{\mu} = [\mu_1, ..., \mu_N]$ indicating the most likely value of the function at each of the data points. Most importantly, we also have a covariance matrix $\boldsymbol{\Sigma}$ which is used to relate the data points to each other. 
+
+Because the covariance matrix is positive semi-definite, we can define the covariance matrix as a kernel function 
+\begin{align}
+    \boldsymbol{\Sigma} \equiv \boldsymbol{\kappa}(\textbf{x},\textbf{x})
+\end{align}
+which is used to relate the data points to each other. Why this is a reasonable thing
+to do is because two points with high similarity will have a high covariance, and two points with low similarity will have a low covariance. The choice of kernel function used is
+a hyperparameter of the model which must be chosen before fitting the data. Typically, the squared exponential kernel is used. With the definition of the covariance matrix defined, 
+we have fully defined our model.
+
+The training of the model is simply the process of finding the mean and covariance of the multivariate Gaussian distribution which best fits the data. Running an optimization routine for 
+the mean and scale of each of the features in the data is sufficient to find the best fit. Once the model is trained, we can make predictions about the function at points where we do not have data.
+
+Because the conditional of a Gaussian distribution is also Gaussian distributed, we can use the Gaussian distribution we just arrived at to predict our next points. Specifically, we can use the conditional distribution to predict the value of the function at a new point $\textbf{x}_*$ given the data $\textbf{x}$ and the kernel function $\boldsymbol{\kappa}(\textbf{x},\textbf{x})$ as
+\begin{align}
+    P(f(\textbf{x}_*)|\textbf{f}, \textbf{x}, \textbf{x}_*) = \mathcal{N}(\boldsymbol{\kappa}_*^T\boldsymbol{\kappa}^{-1}\textbf{f}, \boldsymbol{\kappa}_{**} - \boldsymbol{\kappa}_*^T\boldsymbol{\kappa}^{-1}\boldsymbol{\kappa}_*)
+\end{align}
+Where $\boldsymbol{\kappa}_* = \boldsymbol{\kappa}(\textbf{x},\textbf{x}_*)$ and $\boldsymbol{\kappa}_{**} = \boldsymbol{\kappa}(\textbf{x}_*,\textbf{x}_*)$.
+
+
+This is the key idea behind GPR, and is what allows us to make predictions about the function at points where we do not have data.
+
+
 \subsection{Ant Colony Optimization}
 TODO
 
