@@ -23,6 +23,13 @@ In general, any machine learning algorithm can be broken down into three compone
 
 A \textbf{metric} is a function that measures the quality of the model's prediction (e.g. accuracy), whereas a \textbf{loss function} is what is used by the training system to update its weights automatically (e.g. SSE). Metrics are primarily for human consumption, at the end of training cycles.
 
+\section{Preprocessing}
+
+\subsection{Feature Scaling}
+ TODO: Box-cox transformation
+ TODO: Linearization
+
+
 \subsection{Hyperparameters}
 
 Hyperparameters are not optimized via the machine learning algorithm itself and instead are configured by the data analyst. One method to find a good set is \B{grid search} which combinatorically scans over each parameter (typically in log scale). This of course doesn't work too well when the number of hyperparameters in your model grows. 
