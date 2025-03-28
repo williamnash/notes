@@ -82,7 +82,8 @@ The first term in the variance can be written by using Equation \ref{taylor_erro
 
 \begin{align}
 \E[f^2] &= \E\Bigg[\Big(f(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n}) + \sum_{i=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}(x_i-\bar{x_i})\Big)^2\Bigg]\\
-&= \E\Bigg[f^2(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n}) + 2f(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n})\sum_{i=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}(x_i-\bar{x_i}) + \Big(\sum_{i=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}(x_i-\bar{x_i})\Big)^2\Bigg]\\
+&= \E\Bigg[f^2(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n}) + 2f(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n})\sum_{i=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}(x_i-\bar{x_i})\\
+&+ \Big(\sum_{i=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}(x_i-\bar{x_i})\Big)^2\Bigg]\\
 &= f^2(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n}) + 2f(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n})\sum_{i=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}\cancel{\E[x_i-\bar{x_i}]}\\
 &+ \sum_{i=1}^n \sum_{j=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}\frac{\partial f}{\partial x_j}\Big|_{\bar{x_j}}\E[(x_i-\bar{x_i})(x_j-\bar{x_j})]\\
 &= f^2(\bar{x_1}, \bar{x_2}, \dots, \bar{x_n}) + \sum_{i=1}^n \sum_{j=1}^n \frac{\partial f}{\partial x_i}\Big|_{\bar{x_i}}\frac{\partial f}{\partial x_j}\Big|_{\bar{x_j}}\E[(x_i-\bar{x_i})(x_j-\bar{x_j})]
