@@ -26,14 +26,21 @@ For a sample $n$, the mean is a \emph{statistic}, often defined as $\bar{x}$.
 \mu = \E[x] \qquad \bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
 \end{align}
 
-
-
-
-
-TODO Derive how you get different variances
-
 \subsection{Variance}
-TODO
+The variance measures the spread or variability of data around the mean.
+
+The \textbf{population variance} $\sigma^2$ is defined as:
+\begin{align}
+\sigma^2 = \frac{1}{N}\sum_{i=1}^N(x_i - \mu)^2
+\end{align}
+
+The \textbf{sample variance} $s^2$ is defined as:
+\begin{align}
+s^2 = \frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2
+\end{align}
+
+The sample variance uses $n-1$ in the denominator (Bessel's correction) to provide an unbiased estimator of the population variance.
+
 \subsection{Covariance}
 The covariance between two variables tells us how closely they track with each other. The \textbf{population covariance} is defined as 
 \begin{align}
@@ -43,10 +50,15 @@ Whereas the \textbf{sample covariance} is defined as
 \begin{align}
 	\Cov[x,y] = \frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})
 \end{align}
-TODO: Difference between sample and population.
 
-If the covariance is 0, both variables are independent. If the covariance is large and positive, a larger $x$ value suggests a larger $y$ value (and vice versa). If the coviarance is negative, a larger $x$ value suggests a smaller $y$ value (and vice versa).
+Population covariance considers all members, whereas sample covariance is adjusted by $n-1$ for unbiased estimation.
 
+If covariance is:
+\begin{itemize}
+    \item Positive: variables tend to increase or decrease together.
+    \item Negative: one variable tends to increase when the other decreases.
+    \item Zero: variables are independent (no linear relationship).
+\end{itemize}
 
 \subsubsection{Covariance Matrix}\label{covmat}
 With many variables (say $n$ of them), it is often helpful to define the sample Covariance matrix which calculates the covariance between each of the variables $x_i$ with $i = 1,\dots, n$
@@ -153,20 +165,34 @@ Another distribution shows up in the case where $\lambda$ becomes so large that 
 Using Stirling's approximation, one has
 \begin{align}
 		P(x; \lambda) &\approx \frac{\lambda^{\lambda(1+\delta)}e^{-\lambda}}{\sqrt{2\pi}e^{-\lambda(1+\delta)}(\lambda(1+\delta))^{\lambda(1+\delta)+1/2}}\\
-		&\approx \frac{e^{-\lambda\delta}}{\sqrt{2\pi\lambda}} (1+\delta)^{-\lambda(1+\delta)-1/2}
+		&\approx \frac{e^{\lambda\delta}}{\sqrt{2\pi\lambda}} (1+\delta)^{-\lambda(1+\delta)-1/2}
 \end{align}
-Expanding the last term around $\delta=0$, we have
+First consider the logarithm of this term
 \begin{align}
-	(1+\delta)^{-\lambda(1+\delta)-1/2} &\approx 1 + \delta*(\lambda+1/2) + \dots
-\end{align} 
-TODO
+	\ln\left[(1+\delta)^{-\lambda(1+\delta)-1/2}\right] &= \left[-\lambda(1+\delta)-\frac{1}{2}\right]\ln(1+\delta) \\
+	&\approx \left(- \lambda - \lambda\delta - \frac{1}{2}\right)\ln(1+\delta) \\
+\end{align}
+Expanding around small $\delta$ we have
+\begin{align}
+	\ln(1+\delta) &\approx \delta - \frac{\delta^2}{2} + \frac{\delta^3}{3} + \dots
+\end{align}
+Therefore
+\begin{align}
+	\ln\left[(1+\delta)^{-\lambda(1+\delta)-1/2}\right] &\approx \left(-\lambda - \lambda\delta - \frac{1}{2}\right)\left(\delta - \frac{\delta^2}{2} + \frac{\delta^3}{3} + \dots\right) \\
+	&\approx -\lambda\delta - \lambda\frac{\delta^2}{2} - \frac{\delta}{2} + \dots
+\end{align}
+The first two terms are the largest, re-exponentiating the terms then give us
+\begin{align}
+	P(x; \lambda) &\approx \frac{e^{\lambda\delta}}{\sqrt{2\pi\lambda}}  e^{-\lambda\delta - \lambda\frac{\delta^2}{2}}\\
+	&= \frac{1}{\sqrt{2\pi\lambda}}e^{\frac{-\lambda\delta^2}{2}}  \\
+\end{align}
+Recall $\delta = (x-\lambda)/\lambda$, thus
+\begin{align}
+	P(x;\lambda) &\approx \frac{1}{\sqrt{2\pi\lambda}}\exp\left(-\frac{(x-\lambda)^2}{2\lambda}\right)
+\end{align}
 
-In summary:
-\begin{itemize}
-	\item Poisson is limit of binomial for $p$ small and $n\gg \mu$
-	\item Gaussian is limit of Poisson for large $\mu$
-	\item Gaussian is limit of binomial for large $\mu=np$
-\end{itemize}
+This is the Gaussian (or normal) distribution with mean $\mu = \lambda$ and variance $\sigma^2 = \lambda$. Thus, we explicitly see how the Poisson distribution approaches the Gaussian distribution for large mean $\lambda$.
+
 
 
 
