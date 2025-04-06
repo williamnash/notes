@@ -26,7 +26,30 @@ The Quaternion Group $Q_8$ is defined such that
 %
 %
 \subsection{Lie Groups}
-Of particular importance in physics are \textbf{Lie groups}, groups in which you can change infinitesimally between their elements. This allows you to Taylor expand ... TODO
+
+Of particular importance in physics are \textbf{Lie groups}, groups in which you can change infinitesimally between their elements. This allows you to Taylor expand near the identity element and study the structure of the group locally.
+
+A Lie group is both a group and a smooth manifold, which means the group operations (multiplication and inversion) are smooth (i.e., differentiable). Because you can move continuously from one group element to another, it's natural to study their infinitesimal generators — these make up the associated \textbf{Lie algebra}.
+
+The idea is that any group element $g$ near the identity can be written as
+\[
+g(\epsilon) = \mathbb{1} + \epsilon X + \mathcal{O}(\epsilon^2)
+\]
+for some generator $X$. These generators live in the tangent space of the group at the identity — which forms the Lie algebra.
+
+For example, in the group $SO(3)$ (rotations in 3D), the Lie algebra consists of all 3×3 antisymmetric matrices. Small rotations can be expressed as:
+\[
+R(\theta) \approx \mathbb{1} + \theta J + \mathcal{O}(\theta^2)
+\]
+where $J$ is a generator of rotation (e.g., about the $x$, $y$, or $z$ axis).
+
+Crucially, the Lie algebra encodes the group's local structure via the \textbf{commutator}:
+\[
+[X, Y] = XY - YX
+\]
+which satisfies the Jacobi identity and defines the structure constants of the group.
+
+In physics, Lie groups often describe continuous symmetries — like rotational invariance ($SO(3)$), Lorentz symmetry ($SO(3,1)$), or gauge symmetries (like $SU(2)$ or $SU(3)$ in the Standard Model). Lie algebras let you analyze these symmetries linearly — by studying their infinitesimal action — and then exponentiate back to get the full nonlinear group behavior.
 
 \subsection{SO(3)}
 Consider the addition of angular momentum of two spin $1/2$ particles, $a$ and $b$ the Hilbert space in which they live both have dimension
