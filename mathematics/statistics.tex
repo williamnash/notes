@@ -221,17 +221,40 @@ Discrete random variables can only take a countable number of distinct values e.
 
 Conversely, continuous random variables represent a continuous spectrum of values e.g. all the real numbers. These values get pulled from something called a \B{probability density function}.
 
-\subsection{Marginalizing A Variable}
+\subsection{Marginalizing a Variable}
 TODO
 
-\subsection{Neyman Pearson Lemma}
-The main idea is that you want to maximize your detection probability $P_D$ under then constraint that your Type I error (false alarm) probability $P_{FA}$ is equal to a set value $\alpha$. This is done looking for a maximum with a Lagrange multiplier. TODO
+\subsection{Neyman-Pearson Lemma}
+
+The main idea is that you want to maximize your detection probability $P_D$ under the constraint that your Type I error (false alarm) probability $P_{FA}$ is equal to some preset value $\alpha$. This is typically done by introducing a Lagrange multiplier and solving an optimization problem:
 
 \begin{equation}
-	\textrm{max}[P_D - \gamma(P_{FA}-\alpha)]
+	\max \left[ P_D - \gamma (P_{FA} - \alpha) \right]
 \end{equation}
 
-Given two simple hypotheses $\theta_0$ (the null hypothesis) and $\theta$, (simple hypotheses specify uniquely the probability distributions), we pick 
+Here, $\gamma$ is the Lagrange multiplier enforcing the constraint $P_{FA} = \alpha$.
+
+This setup leads to the Neyman-Pearson Lemma, which provides a powerful result in hypothesis testing. Given two simple hypotheses:
+\begin{itemize}
+	\item $\theta_0$: the null hypothesis (e.g., no signal)
+	\item $\theta_1$: the alternative hypothesis (e.g., signal present)
+\end{itemize}
+where both hypotheses fully specify their respective probability distributions, the lemma states that the likelihood ratio test is the most powerful test for a given false alarm rate $\alpha$.
+
+Define the likelihood ratio:
+\begin{equation}
+	\Lambda(x) = \frac{p(x | \theta_1)}{p(x | \theta_0)}
+\end{equation}
+
+Then the most powerful test of size $\alpha$ is:
+\[
+\Lambda(x) \underset{\theta_0}{\overset{\theta_1}{\gtrless}} \eta
+\]
+where the threshold $\eta$ is chosen such that $P_{FA} = \alpha$.
+
+In words: we compare how likely the observed data $x$ is under the alternative hypothesis vs. the null, and we decide in favor of $\theta_1$ (detection) if this ratio exceeds some threshold. The Neyman-Pearson result guarantees that this test maximizes $P_D$ for a fixed $P_{FA}$.
+
+This forms the basis of many detection systems, where minimizing missed detections while controlling false alarms is critical.
 
 \subsection{Hoeffding's Inequality}\label{hoeffding}
 Given $X_1, X_2, \ldots, X_n$ independent random variables each within $0 \leq X_i \leq 1$, Hoeffding's inequality states that 
