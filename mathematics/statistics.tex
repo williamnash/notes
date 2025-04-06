@@ -287,11 +287,42 @@ the characteristic function has the property that
 
 
 \subsection{Central Limit Theorem}
-States that if you have a bunch of random variables $x_1, x_2, ... x_n$, each coming from an arbitrary pdf with mean $\mu_1, \mu_2, ... \mu_n$, and variance $\sigma_1^2, \sigma_2^2, ...\sigma_n^2$, if you add them all up in the limit of large $n$, it should approach a Gaussian distribution with mean $\mu = \sum_i \mu_i$ and variance $\sigma^2 = \sum_i\sigma_i^2$
 
-TODO
+States that if you have a bunch of random variables $x_1, x_2, \dots, x_n$, each coming from an arbitrary PDF with mean $\mu_1, \mu_2, \dots, \mu_n$ and variance $\sigma_1^2, \sigma_2^2, \dots, \sigma_n^2$, then their sum (or average) will approach a Gaussian distribution in the limit of large $n$. This is essentially the content of the Central Limit Theorem.
 
-Jeffery's prior allows two people to come up with an equal parameter(?) model that looks different, but have the statistics for the two come out the same, when they otherwise wouldn't (Jacobian, etc.)
+More precisely, let
+\[
+S_n = \sum_{i=1}^n x_i
+\]
+Then, for large $n$, the distribution of $S_n$ approaches
+\[
+S_n \sim \mathcal{N}\left( \mu = \sum_i \mu_i, \quad \sigma^2 = \sum_i \sigma_i^2 \right)
+\]
+The key idea is that even if each $x_i$ comes from some weird, lumpy, or heavy-tailed distribution (as long as the variances are finite), their sum smooths out and becomes bell-shaped. This explains why the Gaussian distribution is so ubiquitous — adding enough random stuff tends to make things normal.
+
+If the variables are i.i.d. (independent and identically distributed), then the statement becomes:
+\[
+S_n \sim \mathcal{N}(n\mu, n\sigma^2)
+\quad \text{or} \quad
+\bar{x} = \frac{S_n}{n} \sim \mathcal{N}(\mu, \frac{\sigma^2}{n})
+\]
+
+\subsection{Jeffreys Prior}
+
+Jeffreys prior shows up when trying to make "uninformative" or "objective" choices in Bayesian inference. The problem is this: suppose two people model the same thing using different parameterizations. One uses $\theta$, the other uses $\phi = f(\theta)$. If they both assign a flat prior (i.e., "I have no idea what the parameter is") in their respective coordinate systems, they could end up making different inferences — just because of a change of variable. That's not good.
+
+Jeffreys solved this by proposing a prior that’s invariant under reparameterization. That is, it adjusts for the "distortion" introduced by transforming coordinates. The Jeffreys prior is defined as:
+\[
+p_J(\theta) \propto \sqrt{I(\theta)}
+\]
+where $I(\theta)$ is the Fisher information:
+\[
+I(\theta) = \mathbb{E} \left[ \left( \frac{\partial}{\partial \theta} \log p(x|\theta) \right)^2 \right]
+\]
+
+This quantity transforms nicely under reparameterization (specifically, it scales with the Jacobian squared), so the square root of it ensures that your prior doesn’t depend on the coordinate system you happened to choose.
+
+In short: Jeffreys prior fixes the issue where “uninformed” priors aren’t truly uninformed, unless you account for the geometry of the parameter space.
 
 \subsection{Laplace's Rule of Succession}
 Consider the problem of flipping a coin $N$ times and getting $A$ heads. If each flip has a probability $\rho$ to come up heads, the probability for any amount of heads is given by the Binomial distribution
