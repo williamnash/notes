@@ -7,7 +7,7 @@ The geometric series is defined as
 \begin{align}
 	\sum_{n=0}^{N-1} ar^n =a\Big( \frac{1-r^{N}}{1-r}\Big)
 \end{align}
-Which is only convergent for $r < 1$. To prove it, let's call whatever the value of the total series is equal to $s$, so we have
+which converges if $|r| < 1$. To prove it, let's call whatever the value of the total series is equal to $s$, so we have
 \begin{align}
 	s = a + ar + ar^2 + ar^3 + ... + ar^{N-1}
 \end{align}
@@ -70,7 +70,7 @@ $$
 \end{array}
 $$
 
-\subsection{Modular Arthimetic}
+\subsection{Modular Arithmetic}
 
 The modulus operator is defined as
 \begin{align}
@@ -340,7 +340,7 @@ Which tells us how may ways we can pick $k$ objects out of a total of $n$ of the
 
 \subsection{Euclidean Algorithm}
 
-If you have two numbers that you don't know the prime factorization of, one can find their greatest common denominator (qcd) using this algorithm. 
+If you have two numbers that you don't know the prime factorization of, one can find their greatest common denominator (gcd) using this algorithm. 
 \begin{enumerate}
 \item Choose two numbers $N_1, N_2$ 
 \begin{itemize}
@@ -367,4 +367,56 @@ If you have two numbers that you don't know the prime factorization of, one can 
 
 
 
+
+
+
+% -------------------------
+% Additional Improvements
+% -------------------------
+
+\subsection{Properties of the Determinant}
+The determinant has several useful properties:
+\begin{itemize}
+    \item $\det(\textbf{A}\textbf{B}) = \det(\textbf{A})\det(\textbf{B})$
+    \item $\det(\textbf{A}^T) = \det(\textbf{A})$
+    \item $\det(\lambda \textbf{A}) = \lambda^n \det(\textbf{A})$ for an $n \times n$ matrix
+    \item A matrix is invertible iff its determinant is non-zero
+\end{itemize}
+
+\subsection{Additional Linear Algebra Tips}
+\begin{itemize}
+    \item If two matrices commute and are diagonalizable, they can be simultaneously diagonalized.
+    \item The trace of a matrix is the sum of its eigenvalues (counting multiplicity).
+    \item A real symmetric matrix always has real eigenvalues and an orthonormal eigenbasis (Spectral Theorem).
+\end{itemize}
+
+\subsection{Common Combinatorics Identities}
+\begin{align}
+    \sum_{k=0}^n \binom{n}{k} = 2^n \\
+    \binom{n}{k} = \binom{n}{n-k} \\
+    \sum_{k=0}^r \binom{n}{k} = \binom{n+1}{r+1}
+\end{align}
+
+\subsection{Binomial Theorem}
+The binomial theorem lets you expand expressions of the form $(a + b)^n$:
+\[
+(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k
+\]
+
+\subsection{Multinomial Coefficients}
+The multinomial coefficient generalizes the binomial coefficient:
+\[
+\binom{n}{k_1, k_2, \dots, k_m} = \frac{n!}{k_1! k_2! \dots k_m!}
+\]
+Where $\sum_i k_i = n$. This tells you how many ways to distribute $n$ items into $m$ groups.
+
+\subsection{Inclusion-Exclusion Principle}
+This principle lets you count elements in overlapping sets:
+\[
+|A \cup B| = |A| + |B| - |A \cap B|
+\]
+And for three sets:
+\[
+|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|
+\]
 
