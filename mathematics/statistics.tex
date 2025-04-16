@@ -197,11 +197,64 @@ This is the Gaussian (or normal) distribution with mean $\mu = \lambda$ and vari
 
 
 \section{Markov Chains}
-TODO
+Markov chains are a class of stochastic processes satisfying the \textit{Markov property}, which states that the probability distribution of a future state depends only on the current state and not on the sequence of events that preceded it. Formally, a discrete-time Markov chain is a sequence of random variables
+\[
+X_0, X_1, X_2, \dots
+\]
+where each \(X_i\) takes values in some state space (e.g.\ a finite or countable set), and
+\[
+P\big(X_{n+1} = x_{n+1} \,\big|\, X_n = x_n, X_{n-1} = x_{n-1}, \dots, X_0 = x_0\big)
+= P\big(X_{n+1} = x_{n+1} \,\big|\, X_n = x_n\big).
+\]
+This condition is referred to as the \textit{Markov property}.
+
+\subsection{Transition probabilities and stationarity}
+A Markov chain is fully specified by its transition probabilities, which in discrete state spaces can be summarized by a transition matrix
+\[
+P_{ij} = P\big(X_{n+1} = j \,\big|\, X_n = i\big).
+\]
+Given initial probabilities \( \pi^{(0)} \) for \( X_0 \), the distribution for \(X_n\) evolves according to
+\[
+\pi^{(n+1)} = \pi^{(n)} P,
+\]
+where \(\pi^{(n)}\) is a row vector whose \(i\)-th entry is \(P(X_n = i)\). A distribution \(\pi\) is called a \textit{stationary distribution} of the Markov chain if
+\[
+\pi P = \pi,
+\]
+i.e.\ applying the transition probabilities to \(\pi\) leaves it invariant. Under certain conditions (such as the chain being \textit{irreducible} and \textit{aperiodic}), the Markov chain will converge to this unique stationary distribution regardless of the initial state.
+
+\subsection{Markov Chain Monte Carlo (MCMC)}
+In many applications, we wish to generate samples from a complicated or high-dimensional probability distribution \(\pi(x)\). Direct sampling can be challenging, but if we can construct a Markov chain whose stationary distribution is \(\pi(x)\), then running that chain for many steps will produce samples that (after an initial ``burn-in'' phase) approximate draws from \(\pi(x)\). This broad class of methods is known as Markov Chain Monte Carlo (MCMC). One of the most popular MCMC algorithms is \textit{Gibbs sampling}, described next.
 
 \subsection{Gibbs Sampling}
-Gibbs sampling is used to approximate a multivariate probability distribution when directly sampling it is difficult. 
-TODO
+Gibbs sampling is an MCMC algorithm specifically suited to sampling from \(\pi(x_1, x_2, \ldots, x_n)\) when we can easily sample from each of the corresponding \textit{full conditional} distributions:
+\[
+\pi\bigl(x_1 \,\big|\, x_2, \dots, x_n\bigr),\quad
+\pi\bigl(x_2 \,\big|\, x_1, x_3, \dots, x_n\bigr),\quad \dots,\quad
+\pi\bigl(x_n \,\big|\, x_1, \dots, x_{n-1}\bigr).
+\]
+The key idea of Gibbs sampling is that rather than attempt to sample all variables jointly (which might be difficult), we iteratively sample each variable from its \emph{conditional} distribution, given all the others. 
+
+\paragraph{Algorithm (Gibbs Sampler)}
+Suppose we want to sample from a joint distribution \(\pi(x_1, \ldots, x_n)\). Gibbs sampling proceeds as follows:
+
+\begin{enumerate}
+    \item \textbf{Initialize} all variables: choose a starting point \(\bigl(x_1^{(0)}, \dots, x_n^{(0)}\bigr)\).
+    \item For each iteration \(t = 1, 2, \dots\):
+    \begin{enumerate}
+        \item Sample \( x_1^{(t)} \) from \(\pi\bigl(x_1 \,\big|\, x_2^{(t-1)}, \dots, x_n^{(t-1)}\bigr)\).
+        \item Sample \( x_2^{(t)} \) from \(\pi\bigl(x_2 \,\big|\, x_1^{(t)}, x_3^{(t-1)}, \dots, x_n^{(t-1)}\bigr)\).
+        \item Continue similarly for \( x_3^{(t)}, \dots, x_n^{(t)}\), each time conditioning on the most recently updated values of the other variables.
+    \end{enumerate}
+\end{enumerate}
+
+After a sufficiently large number of iterations, the distribution of \(\bigl(x_1^{(t)}, \dots, x_n^{(t)}\bigr)\) will be close to the \textit{stationary} distribution \(\pi(x_1, \dots, x_n)\). The chain can be \emph{thinned} by taking every \(k\)-th sample and discarding the initial samples (the \emph{burn-in} period), to reduce correlation and ensure approximate independence from the initialization.
+
+\paragraph{Why it works}
+Gibbs sampling is a special case of the Metropolis--Hastings algorithm where the \emph{proposal} for each variable is exactly its full conditional. Under mild regularity conditions (irreducibility, aperiodicity), the Markov chain defined by these updates converges to \(\pi(x_1, \dots, x_n)\). This allows us to obtain (correlated) samples from complicated high-dimensional distributions by sequentially sampling from simpler one-dimensional or lower-dimensional conditional distributions.
+
+\paragraph{Applications}
+Gibbs sampling is especially powerful when the conditional distributions \(\pi\bigl(x_i \mid x_{-i}\bigr)\) are of known form (e.g.\ Gaussian, Gamma, Beta, etc.), making each step a direct draw from a standard distribution. It is widely used in Bayesian statistics, image processing (e.g.\ for hidden Markov random fields), and any domain where full-conditionals are tractable but the joint distribution is not easily sampled from in a single step.
 
 \section{Probability}
 The mathematics of probability translate chances into dice rolls. For a given event, a value $P\in[0,1]$ is assigned to the fraction of times it is expected to happen. The theoretical underpinnings of probability have remained unresolved since it's birth, leaving two primary camps of practitioners; Bayesians and Frequentists.
