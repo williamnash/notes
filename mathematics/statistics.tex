@@ -2,12 +2,6 @@
 Data are collections of information made through observations. Statistics is the device through which data is cranked through to make interpretations of what the data actually says.
 
 \section{Fundamentals}
-\subsection{TODO}
-\begin{itemize}
-	\item Uniformize notation, use $w$ as a vector, etc
-	\item Sort sections
-	\item Fill out TODOs
-\end{itemize}
 
 \subsection{Mean}
 Given a set of data, one important feature one might wish to know is what this data looks like on average. This average is typically synonymous with the arithmetic mean defined as 
@@ -257,13 +251,37 @@ Gibbs sampling is a special case of the Metropolis--Hastings algorithm where the
 Gibbs sampling is especially powerful when the conditional distributions \(\pi\bigl(x_i \mid x_{-i}\bigr)\) are of known form (e.g.\ Gaussian, Gamma, Beta, etc.), making each step a direct draw from a standard distribution. It is widely used in Bayesian statistics, image processing (e.g.\ for hidden Markov random fields), and any domain where full-conditionals are tractable but the joint distribution is not easily sampled from in a single step.
 
 \section{Probability}
-The mathematics of probability translate chances into dice rolls. For a given event, a value $P\in[0,1]$ is assigned to the fraction of times it is expected to happen. The theoretical underpinnings of probability have remained unresolved since it's birth, leaving two primary camps of practitioners; Bayesians and Frequentists.
-TODO Bayesian vs Frequentist
-"In particle physics, with its strong tradition of frequentist coverage, prior pdfs are often chosen to provide intervals (in particular upper limits for Poisson means) with good frequentist coverage [4]. In such cases, our use of Bayesian computational machinery for interval estimation is not so much a change in paradigm as it is a technical device for frequentist inference." - Bob Cousins \url{https://ep-news.web.cern.ch/node/3213}
-\subsubsection{Bayesian Probability}
-TODO
-\subsubsection{Frequentists Probability}
-TODO
+The mathematics of probability translate chances into dice rolls. For a given event, a value $P\in[0,1]$ is assigned to the fraction of times it is expected to happen. The theoretical underpinnings of probability have remained unresolved since its birth, leaving two primary camps of practitioners: Bayesians and Frequentists.
+
+\subsection{Bayesian Probability}
+The Bayesian interpretation treats probability as a \emph{degree of belief} in a proposition. Under this framework, probabilities are subjective and can be updated as new evidence is acquired. The core of Bayesian reasoning is Bayes' theorem:
+\begin{align}
+	P(\theta | D) = \frac{P(D | \theta) P(\theta)}{P(D)}
+\end{align}
+where:
+\begin{itemize}
+	\item $P(\theta)$ is the \textbf{prior}: our initial belief about parameter $\theta$ before seeing data
+	\item $P(D | \theta)$ is the \textbf{likelihood}: the probability of observing data $D$ given $\theta$
+	\item $P(\theta | D)$ is the \textbf{posterior}: our updated belief after seeing the data
+	\item $P(D)$ is the \textbf{evidence} or marginal likelihood, serving as a normalization constant
+\end{itemize}
+
+The Bayesian approach allows incorporation of prior knowledge and provides a natural framework for updating beliefs. It also gives a full probability distribution over parameters rather than just point estimates.
+
+\textit{``In particle physics, with its strong tradition of frequentist coverage, prior pdfs are often chosen to provide intervals (in particular upper limits for Poisson means) with good frequentist coverage. In such cases, our use of Bayesian computational machinery for interval estimation is not so much a change in paradigm as it is a technical device for frequentist inference.''} - Bob Cousins \cite{cousins}
+
+\subsection{Frequentist Probability}
+The Frequentist interpretation defines probability as the \emph{long-run frequency} of an event occurring in repeated trials. Under this view, probability is an objective property of the physical world, not a degree of belief.
+
+Key characteristics of the frequentist approach:
+\begin{itemize}
+	\item Parameters are fixed (but unknown) constants, not random variables
+	\item Probabilities are defined only for repeatable random events
+	\item Inference is based on the sampling distribution of estimators
+	\item Results are interpreted in terms of what would happen over many repetitions of an experiment
+\end{itemize}
+
+Frequentist methods include hypothesis testing (with $p$-values) and confidence intervals. A 95\% confidence interval, for example, means that if we repeated the experiment many times, 95\% of the constructed intervals would contain the true parameter value. Importantly, this is \emph{not} the same as saying there's a 95\% probability the true value lies in any particular interval---that would be a Bayesian statement.
 
 
 
@@ -275,7 +293,22 @@ Discrete random variables can only take a countable number of distinct values e.
 Conversely, continuous random variables represent a continuous spectrum of values e.g. all the real numbers. These values get pulled from something called a \B{probability density function}.
 
 \subsection{Marginalizing a Variable}
-TODO
+Given a joint probability distribution $P(X, Y)$, we can obtain the marginal distribution of one variable by summing (or integrating) over all possible values of the other. For discrete random variables:
+\begin{align}
+	P(X) = \sum_y P(X, Y=y)
+\end{align}
+For continuous random variables:
+\begin{align}
+	p(x) = \int_{-\infty}^{\infty} p(x, y) \, dy
+\end{align}
+
+This process is called \textbf{marginalization} and effectively ``averages out'' the variable we don't care about. The name comes from the fact that if you write out a joint probability table, summing across rows or columns gives you the marginal probabilities in the margins of the table.
+
+Marginalization is essential in Bayesian inference when we have nuisance parameters $\boldsymbol{\nu}$ that we want to eliminate:
+\begin{align}
+	P(\theta | D) = \int P(\theta, \boldsymbol{\nu} | D) \, d\boldsymbol{\nu}
+\end{align}
+This integral can often be intractable analytically, which is one motivation for Monte Carlo methods like MCMC.
 
 \subsection{Neyman-Pearson Lemma}
 
@@ -321,8 +354,30 @@ with
 this gives us an easily computable way to find edge's of cumulative distributions.
  
 \subsection{Cross Entropy}
-TODO
-If we are maximizing for probabilities, using cross-entropy as a loss function represents the negative log-likelihood of the observed data\cite{grus}.
+The cross entropy between two probability distributions $p$ and $q$ over the same set of events measures the average number of bits needed to encode events from $p$ using an optimal code for $q$. It is defined as:
+\begin{align}
+	H(p, q) = -\sum_x p(x) \log q(x)
+\end{align}
+For continuous distributions:
+\begin{align}
+	H(p, q) = -\int p(x) \log q(x) \, dx
+\end{align}
+
+Cross entropy is closely related to the \textbf{Kullback-Leibler (KL) divergence}, which measures how different $q$ is from $p$:
+\begin{align}
+	D_{KL}(p \| q) = H(p, q) - H(p)
+\end{align}
+where $H(p) = -\sum_x p(x) \log p(x)$ is the entropy of $p$. Since $H(p)$ is constant with respect to $q$, minimizing cross entropy is equivalent to minimizing KL divergence.
+
+In machine learning, cross entropy is commonly used as a loss function for classification. If $y$ is the true label (often one-hot encoded) and $\hat{y}$ is the predicted probability distribution, the cross-entropy loss is:
+\begin{align}
+	\mathcal{L} = -\sum_i y_i \log \hat{y}_i
+\end{align}
+
+If we are maximizing for probabilities, using cross-entropy as a loss function represents the negative log-likelihood of the observed data \cite{grus}. For binary classification with true label $y \in \{0, 1\}$ and predicted probability $\hat{p}$, this reduces to:
+\begin{align}
+	\mathcal{L} = -y \log \hat{p} - (1 - y) \log(1 - \hat{p})
+\end{align}
 
 \subsection{Characteristic Function}
 The characteristic function is the Fourier transform of a distributions PDF $p(x)$. Defined as 
@@ -487,11 +542,41 @@ This method is used to derive the approximate Gaussian width when calculating As
 \section{Hypothesis Testing}
 
 \subsection{Confidence Intervals}
-TODO
-Also add calculation of confidence intervals of fit parameters.
-\url{https://online.stat.psu.edu/stat415/lesson/7/7.5}
-Add confidence interval of a Gaussian
+A confidence interval provides a range of values that is likely to contain an unknown population parameter. For a confidence level of $(1-\alpha)$, we construct an interval $[\theta_L, \theta_U]$ such that:
+\begin{align}
+	P(\theta_L \leq \theta \leq \theta_U) = 1 - \alpha
+\end{align}
 
+For a sample mean $\bar{x}$ from a normal distribution with known variance $\sigma^2$, the $(1-\alpha)$ confidence interval is:
+\begin{align}
+	\bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+\end{align}
+where $z_{\alpha/2}$ is the critical value from the standard normal distribution. For a 95\% confidence interval, $z_{0.025} \approx 1.96$.
+
+When the population variance is unknown and must be estimated from the sample, we use the $t$-distribution:
+\begin{align}
+	\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}
+\end{align}
+where $s$ is the sample standard deviation and $t_{\alpha/2, n-1}$ is the critical value from the $t$-distribution with $n-1$ degrees of freedom.
+
+\subsubsection{Confidence Intervals for Fit Parameters}
+When fitting a model to data using least squares or maximum likelihood, the confidence intervals for parameters can be estimated from the covariance matrix of the fit. For a parameter $\theta_i$, the standard error is:
+\begin{align}
+	\sigma_{\theta_i} = \sqrt{(\B{C})_{ii}}
+\end{align}
+where $\B{C}$ is the covariance matrix, often computed as the inverse of the Hessian of the negative log-likelihood evaluated at the best-fit point:
+\begin{align}
+	\B{C} = \left( -\frac{\partial^2 \ln \mathcal{L}}{\partial \theta_i \partial \theta_j} \right)^{-1}\Bigg|_{\hat{\theta}}
+\end{align}
+
+Alternatively, using the $\Delta\chi^2$ method, confidence regions can be found by identifying where:
+\begin{align}
+	\chi^2(\theta) - \chi^2_{\min} = \Delta\chi^2
+\end{align}
+For one parameter, $\Delta\chi^2 = 1$ gives the 68\% (1$\sigma$) interval, and $\Delta\chi^2 = 3.84$ gives the 95\% interval.
+
+
+\url{https://online.stat.psu.edu/stat415/lesson/7/7.5}
 \subsection{P-Value}
 The $p$-value is defined as the probability under the null hypothesis of obtaining a result equal to or more extreme than what was actually observed. The smaller the $p$-value, the more it tells investigators that the null hypothesis may not adequately explain the observation.
 
@@ -501,7 +586,21 @@ See book \cite{grus}
 
 
 \subsection{F-Test}
-TODO
+The $F$-test is used to compare statistical models that have been fitted to a dataset, to determine whether a more complex model provides a significantly better fit than a simpler one. It is based on the $F$-distribution, which arises as the ratio of two scaled chi-squared distributions.
+
+Given two models with residual sum of squares $\text{RSS}_1$ and $\text{RSS}_2$ (where model 2 is the more complex model with more parameters), the $F$-statistic is:
+\begin{align}
+	F = \frac{(\text{RSS}_1 - \text{RSS}_2) / (p_2 - p_1)}{\text{RSS}_2 / (n - p_2)}
+\end{align}
+where $p_1$ and $p_2$ are the number of parameters in each model, and $n$ is the number of data points. Under the null hypothesis (that the simpler model is adequate), $F$ follows an $F$-distribution with $(p_2 - p_1, n - p_2)$ degrees of freedom.
+
+The $F$-test is also commonly used in ANOVA (Analysis of Variance) to test whether group means are equal:
+\begin{align}
+	F = \frac{\text{Between-group variability}}{\text{Within-group variability}} = \frac{\text{MSB}}{\text{MSW}}
+\end{align}
+where MSB is the mean square between groups and MSW is the mean square within groups.
+
+A large $F$-value indicates that the between-group variability is large relative to the within-group variability, suggesting the group means are significantly different.
 
 \section{Kalman Filter}
 The Kalman filter\cite{fruwirth} uses a series of measurements taken in a time series to make an estimate of the underlying parameters. It works as an iterative $\chi^2$ method, and is useful when there is noise introduced between measurements.
@@ -531,6 +630,46 @@ One can then define the covariance matrix as the difference between the ...
 
 
 \section{Bootstrapping}
-TODO
+Bootstrapping is a resampling technique used to estimate the sampling distribution of a statistic by repeatedly drawing samples \emph{with replacement} from the observed data. This allows estimation of standard errors, confidence intervals, and other properties without making strong parametric assumptions about the underlying distribution.
 
+\subsection{The Bootstrap Algorithm}
+Given a sample of size $n$, the bootstrap procedure is:
+\begin{enumerate}
+	\item Draw $n$ observations \emph{with replacement} from the original sample to create a bootstrap sample
+	\item Compute the statistic of interest $\hat{\theta}^*$ on the bootstrap sample
+	\item Repeat steps 1-2 a large number of times $B$ (typically $B \geq 1000$)
+	\item Use the distribution of $\hat{\theta}^*_1, \hat{\theta}^*_2, \ldots, \hat{\theta}^*_B$ to estimate properties of $\hat{\theta}$
+\end{enumerate}
+
+\subsection{Bootstrap Standard Error}
+The bootstrap estimate of the standard error is simply the standard deviation of the bootstrap distribution:
+\begin{align}
+	\widehat{\text{SE}}_\text{boot} = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}(\hat{\theta}^*_b - \bar{\theta}^*)^2}
+\end{align}
+where $\bar{\theta}^* = \frac{1}{B}\sum_{b=1}^B \hat{\theta}^*_b$.
+
+\subsection{Bootstrap Confidence Intervals}
+Several methods exist for constructing bootstrap confidence intervals:
+
+\paragraph{Percentile Method} The $(1-\alpha)$ confidence interval is taken directly from the percentiles of the bootstrap distribution:
+\begin{align}
+	[\hat{\theta}^*_{(\alpha/2)}, \hat{\theta}^*_{(1-\alpha/2)}]
+\end{align}
+
+\paragraph{Basic Bootstrap} Also called the ``pivotal'' method:
+\begin{align}
+	[2\hat{\theta} - \hat{\theta}^*_{(1-\alpha/2)}, 2\hat{\theta} - \hat{\theta}^*_{(\alpha/2)}]
+\end{align}
+
+\paragraph{BCa (Bias-Corrected and Accelerated)} This method adjusts for both bias and skewness in the bootstrap distribution and generally provides better coverage than the percentile method.
+
+\subsection{When Bootstrapping Works}
+Bootstrapping is particularly useful when:
+\begin{itemize}
+	\item The theoretical distribution of the statistic is unknown or complex
+	\item Sample sizes are small and parametric assumptions may not hold
+	\item You need confidence intervals for complicated statistics (medians, ratios, etc.)
+\end{itemize}
+
+However, bootstrapping can fail when the statistic is not ``smooth'' (e.g., sample maximum) or when the sample size is too small to adequately represent the population.
 
