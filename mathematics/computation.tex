@@ -1,6 +1,6 @@
 \chapter{Computation}
 
-\subsection{Complexity}
+\section{Complexity}
 
 Big-O notation is typically used to approximate the time dependence on the number of elements you feed into an algorithm. In Big-O notation, we ignore all lower order terms, and also forget about any leading constants.
 
@@ -20,7 +20,7 @@ $O(N!)$ & Iterations over all combinatorics \\
 \end{tabular}
 \end{center}
 
-\subsection{Binary Representations}
+\section{Binary Representations}
 
 Computers typically represent information in binary. Knowing roughly how large objects are in memory is useful when solving problems. A sequence of bits represents powers of 2, which can be arranged to represent all integer values from 0 to $2^N-1$ where $N$ is the amount of bits you have. 
 \begin{center}
@@ -40,7 +40,7 @@ Adding $10$ to a power of two increases the amount of memory used by roughly a f
 
 There are slight subtleties involving whether we are counting using binary prefixes (e.g. kibibyte = KB) or decimal prefixes (e.g. kilobyte = kB). Binary prefixes count in units of 1024 (a power of two, near 1000), whereas decimal prefixes count in powers of 10. 
 
-\subsection{Efficient Algorithms}
+\section{Efficient Algorithms}
 
 \subsection{Averaging}
 When updating an average which contains many elements, the naive way of calculating the average is $O(n)$ efficient 
@@ -58,11 +58,11 @@ This modified algorithm is $O(1)$ efficient.
 \subsection{Estimating Probabilities}
 When multiplying many different probabilities $p_i$ together, the floating point precision of many computing languages starts to become an issue. To avoid this problem, often $\log(p_i)$ is used which is monotonic with the probability but avoids the \textit{underflow} issue described.
 
-\subsection{Graph Theory}
+\section{Graph Theory}
 Brute force algorithms that search all combinations of $N$ items scale as $N!$. The Seven Bridges of Konigsberg is a famous example solved by Euler, for which he laid our all combinations of sequences you could possibly cross the seven bridges (e.g. $1234567, 1234576,...$ and was able to show each combination did not work.
 
 
-\subsection{Kernels}
+\section{Kernels}
 Kernels are useful when one wants to represent a set of data points in a higher dimensional space (e.g. when making a classifier using Support Vector Machines). One represents the transformation of a set of data points $\B{x}$ as $\B{x}\rightarrow \phi(\B{x})$. Mathematically a Kernel function is defined as
 \begin{align}
 	K(\B{x},\B{x}') = \phi(\B{x})\cdot \phi(\B{x}')
@@ -113,6 +113,6 @@ This metric is a measure of similarity, when the two vectors are identical, the 
 \subsection{Kernel Density Estimation}
 Essentially estimates a density using Kernels. THe method itself is non-parametric, and uses the sum of kernels to estimate a function. In practice, typically the Gaussian kernel is used, so the density estimate is the sum of Gaussians centered around the datapoints. Gaussians themselves have a variable width, which is determine for the function as a whole by some minimization function (typically mean squared error).
 
-\subsection{Quantum Computation}
+\section{Quantum Computation}
 \subsubsection{Grovers Algorithm}
 %\url{https://en.wikipedia.org/wiki/Grover%27s_algorithm}

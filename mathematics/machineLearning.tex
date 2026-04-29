@@ -388,7 +388,7 @@ False Positive (FP) & Positive cases incorrectly identified   \\
  \hline
  False Negative (FN) &   Negative cases incorrectly identified\\
  \hline
-\end{tabular}\label{forcing}
+\end{tabular}\label{confusionmatrix}
 \end{center}
 
 Another helpful breakdown of the table considers the total positive (P) and negative (N) cases in terms of those in the table
@@ -795,9 +795,10 @@ The encoder transforms the input sequence of words $x_i$ into something called a
 Typically both the encoder and decoder are built using RNNs which can keep track of states. The full encoder-decoder machinery is typically trained at once using backpropagation.
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{mathematics/fig/seq2seq1.pdf}}
+% TODO: add seq2seq1.pdf to mathematics/fig/
+\centerline{\fbox{\parbox{0.6\textwidth}{\centering \textit{[Figure missing: seq2seq1.pdf]}}}}
+\caption{Simple encoder-decoder architecture. Input sequence ``hello world." creates an embedded hidden state. This hidden state is fed into the decoder which constructs its output iteratively starting with the initial embedding and iteratively building itself off of the previous element of the sequence. \cite{zhang}}
 \label{fig:encoder-decoder}
-\caption{Simple encoder-decoder architecture. Input sequence ``hello world." creates an embedded hidden state. This hidden state is fed into the decoder which constructs its output iteratively starting with the initial embedding and iteratively building itself off of the previous eleent of the sequence. \cite{zhang}}
 \end{figure}
 
 

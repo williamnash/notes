@@ -7,7 +7,7 @@ The geometric series is defined as
 \begin{align}
 	\sum_{n=0}^{N-1} ar^n =a\Big( \frac{1-r^{N}}{1-r}\Big)
 \end{align}
-which converges if $|r| < 1$. To prove it, let's call whatever the value of the total series is equal to $s$, so we have
+which holds for any $r \neq 1$. Taking $N \to \infty$, the infinite series $\sum_{n=0}^{\infty} ar^n = a/(1-r)$ converges if $|r| < 1$. To prove the finite-sum formula, let's call whatever the value of the total series is equal to $s$, so we have
 \begin{align}
 	s = a + ar + ar^2 + ar^3 + ... + ar^{N-1}
 \end{align}
@@ -108,15 +108,15 @@ Looking at the square of this, we have
 	&= a^2 + b^2 -2ab\cos\theta 
 \end{align}
 
-You can always remember the derivatives of a trigonometric function by looking at it's Taylor expansion, and taking the derivative of that
+You can always remember the derivatives of a trigonometric function by looking at its Taylor expansion, and taking the derivative of that
 \begin{align}
 	\sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} + ...\\
-	\cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{41} + ...
+	\cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} + ...
 \end{align}
 Taking the derivative of sin for instances gives us
 \begin{align}
 	\frac{d}{dx}\sin x &= \frac{d}{dx}\Big( x - \frac{x^3}{3!} + \frac{x^5}{5!} + ...\Big)\\
-	&= 1 - \frac{x^2}{2!} + \frac{x^4}{41} + ...\\
+	&= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} + ...\\
 	&= \cos x
 \end{align}
 
@@ -136,27 +136,27 @@ $$a_i b_{ij} c_j = \textbf{a}\cdot\textbf{B}\cdot\textbf{b} = \sum_{i} a_i \sum_
 The rank of a tensor is simply the number of indices needed to describe it. A vector is a tensor of the first rank, and a general $n \times m$ matrix is a tensor of the second rank. The tensor product of two 2x2 matrices is given by
 \begin{align}
 \begin{bmatrix}
-a_{11} & a_{21} \\
+a_{11} & a_{12} \\
 a_{21} & a_{22}
 \end{bmatrix}
 \otimes
 \begin{bmatrix}
-b_{11} & b_{21} \\
+b_{11} & b_{12} \\
 b_{21} & b_{22}
 \end{bmatrix} &=
 \begin{bmatrix}
 a_{11} \begin{bmatrix}
-b_{11} & b_{21} \\
+b_{11} & b_{12} \\
 b_{21} & b_{22}
-\end{bmatrix}& a_{21} \begin{bmatrix}
-b_{11} & b_{21} \\
+\end{bmatrix}& a_{12} \begin{bmatrix}
+b_{11} & b_{12} \\
 b_{21} & b_{22}
 \end{bmatrix}\\
 a_{21} \begin{bmatrix}
-b_{11} & b_{21} \\
+b_{11} & b_{12} \\
 b_{21} & b_{22}
 \end{bmatrix}& a_{22}\begin{bmatrix}
-b_{11} & b_{21} \\
+b_{11} & b_{12} \\
 b_{21} & b_{22}
 \end{bmatrix}
 \end{bmatrix}
@@ -188,16 +188,16 @@ b_{2}
 Another important tensor operator is the direct sum, which is written as
 \begin{align}
 	\begin{bmatrix}
-a_{11} & a_{21} \\
+a_{11} & a_{12} \\
 a_{21} & a_{22}
 \end{bmatrix}
 \oplus
 \begin{bmatrix}
-b_{11} & b_{21} \\
+b_{11} & b_{12} \\
 b_{21} & b_{22}
 \end{bmatrix} &=
 \begin{bmatrix}
-a_{11} & a_{21} & 0 & 0\\
+a_{11} & a_{12} & 0 & 0\\
 a_{21} & a_{22} & 0 & 0\\
 0 & 0& b_{11} & b_{12}\\
 0 & 0 & b_{21} & b_{22}
@@ -333,14 +333,14 @@ a\\
 \section{Combinatorics}
 A critical combinatorics formula is 
 \begin{align}
-{{n}\choose{k}} = \frac{n!}{k!(n-k)!}
+\binom{n}{k} = \frac{n!}{k!(n-k)!}
 \end{align}
-Which tells us how may ways we can pick $k$ objects out of a total of $n$ of them. Obviously we should have $n>k$, so the number is positive, which means we should have $n$ on the top.
+Which tells us how many ways we can pick $k$ objects out of a total of $n$ of them. We need $n \geq k \geq 0$ for the expression to be defined.
 
 
 \subsection{Euclidean Algorithm}
 
-If you have two numbers that you don't know the prime factorization of, one can find their greatest common denominator (gcd) using this algorithm. 
+If you have two numbers that you don't know the prime factorization of, one can find their greatest common divisor (gcd) using this algorithm. 
 \begin{enumerate}
 \item Choose two numbers $N_1, N_2$ 
 \begin{itemize}
@@ -354,7 +354,7 @@ If you have two numbers that you don't know the prime factorization of, one can 
 \begin{itemize}
 \item $30 -27 = 3$
 \end{itemize}
-\item This number is the greatest common denominator of the two
+\item This number is the greatest common divisor of the two
 \begin{itemize}
 \item $3\times 19 = 57$
 \item $3 \times 9 = 27$

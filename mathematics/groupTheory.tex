@@ -2,15 +2,15 @@
 
 A group is a set of elements that can move between themselves. That movement is denoted by the multiplication of elements. We call the entire group itself $G$, which contains $g_1, g_2, ... g_N$ elements ($N$ is the order of $G$). The group is defined in the following way
 \begin{enumerate}
-	\item $g_1g_2~\exists ~G$ for all $g_1, g_2~\exists~ G$. Which says when we multiply two elements, we get another element that is still within the group back
-	\item $(g_1g_2)g_3 = g_1(g_2g_3)$ for $g_1, g_2, g_3~\exists~ G$. Which says when given a specific order to multiply the elements, the sequencing of multiplication doesn't matter
-	\item There is an identity element $e$ which gives $eg = ge = g$ for all $g\exists G$. This says there is one element that does not change any of the other elements.
+	\item $g_1g_2~\in ~G$ for all $g_1, g_2~\in~ G$. Which says when we multiply two elements, we get another element that is still within the group back
+	\item $(g_1g_2)g_3 = g_1(g_2g_3)$ for $g_1, g_2, g_3~\in~ G$. Which says when given a specific order to multiply the elements, the sequencing of multiplication doesn't matter
+	\item There is an identity element $e$ which gives $eg = ge = g$ for all $g\in G$. This says there is one element that does not change any of the other elements.
 	\item For every element $g$, there is an inverse $g^{-1}$ such that $gg^{-1} = e$. Which allows us, from any element, to return to the identity
 \end{enumerate}
 The order of any of these elements $g$ are given by the smallest integer $k$ such that $g^k = e$.
 An isomorphism between two groups technically is a bijective map that preserves the group operations. This means that any of the operations from one group can be mapped exactly on to those of another.
 
-\subsection{Quaternion Group}
+\section{Quaternion Group}
 The Quaternion Group $Q_8$ is defined such that
 \begin{align}
 	i^2 = j^2 = k^2 = ijk = -1
@@ -25,7 +25,7 @@ The Quaternion Group $Q_8$ is defined such that
 %\end{itemize}
 %
 %
-\subsection{Lie Groups}
+\section{Lie Groups}
 
 Of particular importance in physics are \textbf{Lie groups}, groups in which you can change infinitesimally between their elements. This allows you to Taylor expand near the identity element and study the structure of the group locally.
 
@@ -52,12 +52,12 @@ which satisfies the Jacobi identity and defines the structure constants of the g
 In physics, Lie groups often describe continuous symmetries — like rotational invariance ($SO(3)$), Lorentz symmetry ($SO(3,1)$), or gauge symmetries (like $SU(2)$ or $SU(3)$ in the Standard Model). Lie algebras let you analyze these symmetries linearly — by studying their infinitesimal action — and then exponentiate back to get the full nonlinear group behavior.
 
 So, Lie groups give you a global symmetry structure, and Lie algebras let you study them locally — which is often enough to understand the whole thing.
-\subsection{SO(3)}
+\section{SO(3)}
 Consider the addition of angular momentum of two spin $1/2$ particles, $a$ and $b$ the Hilbert space in which they live both have dimension
 \begin{align}
 d_i = (2j_i + 1)
 \end{align}
-where $i ~\exists~(a,b)$. So $d_i = 2$ in the case of spin 1/2 particles ($\uparrow$ and $\downarrow$). The dimension of their combination is the product of both dimensions
+where $i ~\in~(a,b)$. So $d_i = 2$ in the case of spin 1/2 particles ($\uparrow$ and $\downarrow$). The dimension of their combination is the product of both dimensions
 \begin{align}
 d_{ab} = (2j_a+1)(2j_b+1)
 \end{align}

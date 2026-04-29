@@ -36,9 +36,9 @@ s^2 = \frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2
 The sample variance uses $n-1$ in the denominator (Bessel's correction) to provide an unbiased estimator of the population variance.
 
 \subsection{Covariance}
-The covariance between two variables tells us how closely they track with each other. The \textbf{population covariance} is defined as 
+The covariance between two variables tells us how closely they track with each other. The \textbf{population covariance} is defined as
 \begin{align}
-\Cov[x,y] = \frac{1}{n}\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})
+\Cov[x,y] = \frac{1}{N}\sum_{i=1}^N (x_i-\mu_x)(y_i-\mu_y)
 \end{align}
 Whereas the \textbf{sample covariance} is defined as 
 \begin{align}
@@ -125,14 +125,14 @@ Which tells us, if we try something $n$ times, each of which has a chance $p$ of
 \subsection{Poisson Distribution}
 The Poisson distribution is used to describe the distribution of discrete events over a given time or space interval. Consider a radioactive decay process which has $\lambda$ decays per minute. 
 
-For a process which obey's Binomial statistics, we have a set amount of times the event could happen $n$ and a proportion of successes $k$. For a Poisson process the time or space interval could in principle be broken up infinitely, making it such that we don't just count over a set number of dice rolls, effectively infinitely many of them. Thus we take the limit $n\rightarrow \infty$ of the Binomial distribution with
+For a process which obeys Binomial statistics, we have a set amount of times the event could happen $n$ and a proportion of successes $k$. For a Poisson process the time or space interval could in principle be broken up infinitely, making it such that we don't just count over a set number of dice rolls, effectively infinitely many of them. Thus we take the limit $n\rightarrow \infty$ of the Binomial distribution with
 \begin{align}
 p = \frac{\lambda}{n}
 \end{align}
 Which tells us that the probability of the event happening at any given time is $0$, but as we will see, will give us a property such that a finite amount of events are seen when we are done counting. Mathematically we find
 
 \begin{align}
-P(k; \mu) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}\\
+P(k; \lambda) &= \lim_{n\to \infty} \frac{n(n-1)(n-2)...(n-k+1)}{k!}\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k}\\
 &= \lim_{n\to \infty}\frac{n^k}{k!}\frac{\lambda^k}{n^k}\left(1-\frac{\lambda}{n}\right)^{n-k}
 \end{align}
 Using the definition of the exponential function we arrive at the Poisson distribution with
@@ -351,7 +351,7 @@ with
 \begin{align}
 	\bar{X} = \frac{1}{n}\Big(X_1+X_2+\ldots+X_n\Big)
 \end{align}
-this gives us an easily computable way to find edge's of cumulative distributions.
+this gives us an easily computable way to find edges of cumulative distributions.
  
 \subsection{Cross Entropy}
 The cross entropy between two probability distributions $p$ and $q$ over the same set of events measures the average number of bits needed to encode events from $p$ using an optimal code for $q$. It is defined as:
@@ -435,17 +435,17 @@ In short: Jeffreys prior fixes the issue where “uninformed” priors aren’t 
 \subsection{Laplace's Rule of Succession}
 Consider the problem of flipping a coin $N$ times and getting $A$ heads. If each flip has a probability $\rho$ to come up heads, the probability for any amount of heads is given by the Binomial distribution
 \begin{align}
-p(A) = {N\choose A}\rho^A(1-\rho)^{N-A}
+p(A) = \binom{N}{A}\rho^A(1-\rho)^{N-A}
 \end{align}
 If we want to figure out how fair the coin is, i.e. the value of $\rho$, we know that the probability of a given $\rho$ should be proportional to this function as we
 \begin{align}
-	p(\rho) \propto {N\choose A}\rho^A(1-\rho)^{N-A}
+	p(\rho) \propto \binom{N}{A}\rho^A(1-\rho)^{N-A}
 \end{align}
 We also know that $\rho$ must be in $[0,1]$. Knowing that the sum of probabilities over $\rho$ must equal 1, the normalization constant must be
 \begin{align}
-	p(\rho) =\ffrac{ {N\choose A}\rho^A(1-\rho)^{N-A}}{\int_0^1{N\choose A}\rho^A(1-\rho)^{N-A} d\rho}
+	p(\rho) =\ffrac{ \binom{N}{A}\rho^A(1-\rho)^{N-A}}{\int_0^1\binom{N}{A}\rho^A(1-\rho)^{N-A} d\rho}
 \end{align}
-Since ${N\choose A}$ is constant and common in both numerator and denominator, we have
+Since $\binom{N}{A}$ is constant and common in both numerator and denominator, we have
 \begin{align}
 	p(\rho) =\ffrac{ \rho^A(1-\rho)^{N-A}}{\int_0^1\rho^A(1-\rho)^{N-A} d\rho}
 \end{align}
@@ -455,14 +455,14 @@ It so happens the integral is Euler's beta function, which evaluates to
 \end{align}
 This then simplifies our expression with
 \begin{align}
-	p(\rho) =(N+1){N\choose A}\rho^A(1-\rho)^{N-A}
+	p(\rho) =(N+1)\binom{N}{A}\rho^A(1-\rho)^{N-A}
 \end{align}
 This then literally tells us what the chances are of a given $\rho$ given any number of flips $N$ and heads $A$. The question answered by Laplace's rule of succession answers: If I flip a coin $N$ times with $A$ heads, what is the probability of getting heads on the next flip $N+1$?
 
 This is the same thing as asking, what is $\rho$, which is the probability of getting a heads on any single flip. Therefore, all we need to do is take the expectation value of $\rho$
 \begin{align}
 	\langle \rho\rangle &= \int_0^1\rho ~p(\rho) d\rho\\
-	&= (N+1){N\choose A}\int_0^1 ~\rho^{A+1}(1-\rho)^{N-A} d\rho
+	&= (N+1)\binom{N}{A}\int_0^1 ~\rho^{A+1}(1-\rho)^{N-A} d\rho
 \end{align}
 Using the same beta function relation (or alternatively using the chain rule) we get
 \begin{align}

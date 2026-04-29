@@ -411,7 +411,7 @@ to get the Laplacian
 
 \subsection{Spherical Coordinates}\label{sphere}
 Taking $\theta$ as the polar angle (goes from 0 to $\pi$) and $\phi$ as the azimuthal angle (goes from $0$ to $2\pi$), we have the relations that
-\begin{align}\label{sphere}
+\begin{align}
 x &= r\sin\theta\cos\phi\\
 y &= r\sin\theta\sin\phi\\
 z &= r\cos\theta
@@ -462,15 +462,15 @@ The gradient is
 \end{align}
 The divergence is
 \begin{align}
-\nabla\cdot\textbf{A} = {1 \over \rho}{\partial \left( \rho A_\rho  \right) \over \partial \rho}
-+ {1 \over \rho}{\partial A_\theta \over \partial \theta}
-+ {\partial A_z \over \partial z}
+\nabla\cdot\textbf{A} = \frac{1}{\rho}\frac{\partial \left( \rho A_\rho  \right)}{\partial \rho}
++ \frac{1}{\rho}\frac{\partial A_\theta}{\partial \theta}
++ \frac{\partial A_z}{\partial z}
 \end{align}
 This gives the Laplacian as
 \begin{align}
-\nabla^2 f = {1 \over \rho}{\partial \over \partial \rho}\left(\rho {\partial f \over \partial \rho}\right)
-+ {1 \over \rho^2}{\partial^2 f \over \partial \theta^2}
-+ {\partial^2 f \over \partial z^2}
+\nabla^2 f = \frac{1}{\rho}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial f}{\partial \rho}\right)
++ \frac{1}{\rho^2}\frac{\partial^2 f}{\partial \theta^2}
++ \frac{\partial^2 f}{\partial z^2}
 \end{align}
 
 
@@ -530,7 +530,7 @@ x = \cos\theta \rightarrow \frac{\partial}{\partial\theta} &=\frac{dx}{d\theta} 
 \end{align}
 Which is the exact form of the Legendre Polynomials in equation \ref{legendrediffeq} with $C = l(l+1)$ and $Y(\theta) = P_l(\cos\theta)$. Thus we see if we have azimuthal symmetry, we are free to use these for things to solve Laplace's equation.
 \end{itemize}
-From now on, we write $C = l(l+1)$, because of the reduction to Legendre polynomials that happens when we have no angular dependence. Looking now at the angular portion, we again use seperation of variables
+From now on, we write $C = l(l+1)$, because of the reduction to Legendre polynomials that happens when we have no angular dependence. Looking now at the angular portion, we again use separation of variables
 \begin{align}
 Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 \end{align}
@@ -586,42 +586,42 @@ From here, we need the form of $f(r)$ to proceed.
 
 
 \subsection{Cylindrical Laplaces Equation}\label{cylinderlaplacian}
-We first assume seperability of the potential
+We first assume separability of the potential
 \begin{align}
 \varphi(r,\theta,z) = R(r)\Theta(\theta)Z(z)
 \end{align}
 In cylindrical coordinates we have
 \begin{align}
-\nabla^2 \varphi = {Z\Theta \over \rho}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
-+ {ZR \over \rho^2}{\partial^2 \Theta \over \partial \theta^2}
-+ R\Theta {\partial^2 Z\over \partial z^2}= 0
+\nabla^2 \varphi = \frac{Z\Theta}{\rho}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial R}{\partial \rho}\right)
++ \frac{ZR}{\rho^2}\frac{\partial^2 \Theta}{\partial \theta^2}
++ R\Theta \frac{\partial^2 Z}{\partial z^2}= 0
 \end{align}
 Dividing by the potential, we get
 \begin{align}
-\nabla^2 \varphi = {1 \over R\rho}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
-+ {1 \over \Theta\rho^2}{\partial^2 \Theta \over \partial \theta^2}
-+ \frac{1}{Z} {\partial^2 Z\over \partial z^2}= 0
+\nabla^2 \varphi = \frac{1}{R\rho}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial R}{\partial \rho}\right)
++ \frac{1}{\Theta\rho^2}\frac{\partial^2 \Theta}{\partial \theta^2}
++ \frac{1}{Z}\frac{\partial^2 Z}{\partial z^2}= 0
 \end{align}
-We now have the $z$ part seperated out so we can set that equal to a constant, with
+We now have the $z$ part separated out so we can set that equal to a constant, with
 \begin{align}
-- \Big[{1 \over R\rho}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
-+ {1 \over \Theta\rho^2}{\partial^2 \Theta \over \partial \theta^2}\Big]
-= k^2 = \frac{1}{Z} {\partial^2 Z\over \partial z^2}
+- \Big[\frac{1}{R\rho}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial R}{\partial \rho}\right)
++ \frac{1}{\Theta\rho^2}\frac{\partial^2 \Theta}{\partial \theta^2}\Big]
+= k^2 = \frac{1}{Z}\frac{\partial^2 Z}{\partial z^2}
 \end{align}
-We can solve the $z$ part relatively easily, shown in section \ref{cylinderlaplace}. Rewriting the the left side, with the constant, we have
+We can solve the $z$ part relatively easily. Rewriting the left side, with the constant, we have
 \begin{align}
- \Big[{\rho \over R}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
+ \Big[\frac{\rho}{R}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial R}{\partial \rho}\right)
  +k^2\rho^2\Big]
-+ {1 \over \Theta}{\partial^2 \Theta \over \partial \theta^2} = 0
++ \frac{1}{\Theta}\frac{\partial^2 \Theta}{\partial \theta^2} = 0
 \end{align}
 Calling the $\Theta$ equation a constant, we get
 \begin{align}
-{\rho \over R}{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
- +k^2\rho^2= \alpha^2 = -{1 \over \Theta}{\partial^2 \Theta \over \partial \theta^2}
+\frac{\rho}{R}\frac{\partial}{\partial \rho}\left(\rho \frac{\partial R}{\partial \rho}\right)
+ +k^2\rho^2= \alpha^2 = -\frac{1}{\Theta}\frac{\partial^2 \Theta}{\partial \theta^2}
 \end{align}
 The $\Theta$ one is again easy to solve, but the remaining one becomes tough, with
 \begin{align}
-{\rho }{\partial \over \partial \rho}\left(\rho {\partial R \over \partial \rho}\right)
+{\rho }\frac{\partial}{\partial \rho}\left(\rho \frac{\partial R}{\partial \rho}\right)
  +(k^2\rho^2-\alpha^2)R = 0
 \end{align}
 This one is solved with Bessel functions, or other things depending on what form  the constants take.
