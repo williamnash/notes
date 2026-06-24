@@ -129,7 +129,7 @@ Given $N$ different possible labels a feature vector could be associated to, we 
 	S^{(D)} = -\sum_{i=1}^N p^{(D)}_i\ln p^{(D)}_i
 \end{align}
 
-This tells us roughly how mixed up our dataset is. If the training data has two labels which are equally populated in the dataset, we have correspondingly larger energy than if we had only one of the labels show up. In the ideal case, each leaf of a decision tree will have just one label. A metric by which we can gauge how close we are to this ideal is by \emph{minimizing the entropy} of our model. 
+This tells us roughly how mixed up our dataset is. If the training data has two labels which are equally populated in the dataset, we have correspondingly larger entropy than if we had only one of the labels show up. In the ideal case, each leaf of a decision tree will have just one label. A metric by which we can gauge how close we are to this ideal is by \emph{minimizing the entropy} of our model. 
 
 There are a number of algorithms that that recursively split the dataset into those with smaller entropy i.e. $D\rightarrow D_1, D_2$. After doing this the effective entropy among the two independent datasets can be remeasured and compared with that before the split. This can then continue until a number of conditions are met such as you have only one kind of label, or there are no more splits that could further reduce the entropy.
 
@@ -289,9 +289,9 @@ If the second derivative $f''(x_k)$ is positive, the extremum of $f(x_k+t)$ will
 \begin{align}
 	\frac{d}{dt}\Big( f(x_k) + f'(x_k)t + \frac{1}{2}f''(x_k)t^2\Big) = f'(x_k)+f''(x_k)t = 0 
 \end{align}
-Therefore under these conditions, $t = -f'(x_k)/f''(x_k)$ and the we assign the best estimate for the extremum of the function as
+Therefore under these conditions, $t = -f'(x_k)/f''(x_k)$, and we take the next estimate for the location of the extremum to be
 \begin{align}
-	f(x_{k+1}) = f(x_k)-\frac{f'(x_k)}{f''(x_k)}
+	x_{k+1} = x_k-\frac{f'(x_k)}{f''(x_k)}
 \end{align} 
 
 
@@ -477,8 +477,8 @@ Different curves are compared using the area under the curve (AUC), with a highe
 
 \begin{figure}
 \centerline{\includegraphics[width=0.7\textwidth]{mathematics/fig/rocCurve.png}}
-\label{fig:roc-curve}
 \caption{ROC curve}
+\label{fig:roc-curve}
 \end{figure}
 
 \subsection{Logistic Regression}
@@ -499,10 +499,10 @@ Which allows for easy calculation of gradients. When doing machine learning typi
 \begin{align}
 	f_{\mathbf{w},b}(\mathbf{x}) = \frac{1}{1+e^{-(\mathbf{wx} +b)}}
 \end{align}
-Where $\B{w}$ the weight vector and $b$ the offset are parameters to be fit. The optimal values for $\B{w}$ and $b$ are typically found via gradient descent. Following Equation \ref{eq:sig_der}, each parameter would be updated with the rule
+Where $\B{w}$ the weight vector and $b$ the offset are parameters to be fit. The optimal values for $\B{w}$ and $b$ are typically found by gradient descent on the cross-entropy (log-loss). Although the chain rule brings in the sigmoid derivative \eqref{eq:sig_der}, the $f(1-f)$ factor cancels against the $1/f$ and $1/(1-f)$ coming from the logarithm, so each update reduces to the residual $\big(y-f\big)$ times the input:
 \begin{align}
-    \B{w}&\leftarrow\B{w}+\alpha~\B{x} f_{\mathbf{w},b}(\mathbf{x}) \Big(1-f_{\mathbf{w},b}(\mathbf{x})\Big)\\
-    b&\leftarrow b +\alpha f_{\mathbf{w},b}(\mathbf{x}) \Big(1-f_{\mathbf{w},b}(\mathbf{x})\Big)
+    \B{w}&\leftarrow\B{w}+\alpha\big(y-f_{\mathbf{w},b}(\mathbf{x})\big)\B{x}\\
+    b&\leftarrow b +\alpha\big(y-f_{\mathbf{w},b}(\mathbf{x})\big)
 \end{align}
 
 

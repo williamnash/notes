@@ -26,17 +26,17 @@ Computers typically represent information in binary. Knowing roughly how large o
 \begin{center}
 \begin{tabular}{ | c | c| c|} 
 \hline
- bits & unique values & label \\ \hline
+ bits & unique values ($2^N$) & magnitude \\ \hline
 7 & $128$ &  \\ 
 8 & $256$ &  \\ 
-10 & $1,024$ & KB \\ 
-20 & $1,048,576$ & MB \\ 
-30 & $1,073,741,824$ & GB \\ 
+10 & $1,024$ & $\sim$ thousand (kilo) \\ 
+20 & $1,048,576$ & $\sim$ million (mega) \\ 
+30 & $1,073,741,824$ & $\sim$ billion (giga) \\ 
 \hline
 \end{tabular}
 \end{center}
 
-Adding $10$ to a power of two increases the amount of memory used by roughly a factor of $1000$.
+The kilo/mega/giga labels describe the count $2^N$ itself, since $2^{10}\approx10^3$, $2^{20}\approx10^6$, and $2^{30}\approx10^9$; adding $10$ bits multiplies the number of representable values by roughly $1000$. These counts should not be conflated with storage sizes, which measure \emph{bytes} (one byte $=8$ bits): a kibibyte is $2^{10}$ bytes, a mebibyte $2^{20}$ bytes, and so on.
 
 There are slight subtleties involving whether we are counting using binary prefixes (e.g. kibibyte = KB) or decimal prefixes (e.g. kilobyte = kB). Binary prefixes count in units of 1024 (a power of two, near 1000), whereas decimal prefixes count in powers of 10. 
 
