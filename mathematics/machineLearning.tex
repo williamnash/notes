@@ -26,7 +26,37 @@ A \textbf{metric} is a function that measures the quality of the model's predict
 \section{Preprocessing}
 
 \subsection{Feature Scaling}
- TODO: Box-cox transformation
+
+\subsubsection{Box-Cox Transformation}
+
+Many models (and many of the significance tests we run on their residuals) implicitly assume the data are roughly Gaussian and homoscedastic. Real features are often skewed or have a variance that grows with the mean. The \B{Box-Cox transformation} is a one-parameter family of power transforms that bends a strictly positive feature $x>0$ towards normality \cite{boxcox}:
+
+\begin{align}\label{boxcox}
+	x^{(\lambda)} = \begin{cases}
+		\ffrac{x^\lambda - 1}{\lambda} & \lambda \ne 0 \\[1.5ex]
+		\ln x & \lambda = 0
+	\end{cases}
+\end{align}
+
+The $\lambda = 0$ case is not a special definition but the continuous limit of the first: expanding $x^\lambda = e^{\lambda \ln x} = 1 + \lambda \ln x + \mathcal{O}(\lambda^2)$ gives $(x^\lambda - 1)/\lambda \to \ln x$ as $\lambda \to 0$. Subtracting the $1$ and dividing by $\lambda$ (rather than using the bare power $x^\lambda$) is what makes the family continuous in $\lambda$ and preserves the ordering of the data. A few values recover familiar transforms:
+
+\begin{itemize}
+	\item $\lambda = 1$: linear (no reshaping, just a shift).
+	\item $\lambda = \ffrac{1}{2}$: square root, useful for count-like data.
+	\item $\lambda = 0$: logarithm, useful for multiplicatively-scaled or heavy right-tailed data.
+	\item $\lambda = -1$: reciprocal.
+\end{itemize}
+
+The parameter $\lambda$ is chosen by \B{maximum likelihood} (see Section \ref{sub:mle}): we assume the transformed feature $x^{(\lambda)}$ is normally distributed and find the $\lambda$ that makes the observed data most probable. Including the Jacobian $\prod_i \frac{dx^{(\lambda)}_i}{dx_i} = \prod_i x_i^{\lambda - 1}$ that accounts for the change of variables, the profile log-likelihood reduces to
+
+\begin{align}\label{boxcox_ll}
+	\ell(\lambda) = -\frac{n}{2}\ln \hat\sigma^2_\lambda + (\lambda - 1)\sum_{i=1}^n \ln x_i,
+\end{align}
+
+where $\hat\sigma^2_\lambda$ is the variance of the transformed sample $\{x^{(\lambda)}_i\}$ (the mean having been profiled out). One maximizes Equation \ref{boxcox_ll} over $\lambda$ numerically, typically on a grid such as $\lambda \in [-2, 2]$.
+
+The transform only accepts positive data, since $x^\lambda$ and $\ln x$ are otherwise undefined; in practice one either shifts the feature by a constant or uses the \B{Yeo-Johnson} extension, which handles zero and negative values by applying a Box-Cox-like map to $|x|+1$ on each side of the origin.
+
  TODO: Linearization
 
 
