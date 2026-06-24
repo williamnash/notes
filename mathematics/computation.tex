@@ -58,11 +58,76 @@ This modified algorithm is $O(1)$ efficient.
 \subsection{Estimating Probabilities}
 When multiplying many different probabilities $p_i$ together, the floating point precision of many computing languages starts to become an issue. To avoid this problem, often $\log(p_i)$ is used which is monotonic with the probability but avoids the \textit{underflow} issue described.
 
+\section{Numerical Differentiation}\label{numerical-diff}
+
+Often a function is only known as an array of samples $f_i \equiv f(x_i)$ on a
+grid with spacing $h$, and we want its derivative without an analytic form. A
+\B{stencil} is a small fixed pattern of weights applied to a point and its
+neighbours to approximate a derivative there.
+
+\subsection{Finite Differences}
+The weights come straight from the Taylor expansion. Expanding the neighbours of
+$x_i$,
+\begin{align}
+    f_{i\pm 1} = f_i \pm h f_i' + \ffrac{h^2}{2} f_i'' \pm \ffrac{h^3}{6} f_i''' + O(h^4)
+\end{align}
+Keeping one neighbour gives the \B{forward} and \B{backward} differences, each
+$O(h)$ accurate,
+\begin{align}
+    f_i' \approx \ffrac{f_{i+1} - f_i}{h} && f_i' \approx \ffrac{f_i - f_{i-1}}{h}
+\end{align}
+Subtracting the two expansions cancels the even terms and gives the \B{central}
+difference, which is $O(h^2)$ accurate for the same amount of work,
+\begin{align}\label{eq:central-diff}
+    f_i' \approx \ffrac{f_{i+1} - f_{i-1}}{2h}
+\end{align}
+Adding them instead cancels the odd terms and yields the standard second
+derivative stencil,
+\begin{align}\label{eq:second-diff}
+    f_i'' \approx \ffrac{f_{i+1} - 2f_i + f_{i-1}}{h^2}
+\end{align}
+
+\subsection{Stencils as Convolutions}
+Each formula is a fixed weight vector $\B{s}$ slid across the array --- i.e. a
+convolution with a kernel of Section \ref{kernels}. Writing the weights out, the
+central first- and second-derivative stencils are
+\begin{align}
+    \B{s}' = \ffrac{1}{2h}\,(-1,\;0,\;1) && \B{s}'' = \ffrac{1}{h^2}\,(1,\;-2,\;1)
+\end{align}
+and the derivative array is $f'_i = (\B{s} * \B{f})_i = \sum_k s_k f_{i+k}$. This
+is why differentiating an array is cheap and vectorizable: it is one pass of a
+length-3 kernel, $O(n)$ in the array size.
+
+\subsection{Gradient of an Array}
+For a 1-D array this is the central difference \eqref{eq:central-diff} in the
+interior. The stencil runs off the array at the two endpoints, so there one falls
+back to the one-sided forward/backward differences,
+\begin{align}
+    f_0' \approx \ffrac{f_1 - f_0}{h} && f_{n-1}' \approx \ffrac{f_{n-1} - f_{n-2}}{h}
+\end{align}
+(\texttt{numpy.gradient} does the same, though by default it uses a second-order
+one-sided formula such as $f_0' \approx (-3f_0 + 4f_1 - f_2)/2h$ at the edges). For a field $f(\B{x})$
+sampled on a multidimensional grid, the gradient is just the central-difference
+stencil applied independently along each axis,
+\begin{align}
+    \nabla f \approx \Big(\ffrac{f_{i+1,j}-f_{i-1,j}}{2h_x},\;
+                          \ffrac{f_{i,j+1}-f_{i,j-1}}{2h_y}\Big)
+\end{align}
+recovering the analytic gradient of Section \ref{noncartesian} in the
+$h\to 0$ limit. Summing the second-derivative stencil \eqref{eq:second-diff} over
+each axis gives the discrete Laplacian, the \B{five-point stencil}
+\begin{align}
+    \nabla^2 f \approx \ffrac{f_{i+1,j}+f_{i-1,j}+f_{i,j+1}+f_{i,j-1}-4f_{i,j}}{h^2}
+\end{align}
+i.e. the convolution kernel
+$\frac{1}{h^2}\left(\begin{smallmatrix} 0&1&0\\ 1&-4&1\\ 0&1&0 \end{smallmatrix}\right)$,
+widely used for edge detection and for solving Poisson's equation on a grid.
+
 \section{Graph Theory}
 Brute force algorithms that search all combinations of $N$ items scale as $N!$. The Seven Bridges of Konigsberg is a famous example solved by Euler, for which he laid our all combinations of sequences you could possibly cross the seven bridges (e.g. $1234567, 1234576,...$ and was able to show each combination did not work.
 
 
-\section{Kernels}
+\section{Kernels}\label{kernels}
 Kernels are useful when one wants to represent a set of data points in a higher dimensional space (e.g. when making a classifier using Support Vector Machines). One represents the transformation of a set of data points $\B{x}$ as $\B{x}\rightarrow \phi(\B{x})$. Mathematically a Kernel function is defined as
 \begin{align}
 	K(\B{x},\B{x}') = \phi(\B{x})\cdot \phi(\B{x}')
