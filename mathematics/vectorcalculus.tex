@@ -195,7 +195,7 @@ Where $\Omega$ is called the \emph{solid angle}. These guys are also orthonormal
 They're analogous to $\sin\theta$  except in two dimensions instead of just one. They are also complete with
 
 \begin{align}
-\sum_{l=0}^\infty \sum_{m=-l}^l Y^*_{lm}(\Omega)Y_{l'm'}(\Omega) = \frac{1}{\sin\theta}\delta(\theta-\theta')\delta(\phi-\phi')
+\sum_{l=0}^\infty \sum_{m=-l}^l Y^*_{lm}(\Omega)Y_{lm}(\Omega') = \frac{1}{\sin\theta}\delta(\theta-\theta')\delta(\phi-\phi')
 \end{align}
 
 When we have spherical, but non-azimuthal symmetry when using Laplace's equation, since the argument is actually $P_l(\cos\gamma)$, where $\gamma$ is the angle between one point in spherical coordinates ($\theta,\phi$) and another ($\theta',\phi'$) , we can expand the Legendre Polynomials in terms of the Spherical Harmonics, since they are complete.
@@ -760,7 +760,7 @@ y_p(t) = A_p\cos\omega_0 t + B_p\sin\omega_0 t
 \begin{align}
 y_p'(t) &= t(A_p\cos\omega_0 t + B_p\sin\omega_0 t)\\
 \implies \dot{y}_p'(t) &= A_p\cos\omega_0 t + B_p\sin\omega_0 t + t(-\omega_0A_p\sin\omega_0 t + \omega_0B_p\cos\omega_0 t)\\
-\implies \ddot{y}_p'(t) &= -2\omega_0A_p\sin\omega_0 t + 2\omega_0B_p\cos\omega_0 t +t(-\omega_0^2 A_p\cos\omega_0t -\omega_0^2B_p\cos\omega_0 t)\\
+\implies \ddot{y}_p'(t) &= -2\omega_0A_p\sin\omega_0 t + 2\omega_0B_p\cos\omega_0 t +t(-\omega_0^2 A_p\cos\omega_0t -\omega_0^2B_p\sin\omega_0 t)\\
 \end{align}
 Plugging into the initial differential equation
 \begin{align}

@@ -350,16 +350,16 @@ If you have two numbers that you don't know the prime factorization of, one can 
 \begin{itemize}
 \item	$57 -27 = 30$
 \end{itemize}
-\item Continue to subtract $\min(N_1,N_2)$ until you're about to get negative numbers
+\item Replace the larger number with this difference and repeat with the new pair, continuing until the two numbers are equal
 \begin{itemize}
-\item $30 -27 = 3$
+\item $(30,27)\to(3,27)$, then subtract $3$ from $27$ repeatedly: $(3,27)\to(3,24)\to\cdots\to(3,3)$
 \end{itemize}
-\item This number is the greatest common divisor of the two
+\item Once the two numbers are equal, that common value is the greatest common divisor
 \begin{itemize}
-\item $3\times 19 = 57$
-\item $3 \times 9 = 27$
+\item $\gcd(57,27)=3$, consistent with $57 = 3\times 19$ and $27 = 3\times 9$
 \end{itemize}
 \end{enumerate}
+In practice the repeated subtraction is collapsed into a single remainder step, $\gcd(a,b)=\gcd(b,\,a\bmod b)$, iterated until the remainder is $0$ --- the same modulo operation from the modular arithmetic above.
 
 
 

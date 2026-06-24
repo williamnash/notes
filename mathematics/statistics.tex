@@ -51,7 +51,7 @@ If covariance is:
 \begin{itemize}
     \item Positive: variables tend to increase or decrease together.
     \item Negative: one variable tends to increase when the other decreases.
-    \item Zero: variables are independent (no linear relationship).
+    \item Zero: variables are uncorrelated (no \emph{linear} relationship). This does \emph{not} imply independence---variables can be uncorrelated yet still dependent through a nonlinear relationship.
 \end{itemize}
 
 \subsubsection{Covariance Matrix}\label{covmat}
@@ -523,7 +523,7 @@ This tells us that if the model had the parameter $\mu_{ML}$ the observation we 
 \end{align}
 This is because (TODO: Learn more about this) most things tend towards Gaussians in the limit of large numbers and in the product of many Likelihood functions one gets
 \begin{align}
-	-2\ln\prod_i\mathcal{L}_i = -2\ln\prod_i e^{(x_i-\mu)^2/2\sigma^2} = \sum_i\frac{(x_i-\mu)^2}{\sigma^2} = \chi^2
+	-2\ln\prod_i\mathcal{L}_i = -2\ln\prod_i e^{-(x_i-\mu)^2/2\sigma^2} = \sum_i\frac{(x_i-\mu)^2}{\sigma^2} = \chi^2
 \end{align}
 (TODO, $i$'s are correct?). Now using Wilk's Theorem (TODO), one can look at the change in $\chi^2$ as you change the value of $\mu$. Once you increase $\mu$ in one direction from $\mu_{ML}$, the $\chi^2$ will grow. $\chi^2$ will of course also grow if you decrease it from $\mu_{ML}$. You can quantify how much you can change $\mu$ to some limit of $\chi^2$ given by (SOME THEORY). Depending on what kind of confidence interval you are looking for, or the amount of parameters you still have, this change in $\chi^2$ will be different. 
 
