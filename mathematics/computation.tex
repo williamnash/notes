@@ -96,7 +96,10 @@ central first- and second-derivative stencils are
 \end{align}
 and the derivative array is $f'_i = (\B{s} * \B{f})_i = \sum_k s_k f_{i+k}$. This
 is why differentiating an array is cheap and vectorizable: it is one pass of a
-length-3 kernel, $O(n)$ in the array size.
+length-3 kernel, $O(n)$ in the array size. (Strictly this is a cross-correlation;
+a true convolution flips the kernel, $\sum_k s_k f_{i-k}$, which would negate the
+antisymmetric $\B{s}'$ --- a distinction usually glossed over in the same way it
+is for convolutional networks.)
 
 \subsection{Gradient of an Array}
 For a 1-D array this is the central difference \eqref{eq:central-diff} in the
@@ -122,6 +125,10 @@ each axis gives the discrete Laplacian, the \B{five-point stencil}
 i.e. the convolution kernel
 $\frac{1}{h^2}\left(\begin{smallmatrix} 0&1&0\\ 1&-4&1\\ 0&1&0 \end{smallmatrix}\right)$,
 widely used for edge detection and for solving Poisson's equation on a grid.
+
+Both operators are a few array slices in practice, with the interior and edge
+stencils written out explicitly below.
+\lstinputlisting[language=Python]{mathematics/code/stencilGradient.py}
 
 \section{Graph Theory}
 Brute force algorithms that search all combinations of $N$ items scale as $N!$. The Seven Bridges of Konigsberg is a famous example solved by Euler, for which he laid our all combinations of sequences you could possibly cross the seven bridges (e.g. $1234567, 1234576,...$ and was able to show each combination did not work.
